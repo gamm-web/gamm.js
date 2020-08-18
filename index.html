@@ -1,0 +1,51 @@
+<html>
+
+<head>
+	<title>
+		Gamm.js Demo
+	</title>
+	
+	<script type="text/javascript" src="gamm.js"></script>
+</head>
+
+<body>
+	<div id="main-content">
+		<h1 gamm-events="{'click':'test_function'}">{{msg}}</h1>
+		<h3>{{message}}</h3>
+		<button gamm-events="{'click':'change_background'}" style="color:{{button_color}};">Test Me</button>
+	</div>
+	
+	<script type="text/javascript">
+	
+		var gamm = new Gamm({
+			element : '#main-content',
+			data : {
+				msg : "Hello World!",
+				message : "",
+				button_color : "red",
+			},
+			events : {
+				test_function : function(){
+				
+					alert(1);
+					this.msg = "Aloha!";	
+					this.message = "everyone";
+					
+					
+				},
+				change_background : function(){
+					
+					alert(0);
+					this.button_color = "blue";
+					
+				}
+			}
+		});
+		
+		<!-- gamm.append_template("#main-content"); -->
+		
+	
+	</script>
+</body>
+
+</html>
