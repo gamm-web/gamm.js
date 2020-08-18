@@ -10,9 +10,9 @@
 
 <body>
 	<div id="main-content">
-		<h1 gamm-events="{'click':'test_function'}">{{msg}}</h1>
+		<h1 gamm-events="{'click':'test_function'}">{{msg}} - {{counter}}</h1>
 		<h3>{{message}}</h3>
-		<button gamm-events="{'click':'change_background'}" style="color:{{button_color}};">Test Me</button>
+		<button gamm-events="{'click':'change_background'}" style="color:{{button_color}};">Test Me - {{counter}}</button>
 	</div>
 	
 	<script type="text/javascript">
@@ -23,26 +23,28 @@
 				msg : "Hello World!",
 				message : "",
 				button_color : "red",
+				counter : 0
 			},
 			events : {
 				test_function : function(){
 				
-					alert(1);
-					this.msg = "Aloha!";	
-					this.message = "everyone";
 					
+					this.data.msg = "Aloha!";	
+					this.data.message = "everyone";
+					this.data.counter += 1;
 					
 				},
 				change_background : function(){
 					
-					alert(0);
-					this.button_color = "blue";
+					
+					this.data.button_color = "blue";
+					
 					
 				}
 			}
 		});
 		
-		<!-- gamm.append_template("#main-content"); -->
+		
 		
 	
 	</script>
