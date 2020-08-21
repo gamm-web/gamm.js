@@ -211,116 +211,73 @@ class Gamm{
 			
 			var gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
 			var gamm_temp_code = "";
+			var final_code_compiled = "";
 			var gamm_final_code = "";
-			
-			
-			var gamm_open_tag = new RegExp("<","g");
-			var gamm_open_end_tag = new RegExp("</","g");
-			
-			var gamm_close_tag = new RegExp(" >","g");
-			var gamm_close_quote_tag = new RegExp("\">","g");
-			var gamm_close_end_tag = new RegExp(">","g");
 			
 			
 			// final replacements
 			var gamm_lt_tag_string = new RegExp("&lt;","g");
 			var gamm_gt_tag_string = new RegExp("&gt;","g");
 			var gamm_double_quotes = new RegExp("\"","g");
-			var gamm_new_lines = new RegExp("\n","g");
-			var gamm_end_lines = new RegExp("\r","g");
-			var gamm_tabs = new RegExp("\t","g");
 			
-			var gamm_end_lt_tag = new RegExp("gamm_end_lt_tag","g");
-			var gamm_end_gt_tag = new RegExp("gamm_end_gt_tag","g");
-			
-			var gamm_start_quote_gt_tag = new RegExp("gamm_start_quote_gt_tag","g");
-			var gamm_start_gt_tag = new RegExp("gamm_start_gt_tag","g");
-			var gamm_start_lt_tag = new RegExp("gamm_start_lt_tag","g");
-			
-			
+			var gamm_start_brackets = new RegExp("{{","g");
+			var gamm_end_brackets = new RegExp("}}","g");
 			
 			function gamm_echo(str){
 				gamm_final_code += str;
 			}
 			
-			
-			 
 			while(gamm_el_codes.length > 0){
 				
 				try{
+					
 					gamm_temp_code = gamm_el_codes[0];
 					
-					console.log(gamm_temp_code);
+					// console.log(gamm_temp_code);
 					
-					// gamm_temp_code = gamm_temp_code
-									// .replace(gamm_open_end_tag,"gamm_end_lt_tag")
-									// .replace(gamm_close_tag,"gamm_start_gt_tag")
-									// .replace(gamm_close_quote_tag,"\"gamm_start_quote_gt_tag")
-									// .replace(gamm_open_tag,"gamm_start_lt_tag")
-									// .replace(gamm_close_end_tag,"gamm_end_gt_tag")
-									// .replace(gamm_double_quotes,'\\"');
+					gamm_temp_code = gamm_temp_code.replace(gamm_double_quotes,'\\"');
 					
-					
-					// gamm_temp_code = gamm_temp_code
-									// ;
-					
-					// gamm_temp_code = gamm_temp_code
-									// .replace(gamm_end_lt_tag,"); gamm_echo(\"</")
-									// .replace(gamm_end_gt_tag,">\");")
-									// .replace(gamm_start_quote_gt_tag,"\\\">\"); gamm_echo(")
-									// .replace(gamm_start_lt_tag," gamm_echo(\"<");
-									
-					// gamm_temp_code = gamm_temp_code
-									// .replace(gamm_lt_tag_string,"<")
-									// .replace(gamm_gt_tag_string,">")
-									// .replace(gamm_new_lines,"")
-									// .replace(gamm_end_lines,"")
-									// .replace(gamm_tabs,"")
-									// .replace(/  +/g, ' ');
-									
-					
-					
-					// var check_doubles_gamm_echo = gamm_temp_code.indexOf("gamm_echo( gamm_echo(");
-					// var check_doubles_end_echo = gamm_temp_code.indexOf("););");
-					
-					// while( check_doubles_gamm_echo > -1 || check_doubles_end_echo > -1 ){
+					var start_lt_tag = false;
+					for(var i = 0; i < gamm_temp_code.length; i++){
 						
-						// gamm_temp_code = gamm_temp_code.replace("gamm_echo( gamm_echo(","gamm_echo(");
-						// gamm_temp_code = gamm_temp_code.replace("););",");");
-						// check_doubles_gamm_echo = gamm_temp_code.indexOf("gamm_echo( gamm_echo(");
-						// check_doubles_end_echo = gamm_temp_code.indexOf("););");
+						var str_1 = gamm_temp_code[i];
 						
-					// }
-					
-					console.log(gamm_temp_code);
-					var test_code = this.parse_data(gamm_temp_code,"{{","}}");
-					
-					while( test_code.length > 0 ){
 						
-						gamm_temp_code = gamm_temp_code.replace("{{" + test_code[0] + "}}",'" + ' + test_code[0] + '  + "');
-						test_code = this.parse_data(gamm_temp_code,"{{","}}");
+						if(str_1 == "<" && start_lt_tag == false){
+							
+							
+							final_code_compiled += ' gamm_echo(\"' + str_1 ;
+							start_lt_tag = true;
+						}
+						else if(start_lt_tag == true && str_1 == "\n"){
+							final_code_compiled += '");' + str_1;
+							start_lt_tag = false;
+						}
+						else{
+							final_code_compiled += str_1;
+						}
+							
+					}
+					
+					var tags_with_brackets_compile = this.parse_data(final_code_compiled,"<",">");
+					while( tags_with_brackets_compile.length > 0 ){
+						
+						var replacement_string = "&lt;" + tags_with_brackets_compile[0].replace(gamm_start_brackets,'" + ').replace(gamm_end_brackets,' + "') + "&gt;";
+						
+						final_code_compiled = final_code_compiled.replace("<" + tags_with_brackets_compile[0] + ">",replacement_string);
+						tags_with_brackets_compile = this.parse_data(final_code_compiled,"<",">");
+						
 					}
 					
 					
+					final_code_compiled = final_code_compiled
+								.replace(gamm_lt_tag_string,"<")
+								.replace(gamm_gt_tag_string,">")
+								.replace(gamm_start_brackets,"gamm_echo(")
+								.replace(gamm_end_brackets,");");
+					// console.log(final_code_compiled);
 					
-				for(var i = 0; i < strlen(gamm_temp_code); i++){
-					
-					
-					
-				}
-					
-					
-					
-					
-					console.log(gamm_temp_code);
-					eval(gamm_temp_code);
-					
-					
-					console.log(gamm_final_code);
-					
-					
-					
-					
+					eval(final_code_compiled);
 					
 					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,  gamm_final_code);
 					

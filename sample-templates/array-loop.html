@@ -3,12 +3,16 @@
 		for(var i =0; i < 10; i++){
 			
 			if(i < 5){
-				<li class="item" gamm-events="{'click':'test_other_class'}">{{i}}-heheheheeh</li>
+				<li class="item" gamm-events="{'click':'test_other_class'}">
+				{{i}} {{'-heheheheeh'}}
+				</li>
 			}
 			else{
 				<li class="item" data-index="{{i}}">
 					<span> 
-					<a href="#" >{{(i*2)}}</a>
+						<a href="#" >
+							{{(i*2)}}
+						</a>
 					</span>
 				</li>
 			}
