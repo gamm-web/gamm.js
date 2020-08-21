@@ -2,144 +2,78 @@
 
 <head>
 	<title>
-		Gamm.js Demo
+		Gamm.js Documentation
 	</title>
 	
 	<script type="text/javascript" src="gamm.js"></script>
 </head>
 
 <body>
-	<div id="main-content">
-		<h1 gamm-events="{'click':'test_function'}">{{msg}} - {{counter}}</h1>
-		<h3>{{message}}</h3>
-		<button gamm-events="{'click':'change_background'}" style="color:{{button_color}};">Test Me - {{counter}}</button>
-	</div>
-	
-	<div id="second-content">
-		<ul>
-		<#gamm 
-			for(var i =0; i < 10; i++){
-				
-				if(i < 5){
-					<li >
-					{{i}}
-					</li>
-				}
-				else{
-					<li >
-					{{(i*3)}}
-					</li>
-				}
-				
-				
-			}		
-		#>
-		</ul>
+	<div id="main-content" style="">
+		<h1>Welcome To Gamm.js</h1>
+		<p>
+			A simple library that you can use to create block templates that can easily be manipulated and add methods or events to a certain element in the document.
+			<br>
+			<br>
+			This library also helps you to learn a few tricks to create a good user-interface website that can easily be designed using this library.
+			<br>
+			<br>
+			This library is powered purely by javascript but you can combine both HTML and javascript integration on a said syntax that I will be showing you on this document so sit back and read!
+			<br>
+			<br>
+			This library might be familiar to you like famous frameworks out there on the internet like Angular.js by Google, React.js by Facebook, and Vue.js by Evan You. 
+			This library is almost similar to these 3 famous frameworks but this one like Vue.js doesn't need any complications on installing or integrating into your own projects. 
+			It is light and easy to use than these 3 famous frameworks already in the market.
+		</p>
+		<hr>
+		<h2>Integration</h2>
+		<p>
+			Integration is as easy us this:
+		</p>
+		<blockquote>
+			<code>
+				&lt;script type="text/javascript" src="[path_to_library]/gamm.js"&gt;&lt;/script&gt;
+			</code>
+		</blockquote>
+		<hr>
 		
-		<h1 style="display:{{hide_me}}">Show Me This</h1>
-		<button gamm-events="{'click':'show_hide'}">{{show}}</button>
+		
+		
 	</div>
 	
-	<div id="html-content">
-	</div>
-	
-	<div id="file-content">
-	</div>
 	
 	<script type="text/javascript">
 	
-		var gamm = new Gamm({
-			element : '#main-content',
-			data : {
-				msg : "Hello World!",
-				message : "",
-				button_color : "red",
-				counter : 0
-			},
-			events : {
-				test_function : function(){
-				
-					
-					this.data.msg = "Aloha!";	
-					this.data.message = "everyone";
-					this.data.counter += 1;
-					
-				},
-				change_background : function(){
-					
-					
-					this.data.button_color = "blue";
-					
-					
-				}
-			}
-		});
-		
-		var second_content = new Gamm({
-			element : "#second-content",
-			data : {
-				list : [1,2,3],
-				show : "Hide",
-				hide_me : "block",
-			},
-			events : {
-				show_hide : function(){
-					
-					if( this.data.show == "Hide"){
-						this.data.hide_me = "none";
-						this.data.show = "Show";
-					}
-					else{
-						this.data.hide_me = "block";
-						this.data.show = "Hide";
-					}
-					
-					
-					this.data.list = "<a href='#'>Test Link</a>";
-					
-				}
-			}
-		});
-		
-		
-		var html_content = new Gamm({
-			template : "<button gamm-events=\"{'click':'test_other_class'}\">{{button_label}}</button>",
-			data : {
-				button_label : "Click Me!",
-				
-			},
-			events : {
-				test_other_class : function(){
-					
-					this.other(gamm,"counter", gamm.data.counter + 2 );
-					
-				}
-			}
-		});
-		
-		html_content.append_to("#html-content");
-		
-		var file_content = new Gamm({
-			file : 'sample-templates/array-loop.html',
-			data : {
-				button_label : "Click Me!",
-				test : "style='color:red;'"
-			},
-			events : {
-				test_other_class : function(){
-					
-					this.other(gamm,"counter", gamm.data.counter + 2 );
-					
-				}
-			}
-		});
-		
-		file_content.append_to("#file-content");
-		
-		
-		
 	
 	</script>
+	<style>
+		body{
+			font-family : "Arial", sans serif;
+			background-color:#eee;
+		}
+		#main-content{
+			width:50%; 
+			margin:auto; 
+			border:1px solid #333; 
+			margin-top:10px;
+			padding:15px;
+			background-color:#fff;
+		}
+		code{
+			background-color: #333;
+			width: 100%;
+			display: block;
+			padding: 10px;
+			color: yellow;
+		}
+		
+		@media screen and (max-width:760px){
+			#main-content{
+				width:90%;
+			}
+		}
+		
+	</style>
 </body>
 
 </html>
