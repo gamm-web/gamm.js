@@ -56,9 +56,7 @@ class Gamm{
 		if(this.element != null){
 			this.init_element();			
 		}
-		
-		
-		
+			
 	}
 	
 	convert_to_html(){
@@ -84,7 +82,6 @@ class Gamm{
 		
 		try{
 			
-			// this.compiled_template = this.template;
 			var gamm_el_events = "";
 			
 			gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
@@ -92,8 +89,6 @@ class Gamm{
 			
 			var gamm_el_events_counter = 0;
 			var quote_regex =  new RegExp("\'","g");
-			
-			// console.log(this.compiled_template);
 			
 			while(gamm_el_events.length > 0){
 				
@@ -190,8 +185,6 @@ class Gamm{
 			}
 			
 			
-
-
 		}
 		catch(gamm_datas_error){
 			console.log("ERROR DATA: " + gamm_datas_error);
@@ -233,7 +226,6 @@ class Gamm{
 					
 					gamm_temp_code = gamm_el_codes[0];
 					
-					// console.log(gamm_temp_code);
 					
 					gamm_temp_code = gamm_temp_code.replace(gamm_double_quotes,'\\"');
 					
@@ -275,7 +267,6 @@ class Gamm{
 								.replace(gamm_gt_tag_string,">")
 								.replace(gamm_start_brackets,"gamm_echo(")
 								.replace(gamm_end_brackets,");");
-					// console.log(final_code_compiled);
 					
 					eval(final_code_compiled);
 					
@@ -299,12 +290,10 @@ class Gamm{
 		catch(gamm_codes_error){
 			console.log("ERROR CODES: " + gamm_codes_error);
 		}
-		
-		
 	}
 	
 	distribute_events(){
-		// "use strict";
+		
 		var $this = this;
 		
 		try{
@@ -420,7 +409,6 @@ class Gamm{
 	}
 	
 	
-	
 	append_to(selector){
 		this.compile_codes();
 		this.compile_events(); 
@@ -447,7 +435,6 @@ class Gamm{
 	}
 	
 	
-	
 	get_data(){
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
 	}
@@ -458,8 +445,6 @@ class Gamm{
 		$class.reload.call($class);
 		
 	}
-	
-	
 	
 	//statics
 	static append(selector,value){
