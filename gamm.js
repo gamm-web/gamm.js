@@ -23,18 +23,21 @@ class Gamm{
 		if(args.file !== undefined){
 			
 			this.template = this.read_template(args.file);
+			this.convert_to_html();
 			
 		}
 		else if(args.element !== undefined){
 			
 			this.template = document.querySelectorAll(args.element)[0].innerHTML;
 			this.element = args.element;
+			this.convert_to_html();
+			
 			
 		}
 		else{
 			
 			this.template = args.template;
-			
+			this.convert_to_html();
 		}
 		
 		if(args.data !== undefined){
@@ -48,15 +51,32 @@ class Gamm{
 		
 		
 		this.make_template_id();
-		this.compile_events();
-		this.compile_datas();
+		
 		
 		if(this.element != null){
-			this.init_element();
-			this.distribute_events();
+			this.init_element();			
 		}
 		
 		
+		
+	}
+	
+	convert_to_html(){
+		
+		var parser = new DOMParser();
+		var doc = parser.parseFromString(this.template, 'text/html');
+		for(var i = 0; i < doc.querySelectorAll("body *").length; i++){
+			doc.querySelectorAll("body *")[i].setAttribute("data-gamm","true");
+		}
+		this.template = doc.body.innerHTML;
+		
+	}
+	
+	convert_to_text(str){
+		var parser = new DOMParser();
+		var doc = parser.parseFromString(this.template, 'text/html');
+		var text = doc.body.innerText;
+		return text;
 		
 	}
 	
@@ -64,33 +84,25 @@ class Gamm{
 		
 		try{
 			
-			this.compiled_template = this.template;
+			// this.compiled_template = this.template;
 			var gamm_el_events = "";
 			
-			if(this.element != null){
-				gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
-			}
-			else{
-				gamm_el_events = this.parse_data(this.compiled_template,"gamm-events={","}");
-			}
+			gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+			
 			
 			var gamm_el_events_counter = 0;
 			var quote_regex =  new RegExp("\'","g");
+			
+			// console.log(this.compiled_template);
 			
 			while(gamm_el_events.length > 0){
 				
 				try{
 					var gamm_events = "";
 					
-					if( gamm_el_events[0].indexOf("'") > 0){
+		
+					gamm_events = JSON.parse(gamm_el_events[0].replace(quote_regex,'"') );
 						
-						gamm_events = JSON.parse(gamm_el_events[0].replace(quote_regex,'"') );
-						// console.log(gamm_events);
-					}
-					else{
-						gamm_events = JSON.parse("{" + gamm_el_events[0] + "}");
-					}
-					
 					
 					
 					var gamm_temp_data = "";
@@ -122,33 +134,23 @@ class Gamm{
 					
 					
 					
-					if(this.element != null){
+					
 						
-						this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"",gamm_temp_data);
-						gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
-					}
-					else{
-						
-						this.compiled_template = this.compiled_template.replace("gamm-events={" + gamm_el_events[0] + "}",gamm_temp_data);
-						gamm_el_events = this.parse_data(this.compiled_template,"gamm-events={","}");
-					}
+					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"",gamm_temp_data);
+					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+					
 					
 				}
 				catch(gamm_err){
 					console.log(gamm_err);
 					
 					
-					if(this.element != null){
+					
 						
-						this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"","data-gamm='"+gamm_err+"'");
-						gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"","data-gamm='"+gamm_err+"'");
+					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
 						
-					}
-					else{
-						
-						this.compiled_template = this.compiled_template.replace("gamm-events={" + gamm_el_events[0] + "}",gamm_temp_data);
-						gamm_el_events = this.parse_data(this.compiled_template,"gamm-events={","}");
-					}
+					
 				}
 				
 			}
@@ -168,7 +170,7 @@ class Gamm{
 		
 		try{
 	
-			this.compiled_template = this.compiled_template;
+			// this.compiled_template = this.compiled_template;
 			var gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
 			
 			while(gamm_el_datas.length > 0){
@@ -197,50 +199,173 @@ class Gamm{
 		
 	}
 	
+	compile_codes(){
+		
+		try{
+			
+			this.compiled_template = this.template;
+			var gamm_start_identifier = "&lt;#gamm";
+			var gamm_end_identifier = "#&gt;";
+			
+			
+			
+			var gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
+			var gamm_temp_code = "";
+			var gamm_final_code = "";
+			
+			
+			var gamm_open_tag = new RegExp("<","g");
+			var gamm_open_end_tag = new RegExp("</","g");
+			
+			var gamm_close_tag = new RegExp(" >","g");
+			var gamm_close_quote_tag = new RegExp("\">","g");
+			var gamm_close_end_tag = new RegExp(">","g");
+			
+			
+			// final replacements
+			var gamm_lt_tag_string = new RegExp("&lt;","g");
+			var gamm_gt_tag_string = new RegExp("&gt;","g");
+			var gamm_double_quotes = new RegExp("\"","g");
+			var gamm_new_lines = new RegExp("\n","g");
+			var gamm_end_lines = new RegExp("\r","g");
+			var gamm_tabs = new RegExp("\t","g");
+			
+			var gamm_end_lt_tag = new RegExp("gamm_end_lt_tag","g");
+			var gamm_end_gt_tag = new RegExp("gamm_end_gt_tag","g");
+			
+			var gamm_start_quote_gt_tag = new RegExp("gamm_start_quote_gt_tag","g");
+			var gamm_start_gt_tag = new RegExp("gamm_start_gt_tag","g");
+			var gamm_start_lt_tag = new RegExp("gamm_start_lt_tag","g");
+			
+			
+			
+			function gamm_echo(str){
+				gamm_final_code += str;
+			}
+			
+			
+			 
+			while(gamm_el_codes.length > 0){
+				
+				try{
+					gamm_temp_code = gamm_el_codes[0];
+					
+					console.log(gamm_temp_code);
+					
+					// gamm_temp_code = gamm_temp_code
+									// .replace(gamm_open_end_tag,"gamm_end_lt_tag")
+									// .replace(gamm_close_tag,"gamm_start_gt_tag")
+									// .replace(gamm_close_quote_tag,"\"gamm_start_quote_gt_tag")
+									// .replace(gamm_open_tag,"gamm_start_lt_tag")
+									// .replace(gamm_close_end_tag,"gamm_end_gt_tag")
+									// .replace(gamm_double_quotes,'\\"');
+					
+					
+					// gamm_temp_code = gamm_temp_code
+									// ;
+					
+					// gamm_temp_code = gamm_temp_code
+									// .replace(gamm_end_lt_tag,"); gamm_echo(\"</")
+									// .replace(gamm_end_gt_tag,">\");")
+									// .replace(gamm_start_quote_gt_tag,"\\\">\"); gamm_echo(")
+									// .replace(gamm_start_lt_tag," gamm_echo(\"<");
+									
+					// gamm_temp_code = gamm_temp_code
+									// .replace(gamm_lt_tag_string,"<")
+									// .replace(gamm_gt_tag_string,">")
+									// .replace(gamm_new_lines,"")
+									// .replace(gamm_end_lines,"")
+									// .replace(gamm_tabs,"")
+									// .replace(/  +/g, ' ');
+									
+					
+					
+					// var check_doubles_gamm_echo = gamm_temp_code.indexOf("gamm_echo( gamm_echo(");
+					// var check_doubles_end_echo = gamm_temp_code.indexOf("););");
+					
+					// while( check_doubles_gamm_echo > -1 || check_doubles_end_echo > -1 ){
+						
+						// gamm_temp_code = gamm_temp_code.replace("gamm_echo( gamm_echo(","gamm_echo(");
+						// gamm_temp_code = gamm_temp_code.replace("););",");");
+						// check_doubles_gamm_echo = gamm_temp_code.indexOf("gamm_echo( gamm_echo(");
+						// check_doubles_end_echo = gamm_temp_code.indexOf("););");
+						
+					// }
+					
+					console.log(gamm_temp_code);
+					var test_code = this.parse_data(gamm_temp_code,"{{","}}");
+					
+					while( test_code.length > 0 ){
+						
+						gamm_temp_code = gamm_temp_code.replace("{{" + test_code[0] + "}}",'" + ' + test_code[0] + '  + "');
+						test_code = this.parse_data(gamm_temp_code,"{{","}}");
+					}
+					
+					
+					
+				for(var i = 0; i < strlen(gamm_temp_code); i++){
+					
+					
+					
+				}
+					
+					
+					
+					
+					console.log(gamm_temp_code);
+					eval(gamm_temp_code);
+					
+					
+					console.log(gamm_final_code);
+					
+					
+					
+					
+					
+					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,  gamm_final_code);
+					
+					gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
+					
+				}
+				catch(gamm_code_error){
+					console.log("ERROR CODE: " + gamm_code_error);
+					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,"[object-undefined]");
+					gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
+				}
+				
+			}
+			
+			
+
+
+		}
+		catch(gamm_codes_error){
+			console.log("ERROR CODES: " + gamm_codes_error);
+		}
+		
+		
+	}
+	
 	distribute_events(){
-		"use strict";
+		// "use strict";
 		var $this = this;
 		
 		try{
 			
-			// var gamm_element_and_events = this.gamm_element_and_events;
-			
-			
 			for(var index in this.gamm_element_and_events){
 				
-				
-				
-				
-				eval("document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function(){ $this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this); $this.compile_events.call($this); $this.compile_datas.call($this); $this.init_element.call($this); $this.distribute_events.call($this); };");
-				// console.log(index, gamm_event);
-				
-				// this.stored_events[index] = function(){
-					
-					// console.log(this);
-					// console.log(gamm_event);
-					// $this.events[gamm_event].call($this); 
-					// $this.events[gamm_event].call($this);
-					
-				
-					// $this.compile_datas.call($this); 
-					// $this.compile_events.call($this); 
-					// if($this.element != null){ 
-						// $this.init_element.call($this); 
-					// }
-					
-					
-				// };
-				
-				
-				// this.compiled_events[ index ] = "document.querySelector( '" + gamm_element +  "' ).on" + gamm_on + " = this.stored_events['" + index + "'];";
-				// console.log(this.compiled_events[ index ]);
+				eval(
+					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function(){ \
+						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this); \
+						if($this.element != null){ \
+							$this.init_element.call($this); \
+						}else{ \
+							$this.reload(); \
+						} \
+					};"
+				);
 				
 			}
-			
-			// for(var gamm_key in this.compiled_events){
-				// eval( this.compiled_events[gamm_key] );
-			// }
-			
 			
 		}
 		catch(gamm_events_error){
@@ -339,28 +464,42 @@ class Gamm{
 	
 	
 	
-	append_template(selector){
+	append_to(selector){
+		this.compile_codes();
+		this.compile_events(); 
+		this.compile_datas();		
 		document.querySelector(selector).innerHTML += "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
-		
+		this.distribute_events();
 	}
 	
 	init_element(){
-		
+		this.compile_codes();
+		this.compile_events(); 
+		this.compile_datas(); 		
 		document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
-		
+		this.distribute_events();
 		
 	}
 	
-	refresh_datas(){
-		console.log(this);
+	reload(){
+		this.compile_codes();
+		this.compile_events(); 
+		this.compile_datas(); 		
 		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
-		
+		this.distribute_events();
 	}
 	
 	
 	
 	get_data(){
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+	}
+	
+	other($class,$data,$value){
+		
+		$class.data[$data] = $value;
+		$class.reload.call($class);
+		
 	}
 	
 	

@@ -15,6 +15,33 @@
 		<button gamm-events="{'click':'change_background'}" style="color:{{button_color}};">Test Me - {{counter}}</button>
 	</div>
 	
+	<div id="second-content">
+		<ul>
+		<#gamm 
+			for(var i =0; i < 10; i++){
+				
+				if(i < 5){
+					<li >i</li>
+				}
+				else{
+					<li >(i*3)</li>
+				}
+				
+				
+			}		
+		#>
+		</ul>
+		
+		<h1 style="display:{{hide_me}}">Show Me This</h1>
+		<button gamm-events="{'click':'show_hide'}">{{show}}</button>
+	</div>
+	
+	<div id="html-content">
+	</div>
+	
+	<div id="file-content">
+	</div>
+	
 	<script type="text/javascript">
 	
 		var gamm = new Gamm({
@@ -43,6 +70,67 @@
 				}
 			}
 		});
+		
+		var second_content = new Gamm({
+			element : "#second-content",
+			data : {
+				list : [1,2,3],
+				show : "Hide",
+				hide_me : "block",
+			},
+			events : {
+				show_hide : function(){
+					
+					if( this.data.show == "Hide"){
+						this.data.hide_me = "none";
+						this.data.show = "Show";
+					}
+					else{
+						this.data.hide_me = "block";
+						this.data.show = "Hide";
+					}
+					
+					
+					this.data.list = "<a href='#'>Test Link</a>";
+					
+				}
+			}
+		});
+		
+		
+		var html_content = new Gamm({
+			template : "<button gamm-events=\"{'click':'test_other_class'}\">{{button_label}}</button>",
+			data : {
+				button_label : "Click Me!",
+				
+			},
+			events : {
+				test_other_class : function(){
+					
+					this.other(gamm,"counter", gamm.data.counter + 2 );
+					
+				}
+			}
+		});
+		
+		html_content.append_to("#html-content");
+		
+		var file_content = new Gamm({
+			file : 'sample-templates/array-loop.html',
+			data : {
+				button_label : "Click Me!",
+				test : "style='color:red;'"
+			},
+			events : {
+				test_other_class : function(){
+					
+					this.other(gamm,"counter", gamm.data.counter + 2 );
+					
+				}
+			}
+		});
+		
+		file_content.append_to("#file-content");
 		
 		
 		
