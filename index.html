@@ -33,6 +33,7 @@
 		</p>
 		<blockquote>
 			<code>
+				<span>HTML</span>
 				&lt;script type="text/javascript" src="[path_to_library]/gamm.js"&gt;&lt;/script&gt;
 			</code>
 		</blockquote>
@@ -81,7 +82,18 @@
 			width: 100%;
 			display: block;
 			padding: 10px;
+			padding-top:20px;
+			padding-bottom:20px;
 			color: yellow;
+			position:relative;
+		}
+		code span{
+		    position: absolute;
+			top: 0;
+			right: 0;
+			background-color: #7f7676;
+			padding: 5px;
+			color: #ddd;
 		}
 		
 		@media screen and (max-width:760px){
