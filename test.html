@@ -10,13 +10,32 @@
 
 <body>
 	<div id="main-content" style="">
-		
-		
+		<label>First Name: </label>
+		<input type="text" name="firstname" value="">
+		<br>
+		<label>Last Name: </label>
+		<input type="text" name="lastname" value="">
+		<br>
+		<button gamm-events="{'click':'submit'}">
 	</div>
 	
 	
 	<script type="text/javascript">
 	
+		var gamm = new GAMM({
+			element : "#main-content",
+			data : {
+				firstname : "",
+				lastname : ""
+			},
+			events : {
+				submit : function(){
+				
+					
+				}
+			}
+			
+		});
 	
 	</script>
 	<style>
