@@ -11,8 +11,11 @@ class Gamm{
 	
 	stored_events = {};
 	compiled_events = {};
+	load = null;
 	
-	
+	textareas = {};
+	properties = {};
+		
 	gamm_element_and_events = {};
 	
 	
@@ -28,7 +31,13 @@ class Gamm{
 		}
 		else if(args.element !== undefined){
 			
-			this.template = document.querySelectorAll(args.element)[0].innerHTML;
+			try{
+				this.template = document.querySelectorAll(args.element)[0].innerHTML;
+			}
+			catch(gamm_html_error){
+				this.template = "";
+			}
+			
 			this.element = args.element;
 			this.convert_to_html();
 			
@@ -52,10 +61,15 @@ class Gamm{
 		
 		this.make_template_id();
 		
+		if(args.load !== undefined){
+			this.load = args.load;			
+		}
 		
 		if(this.element != null){
 			this.init_element();			
 		}
+		
+		
 			
 	}
 	
@@ -63,9 +77,9 @@ class Gamm{
 		
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(this.template, 'text/html');
-		for(var i = 0; i < doc.querySelectorAll("body *").length; i++){
-			doc.querySelectorAll("body *")[i].setAttribute("data-gamm","true");
-		}
+		// for(var i = 0; i < doc.querySelectorAll("body *").length; i++){
+			// doc.querySelectorAll("body *")[i].setAttribute("data-gamm","true");
+		// }
 		this.template = doc.body.innerHTML;
 		
 	}
@@ -199,18 +213,19 @@ class Gamm{
 			this.compiled_template = this.template;
 			var gamm_start_identifier = "&lt;#gamm";
 			var gamm_end_identifier = "#&gt;";
-			
+			// console.log(this.compiled_template);
 			
 			
 			var gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
 			var gamm_temp_code = "";
 			var final_code_compiled = "";
 			var gamm_final_code = "";
-			
+			// alert(0);
 			
 			// final replacements
 			var gamm_lt_tag_string = new RegExp("&lt;","g");
 			var gamm_gt_tag_string = new RegExp("&gt;","g");
+			var gamm_ampersand_string = new RegExp("&amp;","g");
 			var gamm_double_quotes = new RegExp("\"","g");
 			
 			var gamm_start_brackets = new RegExp("{{","g");
@@ -218,6 +233,10 @@ class Gamm{
 			
 			function gamm_echo(str){
 				gamm_final_code += str;
+			}
+			
+			function tag(str){
+				gamm_final_code += "<" + str + ">";
 			}
 			
 			while(gamm_el_codes.length > 0){
@@ -265,9 +284,12 @@ class Gamm{
 					final_code_compiled = final_code_compiled
 								.replace(gamm_lt_tag_string,"<")
 								.replace(gamm_gt_tag_string,">")
+								.replace(gamm_ampersand_string,"&")
 								.replace(gamm_start_brackets,"gamm_echo(")
 								.replace(gamm_end_brackets,");");
 					
+
+					// console.log(final_code_compiled);
 					eval(final_code_compiled);
 					
 					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,  gamm_final_code);
@@ -292,6 +314,103 @@ class Gamm{
 		}
 	}
 	
+	compile_models(){
+		
+		try{
+			
+			var $this = this;
+			var gamm_models = document.querySelectorAll("[name]");
+			
+			for(var i = 0; i < gamm_models.length; i++){
+				
+				var gamm_model = gamm_models[i];
+				gamm_model.value = this.data[gamm_model.name];
+				
+				
+				try{
+					
+					if(gamm_model.tagName == "TEXTAREA"){
+					
+						if( this.textareas[gamm_model.name] !== undefined){
+							
+							document.querySelectorAll("[name='" + gamm_model.name + "']")[0].style.width = this.textareas[gamm_model.name].width;
+							document.querySelectorAll("[name='" + gamm_model.name + "']")[0].style.height = this.textareas[gamm_model.name].height;
+							
+						}
+						
+						
+						
+					}
+					
+					
+				}
+				catch(ta_init_error){
+					console.log(ta_init_error);
+				}
+				
+				if(gamm_model.tagName == "TEXTAREA"){
+
+					gamm_model.onmouseup = function(){
+						
+						if( $this.textareas[this.name] === undefined){
+							
+							$this.textareas[this.name] = {
+								width: this.style.width,
+								height : this.style.height
+							};
+							
+						}
+						
+						if( this.style.width != $this.textareas[this.name].width || this.style.height != $this.textareas[this.name].height ){
+							$this.textareas[this.name].height = this.style.height;
+							$this.textareas[this.name].width = this.style.width;
+						}
+						
+					};
+					
+				}
+				
+				
+				gamm_model.onkeyup = function(){
+					
+					
+					if(this.value != $this.data[this.name]){
+						
+						$this.data[this.name] = this.value;
+						$this.reload.call($this);						
+						$this.focus(document.querySelectorAll("[name='" + this.name + "']")[0]);
+					
+					}
+					
+					
+				};
+				
+				gamm_model.onchange = function(){
+					
+					
+					
+					if(this.value != $this.data[this.name]){
+						
+						$this.data[this.name] = this.value;
+						$this.reload.call($this);
+						$this.focus(document.querySelectorAll("[name='" + this.name + "']")[0]);
+						
+					}
+					
+				};
+				
+			}
+			
+		}
+		catch(gamm_models_error){
+			console.log(gamm_models_error);
+		}
+		
+	}
+	
+	
+	
+	
 	distribute_events(){
 		
 		var $this = this;
@@ -301,12 +420,12 @@ class Gamm{
 			for(var index in this.gamm_element_and_events){
 				
 				eval(
-					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function(){ \
-						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this); \
+					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function($event){ \
+						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
 						if($this.element != null){ \
 							$this.init_element.call($this); \
 						}else{ \
-							$this.reload(); \
+							$this.reload.call($this); \
 						} \
 					};"
 				);
@@ -319,6 +438,8 @@ class Gamm{
 		}
 		
 	}
+	
+	
 	
 	parse_data($data,$first_pattern,$second_pattern){
 
@@ -410,28 +531,60 @@ class Gamm{
 	
 	
 	append_to(selector){
+		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
 		this.compile_codes();
-		this.compile_events(); 
+		this.compile_events(); 				
 		this.compile_datas();		
-		document.querySelector(selector).innerHTML += "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		try{
+			
+			document.querySelector(selector).innerHTML += "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
 		this.distribute_events();
+		this.compile_models();
 	}
 	
 	init_element(){
+		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
+		
 		this.compile_codes();
-		this.compile_events(); 
+		this.compile_events(); 						
 		this.compile_datas(); 		
-		document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		try{
+			
+			document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+				
 		this.distribute_events();
+		this.compile_models();
 		
 	}
 	
 	reload(){
+		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
 		this.compile_codes();
-		this.compile_events(); 
-		this.compile_datas(); 		
+		this.compile_events(); 		
+		this.compile_datas(); 				
 		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
 		this.distribute_events();
+		this.compile_models();	
 	}
 	
 	
@@ -445,6 +598,26 @@ class Gamm{
 		$class.reload.call($class);
 		
 	}
+	
+	focus(element) {
+		var eventType = "onfocusin" in element ? "focusin" : "focus",
+			bubbles = "onfocusin" in element,
+			event;
+
+		if ("createEvent" in document) {
+			event = document.createEvent("Event");
+			event.initEvent(eventType, bubbles, true);
+		}
+		else if ("Event" in window) {
+			event = new Event(eventType, { bubbles: bubbles, cancelable: true });
+		}
+
+		element.focus();
+		element.dispatchEvent(event);
+	}
+	
+	
+	
 	
 	//statics
 	static append(selector,value){
