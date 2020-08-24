@@ -41,7 +41,6 @@ class Gamm{
 			this.element = args.element;
 			this.convert_to_html();
 			
-			
 		}
 		else{
 			
@@ -69,17 +68,12 @@ class Gamm{
 			this.init_element();			
 		}
 		
-		
-			
 	}
 	
 	convert_to_html(){
 		
 		var parser = new DOMParser();
-		var doc = parser.parseFromString(this.template, 'text/html');
-		// for(var i = 0; i < doc.querySelectorAll("body *").length; i++){
-			// doc.querySelectorAll("body *")[i].setAttribute("data-gamm","true");
-		// }
+		var doc = parser.parseFromString(this.template, 'text/html');		
 		this.template = doc.body.innerHTML;
 		
 	}
@@ -615,8 +609,6 @@ class Gamm{
 		element.focus();
 		element.dispatchEvent(event);
 	}
-	
-	
 	
 	
 	//statics
