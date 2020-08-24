@@ -1,27 +1,25 @@
 window.GAMM_IDS = [];
 class Gamm{
 	
-	element = null;
-	template_id = "";
-	template = "";
-	compiled_template = "";
-	data = {};
-	gamm_events = {};
-	options = [];
-	
-	stored_events = {};
-	compiled_events = {};
-	load = null;
-	
-	textareas = {};
-	properties = {};
-		
-	gamm_element_and_events = {};
-	
-	
 	constructor(args){
 		
 		this.template = "";
+
+		this.element = null;
+		this.template_id = "";
+		this.template = "";
+		this.compiled_template = "";
+		this.data = {};
+		this.gamm_events = {};
+		this.options = [];
+		
+		this.stored_events = {};
+		this.compiled_events = {};
+		this.load = null;
+		
+		this.textareas = {};
+        this.properties = {};
+        this.gamm_element_and_events = {};
 		
 		if(args.file !== undefined){
 			
