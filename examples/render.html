@@ -10,12 +10,23 @@
 
 <body>
 	<div id="main-content" style="">
-		<h1>HTML Render</h1>
-		<blockquote>
-			<code>
-				<h1></h1>
-			</code>
-		</blockquote>
+		<a href="../index.html" style="color:#000;">
+			&lt;&lt;&lt;Home
+		</a>
+
+		<h2>HTML Render</h2>
+		
+			<pre>
+				<code>
+					<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+
+		&lt;h1&gt;{{welcome_message}}&lt;/h1&gt;					
+
+	&lt;/div&gt;				
+				</code>
+			</pre>
+		
 		
 	</div>
 	
@@ -40,11 +51,44 @@
 		code{
 			background-color: #333;
 			width: 100%;
-			display: block;
-			padding: 10px;
+			display: block;			
 			color: yellow;
+			position:relative;
+		}
+		code span{
+		    position: absolute;
+			top: 0;
+			right: 0;
+			background-color: #7f7676;
+			padding: 5px;
+			color: #ddd;
 		}
 		
+		#examples{
+			height: 200px;			
+		}
+		#examples ul{
+			list-style:disc;
+		}
+		#examples ul li{
+			display: inline;
+			margin:10px;
+		}
+
+		#examples ul li a{
+			padding:10px;
+			border: 1px solid #333;
+			color:#333;
+			background-color: #fff;
+			text-decoration: none;
+		}
+		#examples ul li a:hover{
+			opacity: 0.7;
+			color:#fff;
+			background-color: #333;
+		}
+
+
 		@media screen and (max-width:760px){
 			#main-content{
 				width:90%;

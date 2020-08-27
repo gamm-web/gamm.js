@@ -31,13 +31,22 @@
 		<p>
 			Integration is as easy us this:
 		</p>
-		<blockquote>
+		<pre>
 			<code>
 				<span>HTML</span>
-				&lt;script type="text/javascript" src="[path_to_library]/gamm.js"&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="[path_to_library]/gamm.js"&gt;&lt;/script&gt;
 			</code>
-		</blockquote>
+		</pre>
 		
+		<p>
+			You can also use the minify/compressed version:
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;script type="text/javascript" src="[path_to_library]/gamm.min.js"&gt;&lt;/script&gt;
+			</code>
+		</pre>
 		<hr>
 		<h2>Disclaimer</h2>
 		<p>
@@ -53,15 +62,64 @@
 		</p>
 		<hr>
 		<h2>Examples</h2>
-		<p>
-			<>
-		</p>
+		<div id="examples">
+			<ul>
+			<#gamm
+				for(var k in this.data.links){
+					var d = this.data.links[k];
+					<li>
+						<a href="{{d.url}}">
+							{{d.name}}
+						</a>
+					</li>
+				}
+			#>
+			</ul>
+		</div>
 		
 	</div>
 	
 	
 	<script type="text/javascript">
 	
+	var examples = new Gamm({
+		element : "#examples",
+		data : {
+			links : [
+				{
+					name : "HTML Render",
+					url : "examples/render.html"
+				},
+				{
+					name : "Data And Models",
+					url : "examples/data-models.html"
+				},
+				{
+					name : "Events Or Methods",
+					url : "examples/events-methods.html"
+				},
+				{
+					name : "Loops",
+					url : "examples/loops.html"
+				},
+				{
+					name : "Conditions",
+					url : "examples/conditions.html"
+				},
+				{
+					name : "Styling",
+					url : "examples/styling.html"
+				},
+				{
+					name : "Limitations",
+					url : "examples/limitations.html"
+				},
+			]
+		},
+		events : {
+
+		}
+	});
 	
 	</script>
 	<style>
@@ -80,10 +138,7 @@
 		code{
 			background-color: #333;
 			width: 100%;
-			display: block;
-			padding: 10px;
-			padding-top:20px;
-			padding-bottom:20px;
+			display: block;			
 			color: yellow;
 			position:relative;
 		}
@@ -96,6 +151,31 @@
 			color: #ddd;
 		}
 		
+		#examples{
+			height: 200px;			
+		}
+		#examples ul{
+			list-style:disc;
+		}
+		#examples ul li{
+			display: inline;
+			margin:10px;
+		}
+
+		#examples ul li a{
+			padding:10px;
+			border: 1px solid #333;
+			color:#333;
+			background-color: #fff;
+			text-decoration: none;
+		}
+		#examples ul li a:hover{
+			opacity: 0.7;
+			color:#fff;
+			background-color: #333;
+		}
+
+
 		@media screen and (max-width:760px){
 			#main-content{
 				width:90%;
