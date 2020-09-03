@@ -1,0 +1,69 @@
+<html>
+
+<head>
+	<script type="text/javascript" src="gamm.js"></script>
+</head>
+
+<body>
+
+
+<div class="menu-container" id="main-menu">
+<ul id="estorm-main-menu">
+<#gamm
+	
+	for(var k in this.data.main_menu){
+		var has_submenu = '';
+		var menu = this.data.main_menu[k];
+		
+		if( menu.submenus.length  > 0 ){
+			has_submenu = 'has-submenu';
+		}
+		
+		<li class="list-inline-item {{has_submenu}}">
+			<a href="{{menu.link}}">
+			{{menu.title}}
+			</a>
+			
+			if( menu.submenus.length  > 0 ){
+				
+				var submenus = menu.submenus;
+				<div class="submenu">
+				
+					for(var j in submenus){
+						var submenu = submenus[j];
+						
+						<a href="{{submenu.link}}">
+						{{submenu.title}}
+						</a>
+						
+					}
+				</div>
+			}			
+		</li>
+		
+	}
+	
+#>
+</ul>
+</div>
+
+<script>
+
+	var final_menu = JSON.parse('[{"title":"Admin","link":"#","order":1,"submenus":[{"title":"Tools","link":"#","order":1},{"title":"Useful Links","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Useful%20Links.aspx","order":2},{"title":"Supplier List and Details","link":"#","order":3},{"title":"Subscription Calendar","link":"#","order":4},{"title":"Managed Services Clients","link":"#","order":null},{"title":"Director\'s Expectation","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Director%27s%20Expectations.aspx","order":null},{"title":"Accountability Chart","link":"#","order":null},{"title":"Organistional Chart","link":"#","order":null},{"title":"Admin Docs","link":"#","order":null},{"title":"Client Registers","link":"#","order":null},{"title":"Education","link":"#","order":null},{"title":"Accounts","link":"#","order":null},{"title":"Agreements","link":"#","order":null},{"title":"test","link":"#","order":null}]},{"title":"Service","link":"#","order":2,"submenus":[{"title":"Training","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Training.aspx","order":null},{"title":"Skills Matrix","link":"#","order":null},{"title":"Tools","link":"#","order":null},{"title":"Useful Links","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Useful%20Links.aspx","order":null},{"title":"Important Contacts & Partners","link":"#","order":null},{"title":"Root Cause Analysis","link":"#","order":null},{"title":"Service & Hardware Catalogue","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Service%20%26%20Hardware%20Catalogue.aspx","order":null},{"title":"Hardware Registers","link":"#","order":null},{"title":"Projects","link":"#","order":null},{"title":"Tech Meeting Discussion Topics","link":"#","order":null}]},{"title":"Policy","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Policy%20%26%20Procedures.aspx","order":3,"submenus":[]},{"title":"Sales-Marketing","link":"#","order":4,"submenus":[{"title":"Demo Sites","link":"#","order":null},{"title":"Marketing Calendar","link":"#","order":null},{"title":"PD Events","link":"#","order":null},{"title":"Marketing Material","link":"#","order":null}]},{"title":"Technical Documentation","link":"#","order":5,"submenus":[{"title":"eStorm","link":"https://estormaustralia.sharepoint.com/sites/TestSite/Pages/Homepage.aspx","order":null},{"title":"Client","link":"#","order":null},{"title":"Connectwise Guide","link":"#","order":null}]}]');
+
+	window.EstormMenu = new Gamm({
+        element : "#main-menu",
+        data : {
+            main_menu : final_menu
+        },
+        events : {
+
+        }
+    });
+	window.EstormMenu.prepend_to("body");
+
+</script>
+
+</body>
+
+</html>

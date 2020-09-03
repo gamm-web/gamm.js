@@ -521,6 +521,27 @@ class Gamm{
 		
 	}
 	
+	prepend_to(selector){
+		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
+		try{
+			
+			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>" + document.querySelector(selector).innerHTML;
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+		this.distribute_events();
+		this.compile_models();
+		
+	}
+	
 	
 	append_to(selector){
 		
@@ -540,6 +561,27 @@ class Gamm{
 		}
 		this.distribute_events();
 		this.compile_models();
+	}
+	
+	insert_to(selector){
+		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
+		try{
+			
+			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+		this.distribute_events();
+		this.compile_models();
+		
 	}
 	
 	init_element(){
@@ -613,6 +655,12 @@ class Gamm{
 	static append(selector,value){
 		
 		document.querySelector(selector).innerHTML += value;
+		
+	}
+	
+	static prepend(selector,value){
+		
+		document.querySelector(selector).innerHTML = value + document.querySelector(selector).innerHTML;
 		
 	}
 	
