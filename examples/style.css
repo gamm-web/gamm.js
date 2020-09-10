@@ -51,7 +51,9 @@ code span{
 
 
 #menu ul{
-	list-style:disc;
+	list-style: none;
+    padding: 0;
+    text-align: center;
 }
 #menu ul li{
 	display: inline-block;

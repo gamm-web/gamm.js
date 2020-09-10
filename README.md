@@ -1,2 +1,4 @@
 # gamm.js
-A Javascript framework that i will be using for most projects
+A Javascript framework/Library that I will be using for most projects.
+Author Uri: https://www.juztpost.net
+Documentation: https://www.juztpost.net/gammjs
