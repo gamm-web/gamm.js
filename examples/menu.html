@@ -1,0 +1,12 @@
+<ul>
+<#gamm
+	for(var k in this.data.links){
+		var d = this.data.links[k];
+		<li>
+			<a href="{{d.url}}">
+				{{d.name}}
+			</a>
+		</li>
+	}
+#>
+</ul>
