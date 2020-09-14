@@ -517,6 +517,7 @@ class Gamm{
 		}
 		else{
 			this.template_id = result;
+			window.GAMM_IDS[ window.GAMM_IDS.length ] = result;
 		}
 		
 	}
