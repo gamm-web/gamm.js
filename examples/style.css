@@ -133,7 +133,7 @@ iframe.results{
 
 
 @media screen and (max-width:760px){
-	#main-content,#footer, #menu{
+	#main-content,#footer, #menu, #bottom-menu{
 		width:90%;
 	}
 }

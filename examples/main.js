@@ -43,6 +43,11 @@ var menu = new Gamm({
 				selected : ""
 			},
 			{
+				name : "Templates",
+				url : "templates.html",
+				selected : ""
+			},
+			{
 				name : "Limitations",
 				url : "limitations.html",
 				selected : ""
