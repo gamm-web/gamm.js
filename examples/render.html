@@ -20,7 +20,9 @@
 		
 
 		<h2>HTML Render</h2>
-		
+			<p>
+				To render or pass variable data like the other frameworks you can use double open and close brackets and inside is the data name or variable name.
+			</p>
 			<pre>
 				<code>
 					<span>HTML</span>
@@ -29,6 +31,52 @@
 		&lt;h1&gt;{{welcome_message}}&lt;/h1&gt;					
 
 	&lt;/div&gt;				
+				</code>
+			</pre>
+
+			<p>
+				And to use the library you can use the class new "Gamm" with object parameters element on which element you want to parse and compile the results.
+			</p>
+			<pre>
+				<code>
+					<span>Javascript</span>
+
+	new Gamm({
+		element : "#main-content",
+		data : {
+			welcome_message : "Hello Gamm.js"
+		}
+	});
+				</code>
+			</pre>
+
+
+			<p>
+				The said code will generate this result in HTML and will insert to the element value on the parameters object "element".
+				But will also include and enclose the inner HTML with "&lt;div&gt;" tag with a random id generated as a template-id for the parse HTML code.
+			</p>
+
+			<pre>
+				<code class="">
+					<span>CODE RESULT</span>
+	&lt;div id="main-content"&gt;		
+		&lt;div id="template-id-random-generated"&gt;
+			&lt;h1&gt;Hello Gamm.js&lt;/h1&gt;					
+		&lt;/div&gt;
+	&lt;/div&gt;				
+				</code>
+			</pre>
+
+		<p>
+			So as you can see it will be automatically compiled by the browsers and display the result as this:
+		</p>
+		<iframe src="" frameborder="0">
+			
+		</iframe>
+			<pre>
+				<code class="result">
+					<span>COMPILED RESULT</span>
+		<h1>Hello Gamm.js</h1>				
 				</code>
 			</pre>
 		

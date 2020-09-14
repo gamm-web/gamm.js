@@ -34,10 +34,17 @@ var menu = new Gamm({
 				name : "Limitations",
 				url : "limitations.html"
 			},
-		]
+		],
+		page_views : 0
 	},
 	events : {
 
+	},
+	load : function(){
+		
+		
+		this.data.page_views = this.read_template("counter.php");
+		
 	}
 });
 
