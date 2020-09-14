@@ -45,8 +45,87 @@
 	</div>
 	
 	<div id="main-content" >
+		<h2>Data And Models</h2>
+		<p>
+			Data and models in this library can be declared via user input forms by the "name" attribute. No need to use another custom
+			attributes we can just use the already built-in "name" attribute.
+		</p>
 		
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+
+		&lt;input type="text" name="firstname"&gt;
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			firstname : "John Doe"
+		}
+	});
+			</code>
+		</pre>
+	
+		<b>Result:</b>
+		<iframe class="results" src="code/data-models-1.html" frameborder="0">			
+		</iframe>
+
+		<hr>
+		<h2>
+			Data Binding
+		</h2>
+		<p>
+			When you change value of a model or data. It will also change the data which you have put on the brackets and even in the inputs.
+			The forms has a watcher that detects change of value and also changes the values related to that data or model.
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;label&gt;Try to change the input value: &lt;/label&gt; 	
+		&lt;br&gt; 	
+		&lt;input type="text" name="firstname"&gt; 
+		&lt;br&gt; 
+		My first name is : {{firstname}}
 		
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			firstname : "Jose Marie"
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<iframe class="results" src="code/data-models-2.html" frameborder="0">			
+		</iframe>
+
+		<hr>
+
+		<h2>
+			Data Binding On Events
+		</h2>
+		<p>
+			Some data binding only works on textbox or input type "text", combobox(select tag) and textarea tags.
+			checkboxes, radioboxes, 
+		</p>
 	</div>
 
 	<div id="bottom-menu">		
