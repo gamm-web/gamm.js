@@ -1,38 +1,51 @@
+
+window.url = window.location.href;
+window.url = window.url.split("/");
+window.url = window.url[ window.url.length - 1];
+
 var menu = new Gamm({
 	file : "menu.html",
 	data : {
 		links : [
 			{
 				name : "Introduction",
-				url : "index.html"
+				url : "index.html",
+				selected : ""
 			},
 			{
 				name : "HTML Render",
-				url : "render.html"
+				url : "render.html",
+				selected : ""
 			},
 			{
 				name : "Data And Models",
-				url : "data-models.html"
+				url : "data-models.html",
+				selected : ""
 			},
 			{
 				name : "Events Or Methods",
-				url : "events-methods.html"
+				url : "events-methods.html",
+				selected : ""
 			},
 			{
 				name : "Loops",
-				url : "loops.html"
+				url : "loops.html",
+				selected : ""
 			},
 			{
 				name : "Conditions",
-				url : "conditions.html"
+				url : "conditions.html",
+				selected : ""
 			},
 			{
 				name : "Styling",
-				url : "styling.html"
+				url : "styling.html",
+				selected : ""
 			},
 			{
 				name : "Limitations",
-				url : "limitations.html"
+				url : "limitations.html",
+				selected : ""
 			},
 		],
 		page_views : 0
@@ -50,5 +63,6 @@ var menu = new Gamm({
 
 
 menu.insert_to("#menu");
+menu.insert_to("#bottom-menu");
 
 

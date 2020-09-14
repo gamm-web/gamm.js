@@ -4,8 +4,12 @@
 <#gamm
 	for(var k in this.data.links){
 		var d = this.data.links[k];
+		var selected = '';
+		if(window.url == d.url){
+			selected = 'selected';
+		}
 		<li>
-			<a href="{{d.url}}">
+			<a href="{{d.url}}" class="{{selected}}">
 				{{d.name}}
 			</a>
 		</li>

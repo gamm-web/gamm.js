@@ -99,12 +99,62 @@
 		<p>
 			So as you can see it will be automatically compiled by the browsers and display the result as this:
 		</p>
-		<iframe src="code/render-1.html" frameborder="0">
-			
+		<b>Result:</b>
+		<iframe class="results" src="code/render-1.html" frameborder="0">			
 		</iframe>
 		
+		<hr>
+		<h2>The Gamm Tag</h2>
+		<p>
+			The use of gamm tag is usually for loop and conditional syntax. For more examples you can check loops and coditions pages.
+			but below is a little example of usage of it.
+		</p>
+		<pre>
+			<code class="">
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;#gamm
+			//Javascript code...
+		#&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+		<p>
+			A little more sample.
+		</p>
+		<pre>
+			<code class="">
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;#gamm
+			var display_this_var = 'Hello Gamm.js';
+			&lt;h1&gt;
+			{{display_this_var}}
+			&lt;/h1&gt;
+		#&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+
+	new Gamm({
+		element : "#main-content"
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<iframe class="results" src="code/render-2.html" frameborder="0">			
+		</iframe>
+
 		
-		
+	</div>
+
+	<div id="bottom-menu">		
+			
 	</div>
 	
 	<div id="footer">
