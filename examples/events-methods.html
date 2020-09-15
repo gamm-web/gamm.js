@@ -45,8 +45,49 @@
 	</div>
 	
 	<div id="main-content" >
+		<h2>Events Or Methods</h2>
+		<p>
+			Adding events to the element is easier just by addding an attribute "gamm-events" with a JSON data starts with the 
+			key as the name of the event and value as the function inside "events" parameters in the library class.
+		</p>
 		
-		
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;button gamm-events="{'click':'show_alert'}" &gt;Click Me For Alert!&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<p>
+			Here you can see we add a JSON format data inside "gamm-events" with the key as "click" and the value is the function name "show_alert".
+		</p>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		events : {
+			show_alert : function(){
+
+				alert("Hello Gamm.js");
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/events-methods-1.php" frameborder="0">			
+		</iframe>
+
+		<hr>
+
 	</div>
 
 	<div id="bottom-menu">		
