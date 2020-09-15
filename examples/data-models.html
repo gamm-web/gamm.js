@@ -175,6 +175,50 @@
 		<iframe class="results" src="code/data-models-3.php" frameborder="0">			
 		</iframe>
 
+		<hr>
+		<h2>
+			Data Updates After An Event Is Triggered
+		</h2>
+		<p>
+			When a data is manipulated inside the function it will also update the template object base on the code execution or syntax you composed.
+		</p>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		Press this button then this will count: {{counter}}
+		&lt;br&gt;
+		&lt;button gamm-events="{'click' : 'increment_counter'}"&gt;Increment Data Counter&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			counter : 0
+		},
+		events : {
+			increment_counter : function(){
+
+				this.data.counter++;
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/data-models-4.php" frameborder="0">			
+		</iframe>
+
+
 	</div>
 
 	<div id="bottom-menu">		

@@ -3,7 +3,7 @@
 
 <head>
 	<title>
-		Gamm.js Documentation - Loops
+		Gamm.js Documentation | Loops
 	</title>
 	
 	<script type="text/javascript" src="../gamm.js"></script>
@@ -46,8 +46,118 @@
 	
 	<div id="main-content" >
 		<h2>Loops</h2>
+		<p>
+			This is a common thing in data handling when you want to display same html format and the only changing is the value of a given lists.
+			For the loop to work we don't need to add any attribute but use what Javascript already offers. 
+		</p>
 
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
 		
+		&lt;#gamm 
+			&lt;ul&gt;	
+			for(var k in this.data.menus){
+				var menu_name = this.data.menus[k];
+				&lt;li&gt;	
+					&lt;a href="#"&gt;	
+					{{menu_name}}
+					&lt;/a&gt;	
+				&lt;/li&gt;	
+
+			}
+			&lt;/ul&gt;	
+		#&gt;	
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			menus : [
+				"Home",
+				"About Us",
+				"Contact Us"
+			]
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/loops-1.php" frameborder="0">			
+		</iframe>
+
+		<hr>
+		<h2>
+			Object Loop
+		</h2>
+		<p>
+			Like the above loop we can also use "For" Loop method already in Javascript.
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		
+		&lt;#gamm 
+			&lt;ul&gt;	
+			for(var key in this.data.menus){
+				var menu = this.data.menus[key];
+				
+				&lt;li&gt;	
+					&lt;a href="{{menu.link}}"&gt;	
+					{{menu.name}}
+					&lt;/a&gt;	
+				&lt;/li&gt;	
+
+			}
+			&lt;/ul&gt;	
+		#&gt;	
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			menus : [
+				{
+					name : "Home",
+					link : "home.html"
+				},
+				{
+					name : "About",
+					link : "about.html"
+				},
+				{
+					name : "Contact",
+					link : "contact.html"
+				}
+			]
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/loops-2.php" frameborder="0">			
+		</iframe>
+
 	</div>
 
 	<div id="bottom-menu">		
