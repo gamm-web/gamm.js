@@ -44,7 +44,6 @@
 		<button gamm-events="{'click':'show_alert'}" >Click Me For Alert!</button>
 	</div>	
 	
-	
     <script type="text/javascript">
 
     new Gamm({

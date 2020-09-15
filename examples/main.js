@@ -61,7 +61,7 @@ var menu = new Gamm({
 	load : function(){
 		
 		
-		this.data.page_views = this.read_template("counter.php");
+		this.data.page_views = this.read_template("counter.php?page=" + window.url);
 		
 	}
 });
