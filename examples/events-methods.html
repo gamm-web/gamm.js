@@ -3,7 +3,7 @@
 
 <head>
 	<title>
-		Gamm.js Documentation
+		Gamm.js Documentation | Events Or Methods
 	</title>
 	
 	<script type="text/javascript" src="../gamm.js"></script>
@@ -87,6 +87,91 @@
 		</iframe>
 
 		<hr>
+
+		<h2>
+			Get Element Data Or Properties On Events
+		</h2>
+		<p>
+			To get the element properties of the attached event you will need to add a first parameter to your function.
+			Through this you will able to see all the information you needed.
+		</p>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;button gamm-events="{'click':'show_alert'}" data-my_information="This is what you alert please!"&gt;
+			I will show what's on the attribute 'data-my_information'.
+		&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		events : {
+			show_alert : function(el){
+
+				alert(el.getAttribute("data-my_information"));
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/events-methods-2.php" frameborder="0">			
+		</iframe>
+
+		<hr>
+		<h2>
+			Get Element Mouse Event
+		</h2>
+		<p>
+			This time to get the mouse events of a element that you have attached a method/event you just need to add a second parameter to your function.
+			See example.
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;div style="border:1px solid black; width:300px; height:100px;" gamm-events="{'mouseover':'show_mouse_x_y'}" &gt;
+			{{mouse_x}},{{mouse_y}}
+		&lt;/div&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			mouse_x : 0,
+			mouse_y : 0
+		},
+		events : {
+			show_mouse_x_y : function(el,mev){
+
+				this.data.mouse_x = mev.clientX;
+				this.data.mouse_y = mev.clientY;
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/events-methods-3.php" frameborder="0">			
+		</iframe>
 
 	</div>
 

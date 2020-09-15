@@ -3,13 +3,12 @@
 
 <head>
 	<title>
-		Gamm.js Documentation | Limitations
+		Gamm.js Documentation - HTML Render
 	</title>
 	
-	<script type="text/javascript" src="../gamm.js"></script>
-	<link rel="stylesheet" href="style.css" type="text/css">
+	<script type="text/javascript" src="../../gamm.js"></script>
 
-	<link rel="icon" href="logo.jpg" sizes="32x32" />
+	<link rel="icon" href="../logo.jpg" sizes="32x32" />
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -27,38 +26,45 @@
 <!-- Facebook Meta Tags -->
 <meta property="og:title" content="GAMM-JS" >
 <meta property="og:description" content="A Personal Javascript Library Alternative!">
-<meta property="og:image" content="logo.jpg">
+<meta property="og:image" content="../logo.jpg">
 <meta property="og:url" content="https://www.juztpost.net/" >
 <meta property="og:type" content="website">
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:title" content="GAMM-JS">
 <meta name="twitter:description" content="A Personal Javascript Library Alternative!">
-<meta name="twitter:image" content="logo.jpg">
+<meta name="twitter:image" content="../logo.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 </head>
 
 <body>
-	<div id="menu">		
-		
-	</div>
 	
-	<div id="main-content" >
-		
-		
-	</div>
+    <div id="main-content">		
+		<div style="border:1px solid black; width:300px; height:100px;" gamm-events="{'mouseover':'show_mouse_x_y'}" >
+			{{mouse_x}},{{mouse_y}}
+		</div>
+	</div>				
+	
+    <script type="text/javascript">
 
-	<div id="bottom-menu">		
-			
-	</div>
-	
-	<div id="footer">
-		&copy; Copyright Gamm.js @ 2020
-	</div>
-	
-	<script type="text/javascript" src="main.js"></script>
-	
+    new Gamm({
+		element : "#main-content",
+		data : {
+			mouse_x : 0,
+			mouse_y : 0
+		},
+		events : {
+			show_mouse_x_y : function(el,mev){
+
+				this.data.mouse_x = mev.clientX;
+				this.data.mouse_y = mev.clientY;
+
+			}
+		}
+	});
+
+    </script>
 </body>
 
 </html>

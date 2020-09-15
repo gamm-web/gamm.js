@@ -3,13 +3,12 @@
 
 <head>
 	<title>
-		Gamm.js Documentation | Limitations
+		Gamm.js Documentation - HTML Render
 	</title>
 	
-	<script type="text/javascript" src="../gamm.js"></script>
-	<link rel="stylesheet" href="style.css" type="text/css">
+	<script type="text/javascript" src="../../gamm.js"></script>
 
-	<link rel="icon" href="logo.jpg" sizes="32x32" />
+	<link rel="icon" href="../logo.jpg" sizes="32x32" />
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -27,38 +26,40 @@
 <!-- Facebook Meta Tags -->
 <meta property="og:title" content="GAMM-JS" >
 <meta property="og:description" content="A Personal Javascript Library Alternative!">
-<meta property="og:image" content="logo.jpg">
+<meta property="og:image" content="../logo.jpg">
 <meta property="og:url" content="https://www.juztpost.net/" >
 <meta property="og:type" content="website">
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:title" content="GAMM-JS">
 <meta name="twitter:description" content="A Personal Javascript Library Alternative!">
-<meta name="twitter:image" content="logo.jpg">
+<meta name="twitter:image" content="../logo.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 </head>
 
 <body>
-	<div id="menu">		
-		
-	</div>
 	
-	<div id="main-content" >
-		
-		
-	</div>
+<div id="main-content">		
+		<button gamm-events="{'click':'show_alert'}" data-my_information="This is what you alert please!">
+			I will show what's on the attribute 'data-my_information'.
+		</button>
+	</div>		
+	
+    <script type="text/javascript">
 
-	<div id="bottom-menu">		
-			
-	</div>
-	
-	<div id="footer">
-		&copy; Copyright Gamm.js @ 2020
-	</div>
-	
-	<script type="text/javascript" src="main.js"></script>
-	
+    new Gamm({
+		element : "#main-content",
+		events : {
+			show_alert : function(el){
+                
+				alert(el.getAttribute("data-my_information"));
+
+			}
+		}
+	});
+
+    </script>
 </body>
 
 </html>
