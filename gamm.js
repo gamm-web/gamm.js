@@ -311,12 +311,36 @@ class Gamm{
 		try{
 			
 			var $this = this;
-			var gamm_models = document.querySelectorAll("[name]");
+			var gamm_models = document.querySelectorAll("#" + this.template_id + " [name]");
 			
 			for(var i = 0; i < gamm_models.length; i++){
 				
 				var gamm_model = gamm_models[i];
-				gamm_model.value = this.data[gamm_model.name];
+
+				if(gamm_model.tagName == "INPUT"){
+
+					if(gamm_model.type == "checkbox" || gamm_model.type == "radio"){
+
+						var boxes = document.querySelectorAll("#" + this.template_id + " [name='" + gamm_model.name + "']");
+						for(var j = 0; j < boxes.length; j++){
+
+							if(this.data[gamm_model.name].indexOf(boxes[j].value) > -1){
+								boxes[j].checked = true;
+							}
+							else{
+								boxes[j].checked = false;
+							}
+
+						}
+
+					}
+
+
+				}
+				else{
+					gamm_model.value = this.data[gamm_model.name];
+				}
+				
 				
 				
 				try{
@@ -365,14 +389,56 @@ class Gamm{
 				
 				gamm_model.onkeyup = function(){
 					
-					
-					if(this.value != $this.data[this.name]){
-						
-						$this.data[this.name] = this.value;
-						$this.reload.call($this);						
-						$this.focus(document.querySelectorAll("[name='" + this.name + "']")[0]);
-					
+					if(this.type !== undefined && (this.type == "radio" || this.type == "checkbox") ){
+
+						if(this.type == "radio"){
+
+							if(this.checked){
+
+								$this.data[this.name] = this.value;
+								
+							}
+
+						}
+						else{
+							
+							if(this.checked){
+
+								if($this.data[this.name].indexOf(this.value) < 0 ){
+
+									if(typeof $this.data[this.name] != "object"){
+										$this.data[this.name] = [];
+										$this.data[this.name].push(this.value);
+									}
+									else{
+										$this.data[this.name].push(this.value);
+									}
+									
+
+								}
+								else{
+									$this.data[this.name].splice($this.data[this.name].indexOf(this.value),1);
+								}
+								
+
+							}
+
+						}
+
 					}
+					else{
+
+						if(this.value != $this.data[this.name]){
+						
+							$this.data[this.name] = this.value;
+							
+						}
+
+					}
+
+					$this.reload.call($this);						
+					$this.focus(this);
+					
 					
 					
 				};
@@ -381,13 +447,53 @@ class Gamm{
 					
 					
 					
-					if(this.value != $this.data[this.name]){
-						
-						$this.data[this.name] = this.value;
-						$this.reload.call($this);
-						$this.focus(document.querySelectorAll("[name='" + this.name + "']")[0]);
-						
+					if(this.type !== undefined && (this.type == "radio" || this.type == "checkbox") ){
+
+						if(this.type == "radio"){
+
+							if(this.checked){
+
+								$this.data[this.name] = this.value;
+								
+							}
+
+						}
+						else{
+							
+							if(this.checked){
+
+								if($this.data[this.name].indexOf(this.value) < 0 ){
+
+									$this.data[this.name].push(this.value);
+
+								}
+								
+								
+
+							}
+							else{
+								var index = $this.data[this.name].indexOf(this.value);									
+								$this.data[this.name].splice(index,1);
+								
+							}
+
+							
+
+						}
+
 					}
+					else{
+
+						if(this.value != $this.data[this.name]){
+						
+							$this.data[this.name] = this.value;
+							
+						}
+
+					}
+
+					$this.reload.call($this);						
+					$this.focus(this);
 					
 				};
 				

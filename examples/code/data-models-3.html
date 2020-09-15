@@ -40,25 +40,34 @@
 
 <body>
 	
-	<div id="main-content">
-        <label>Try to change the input value: </label> 
-        <br>
-        <input type="text" name="firstname">
-        <br>
-        My first name is : {{firstname}}
-      
-        
-    </div>
+	<div id="main-content">		
+		<label>I like to: </label> 	
+		<br> 	
+		<input type="checkbox" name="hobby" value="Work"> Work
+		<br> 
+		<input type="checkbox" name="hobby" value="Play"> Play
+		<br> 
+		<label>Select Gener: </label> 	
+		<br> 	
+		<input type="radio" name="gender" value="Male" >  Male
+		<br> 	
+		<input type="radio" name="gender" value="Female" >  Female
+		<br>
+		{{hobby}}
+		<br> 			
+		{{gender}}
+	</div>	
 	
 	
     <script type="text/javascript">
 
     new Gamm({
-        element : "#main-content",
-        data : {
-            firstname : "Jose Marie"
-        }
-    });
+		element : "#main-content",
+		data : {
+			hobby : [],
+			gender : "",
+		}
+	});
 
     </script>
 </body>

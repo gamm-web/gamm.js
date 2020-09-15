@@ -120,12 +120,52 @@
 		<hr>
 
 		<h2>
-			Data Binding On Events
+			Data Binding On Radio And Check Boxes
 		</h2>
 		<p>
-			Some data binding only works on textbox or input type "text", combobox(select tag) and textarea tags.
-			checkboxes, radioboxes, 
+			
 		</p>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;label&gt;I like to: &lt;/label&gt; 	
+		&lt;br&gt; 	
+		&lt;input type="checkbox" name="hobby" value="Work"&gt; Work
+		&lt;br&gt; 
+		&lt;input type="checkbox" name="hobby" value="Play"&gt; Play
+		&lt;br&gt; 
+		&lt;label&gt;Select Gener: &lt;/label&gt; 	
+		&lt;br&gt; 	
+		&lt;input type="radio" name="gender" value="Male" &gt;  Male
+		&lt;br&gt; 	
+		&lt;input type="radio" name="gender" value="Female" &gt;  Female
+		&lt;br&gt;
+		{{hobby}}
+		&lt;br&gt; 			
+		{{gender}}
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			hobby : "",
+			gender : "",
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<iframe class="results" src="code/data-models-3.html" frameborder="0">			
+		</iframe>
+
 	</div>
 
 	<div id="bottom-menu">		
