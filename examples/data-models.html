@@ -95,6 +95,12 @@
 		&lt;input type="text" name="firstname"&gt; 
 		&lt;br&gt; 
 		My first name is : {{firstname}}
+		&lt;select name="gender"&gt; 
+			&lt;option value="Male"&gt;Male&lt;/option&gt; 
+			&lt;option value="Female"&gt;Female&lt;/option&gt; 
+		&lt;/select&gt; 
+		&lt;br&gt; 
+		My Gender is: {{gender}}
 		
 
 	&lt;/div&gt;				
@@ -107,13 +113,15 @@
 	new Gamm({
 		element : "#main-content",
 		data : {
-			firstname : "Jose Marie"
+			firstname : "Jose Marie",
+			gender : ""
 		}
 	});
 			</code>
 		</pre>
 
 		<b>Result:</b>
+		<i>Try To interact with the result.</i>
 		<iframe class="results" src="code/data-models-2.html" frameborder="0">			
 		</iframe>
 
@@ -155,7 +163,7 @@
 	new Gamm({
 		element : "#main-content",
 		data : {
-			hobby : "",
+			hobby : [],
 			gender : "",
 		}
 	});
@@ -163,6 +171,7 @@
 		</pre>
 
 		<b>Result:</b>
+		<i>Try To interact with the result.</i>
 		<iframe class="results" src="code/data-models-3.html" frameborder="0">			
 		</iframe>
 

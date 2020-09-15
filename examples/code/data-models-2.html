@@ -46,7 +46,13 @@
         <input type="text" name="firstname">
         <br>
         My first name is : {{firstname}}
-      
+        <br>
+        <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <br>
+        My Gender is: {{gender}}
         
     </div>
 	
@@ -56,7 +62,8 @@
     new Gamm({
         element : "#main-content",
         data : {
-            firstname : "Jose Marie"
+            firstname : "Jose Marie",
+            gender : ""
         }
     });
 
