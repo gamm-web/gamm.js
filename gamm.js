@@ -672,7 +672,12 @@ class Gamm{
 		this.compile_datas();		
 		try{
 			
-			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>" + document.querySelector(selector).innerHTML;
+			var template_div = document.createElement("div");
+			template_div.id = this.template_id;
+			template_div.innerHTML = this.compiled_template;
+
+
+			document.querySelector(selector).prepend(template_div);
 		}
 		catch(gamm_html_error){
 			this.template = "";
@@ -694,7 +699,12 @@ class Gamm{
 		this.compile_datas();		
 		try{
 			
-			document.querySelector(selector).innerHTML += "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+			var template_div = document.createElement("div");
+			template_div.id = this.template_id;
+			template_div.innerHTML = this.compiled_template;
+
+
+			document.querySelector(selector).append(template_div);
 		}
 		catch(gamm_html_error){
 			this.template = "";
@@ -737,6 +747,7 @@ class Gamm{
 		try{
 			
 			document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+			
 		}
 		catch(gamm_html_error){
 			this.template = "";
@@ -789,21 +800,5 @@ class Gamm{
 		element.focus();
 		element.dispatchEvent(event);
 	}
-	
-	
-	//statics
-	static append(selector,value){
-		
-		document.querySelector(selector).innerHTML += value;
-		
-	}
-	
-	static prepend(selector,value){
-		
-		document.querySelector(selector).innerHTML = value + document.querySelector(selector).innerHTML;
-		
-	}
-	
-	
 	
 }

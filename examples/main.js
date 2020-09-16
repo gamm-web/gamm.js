@@ -48,6 +48,11 @@ var menu = new Gamm({
 				selected : ""
 			},
 			{
+				name : "Gamm Methods",
+				url : "gamm-methods.html",
+				selected : ""
+			},
+			{
 				name : "Limitations",
 				url : "limitations.html",
 				selected : ""

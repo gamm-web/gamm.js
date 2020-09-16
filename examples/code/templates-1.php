@@ -44,7 +44,8 @@
 		<div id="form-wrapper" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
 		</div>
 
-		<div id="form-results" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
+        <div id="form-results" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
+            <b>Other Template</b>
 			<table border="1">
 				<tbody>
 
@@ -115,7 +116,6 @@
 		},
 		events : {
 			submit_result : function(){
-                alert(0);
 				this.other(Result,"result",this.data);
 			}
 		}
