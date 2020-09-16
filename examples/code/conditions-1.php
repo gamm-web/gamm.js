@@ -40,32 +40,28 @@
 
 <body>
 	
-	<div id="main-content">		
-		<label>I like to: </label> 	
-		<br> 	
-		<input type="checkbox" name="hobby" value="Work"> Work
-		<br> 
-		<input type="checkbox" name="hobby" value="Play"> Play
-		<br> 
-		<label>Select Gender: </label> 	
-		<br> 	
-		<input type="radio" name="gender" value="Male" >  Male
-		<br> 	
-		<input type="radio" name="gender" value="Female" >  Female
-		<br>
-		{{hobby}}
-		<br> 			
-		{{gender}}
+    <div id="main-content">		
+		
+		<#gamm 
+			if(this.data.show_me == true){
+				<h1>	
+				{{'Show Me'}}
+				</h1>	
+            }
+            else{
+                {{'Nothing To See Here.'}}
+            }
+		#>
+
 	</div>	
 	
 	
     <script type="text/javascript">
 
     new Gamm({
-		element : "#main-content",  
+		element : "#main-content",
 		data : {
-			hobby : [],
-			gender : "",
+			show_me : false
 		}
 	});
 

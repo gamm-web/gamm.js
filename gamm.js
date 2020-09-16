@@ -235,6 +235,14 @@ class Gamm{
 			function tag(str){
 				gamm_final_code += "<" + str + ">";
 			}
+
+			function $(str){
+				gamm_final_code += "<" + str + ">";
+			}
+
+			function $$(str){
+				gamm_final_code += "</" + str + ">";
+			}
 			
 			while(gamm_el_codes.length > 0){
 				

@@ -46,6 +46,163 @@
 	
 	<div id="main-content" >
 		
+		<h2>
+			Conditions
+		</h2>
+		<p>
+			Condition is very important for us developers to limit something we want to display, execution, time, etc...
+			So in this page I will show that it is easy to use those conditions because this library is already using Javascript 
+			syntax. See example.
+		</p>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		
+		&lt;#gamm 
+			if(this.data.show_me == true){
+				&lt;h1&gt;	
+				{{'Show Me'}}
+				&lt;/h1&gt;	
+			}
+			else{
+			
+				{{'Nothing To See Here.'}}
+				
+			}
+		#&gt;
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			show_me : false
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/conditions-1.php" frameborder="0">			
+		</iframe>
+
+		<hr>
+		<h2>
+			Play With Events And Conditions
+		</h2>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		
+		&lt;#gamm 
+			if(this.data.show_me == true){
+				&lt;h1&gt;	
+				{{'Show Me'}}
+				&lt;/h1&gt;	
+			}
+			else{
+			
+				{{'Nothing To See Here.'}}
+				
+			}
+		#&gt;
+		&lt;br&gt;
+		&lt;button gamm-events="{'click' : 'button_is_click'}"&gt;{{button_text}}&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			show_me : false,
+			button_text : "Show H1"
+		},
+		events : {
+			button_is_click : function(){
+
+				if(this.data.button_text == "Show H1"){
+					this.data.show_me = true;
+					this.data.button_text = "Hide H1";
+				}
+				else{
+					this.data.show_me = false;
+					this.data.button_text = "Show H1";
+				}
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/conditions-2.php" frameborder="0">			
+		</iframe>
+
+		<hr>
+		<h2>
+			Arithmetic Condition
+		</h2>
+		<p>
+			Arithmetic condition is also very important so we can identify values that needed to be process or execute a given
+			code. See Example.
+		</p>
+
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		
+		&lt;#gamm 
+			for(var i = 0; i < this.data.numbers.length; i++){
+				var number = this.data.numbers[i];
+
+				if( (number % 2) == 0){
+					{{number + ' is even.'}}
+				}
+				else{
+					{{number + ' is odd.'}}
+				}
+				
+				&lt;br&gt;
+
+			}
+		#&gt;		
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			numbers : [1,2,3,4,5,6,7,8,9,10]	
+		}		
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/conditions-3.php" frameborder="0">			
+		</iframe>
 		
 	</div>
 

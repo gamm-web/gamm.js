@@ -40,33 +40,33 @@
 
 <body>
 	
-	<div id="main-content">		
-		<label>I like to: </label> 	
-		<br> 	
-		<input type="checkbox" name="hobby" value="Work"> Work
-		<br> 
-		<input type="checkbox" name="hobby" value="Play"> Play
-		<br> 
-		<label>Select Gender: </label> 	
-		<br> 	
-		<input type="radio" name="gender" value="Male" >  Male
-		<br> 	
-		<input type="radio" name="gender" value="Female" >  Female
-		<br>
-		{{hobby}}
-		<br> 			
-		{{gender}}
-	</div>	
+    <div id="main-content">		
+		
+		<#gamm 
+			for(var i = 0; i < this.data.numbers.length; i++){
+				var number = this.data.numbers[i];
+
+				if( (number % 2) == 0){
+					{{number + ' is even.'}}
+				}
+				else{
+					{{number + ' is odd.'}}
+				}
+				
+				<br>
+
+			}
+		#>		
+	</div>		
 	
 	
     <script type="text/javascript">
 
     new Gamm({
-		element : "#main-content",  
+		element : "#main-content",
 		data : {
-			hobby : [],
-			gender : "",
-		}
+			numbers : [1,2,3,4,5,6,7,8,9,10]	
+		}		
 	});
 
     </script>
