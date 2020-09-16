@@ -183,7 +183,7 @@ class Gamm{
 				
 				try{
 					
-					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}", this.data[gamm_el_datas[0]] );
+					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}", eval( "this.data." + gamm_el_datas[0] ) );
 					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
 					
 				}

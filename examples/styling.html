@@ -46,7 +46,108 @@
 	
 	<div id="main-content" >
 		
+		<h2>
+			Styling
+		</h2>
+		<p>
+			Styling in this library is not far from we already have in Javascript, we can use style tag, CSS or even the style attribute and put values on it.
+			As the library is flexible, we can directly associate object/variables/data into the attributes itself. See Example.
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;button gamm-events="{'click':'change_color'}" style="background-color:{{button_color}}; color:{{text_color}}"&gt;
+			{{button_text}}
+		&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			button_color : "white",
+			text_color : "black",
+			button_text : "Change Me Into Black"
+		},
+		events : {
+			change_color : function(){
+
+				if(this.data.button_text == "Change Me Into Black"){
+					this.data.button_color = "black";
+					this.data.text_color = "white";
+					this.data.button_text = "Change Me Into White";
+				}
+				else{
+					this.data.button_color = "white";
+					this.data.text_color = "black";
+					this.data.button_text = "Change Me Into Black";
+				}
+
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/styling-1.php" frameborder="0">			
+		</iframe>
 		
+		<hr>
+
+		<h2>
+			Styling Techniques
+		</h2>
+		<p>
+			As the library always says, we can already use Javascript functions that is built-in, this is what makes this library easy to use 
+			because we already have Javascript documentations and to make everything faster.
+		</p>
+		<pre>
+			<code>
+				<span>HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;div style="width:{{width}}px; height:100px; border:1px solid #000; "&gt;			
+		&lt;/div&gt;
+		&lt;br&gt;
+		&lt;button gamm-events="{'click' : 'increase_width'}"&gt;Increase Width&lt;/button&gt; 		
+		&lt;button gamm-events="{'click' : 'decrease_width'}"&gt;Decrease Width&lt;/button&gt;
+
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	new Gamm({
+		element : "#main-content",
+		data : {
+			width : 10
+		},
+		events : {
+			increase_width : function(){
+				this.data.width += 5;
+			},
+			decrease_width : function(){
+				this.data.width -= 5;
+			}
+		}
+	});
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/styling-2.php" frameborder="0">			
+		</iframe>
+
+
 	</div>
 
 	<div id="bottom-menu">		

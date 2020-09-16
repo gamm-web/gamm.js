@@ -46,6 +46,137 @@
 	
 	<div id="main-content" >
 		
+		<h2>
+			Templates
+		</h2>
+		<p>
+			This library also offers to call a file to easly make your own templates if you want a seperate a certain are of your project.
+			You can make blocks or modular template so you can easily fix which part may cause the problem or issue.
+		</p>
+
+		<pre>
+			<code>
+				<span>HTML File 1</span>
+	&lt;div id="form-template"&gt;
+		
+		&lt;label&gt;Firstname: &lt;/label&gt; &lt;input type="text" name="firstname"&gt;
+		&lt;br&gt;	
+		&lt;label&gt;Lastname: &lt;/label&gt; &lt;input type="text" name="lastname"&gt;
+		&lt;br&gt;
+		&lt;label&gt;Gender: &lt;/label&gt; 
+		&lt;input type="radio" name="gender" value="Male"&gt; Male 
+		&lt;input type="radio" name="gender" value="Female"&gt; Female
+		&lt;br&gt;
+		&lt;label&gt;Field Work: &lt;/label&gt; 
+		&lt;select name="field_work"&gt;
+			&lt;#gamm
+				for(var k in this.data.options){
+					var option = this.data.options[k];
+					&lt;option value="{{option}}"&gt;
+					{{option}}
+					&lt;/option&gt;
+				}
+			#&gt;
+		&lt;/select&gt;
+		&lt;button gamm-events="{'click' : 'submit_result'}"&gt;Submit&lt;/button&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Main HTML</span>
+	&lt;div id="main-content"&gt;		
+		&lt;div id="form-wrapper" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;"&gt;
+		&lt;/div&gt;
+
+		&lt;div id="form-results" style="width:30%; margin:10px; padding:5px; float:left;"&gt;
+			&lt;table border="1"&gt;
+				&lt;tbody&gt;
+
+					&lt;tr&gt;
+						&lt;th&gt;
+							Firstname
+						&lt;/th&gt;
+						&lt;td&gt;
+							{{result.firstname}}
+						&lt;/td&gt;
+					&lt;/tr&gt;
+
+					&lt;tr&gt;
+						&lt;th&gt;
+							Lastname
+						&lt;/th&gt;
+						&lt;td&gt;
+							{{result.lastname}}
+						&lt;/td&gt;
+					&lt;/tr&gt;
+
+					&lt;tr&gt;
+						&lt;th&gt;
+							Gender
+						&lt;/th&gt;
+						&lt;td&gt;
+							{{result.gender}}
+						&lt;/td&gt;
+					&lt;/tr&gt;
+
+					&lt;tr&gt;
+						&lt;th&gt;
+							Field Work
+						&lt;/th&gt;
+						&lt;td&gt;
+							{{result.field_work}}
+						&lt;/td&gt;
+					&lt;/tr&gt;
+
+				&lt;/tbody&gt;
+			&lt;/table&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;				
+			</code>
+		</pre>
+
+		<pre>
+			<code>
+				<span>Javascript</span>
+	var Result = new Gamm({
+		element : "#form-results",
+		data : {
+			result : {
+				firstname : "",
+				lastname : "",
+				gender : "",
+				field_work : ""
+			}
+		}
+	});
+
+	var FormTemplate = new Gamm({
+		file : "form.html",
+		data : {
+			firstname : "",
+			lastname : "",
+			gender : "",
+			field_work : "",
+			options : ["Computer Science","Information Technology","Information System"]
+		},
+		events : {
+			submit_result : function(){
+				this.other(Result,"result",this.data);
+			}
+		}
+	});
+
+	FormTemplate.insert_to("#form-wrapper");
+			</code>
+		</pre>
+
+		<b>Result:</b>
+		<i>Try To interact with the result.</i>
+		<iframe class="results" src="code/templates-1.php" frameborder="0">			
+		</iframe>
+
 		
 	</div>
 
