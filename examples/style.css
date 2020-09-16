@@ -131,6 +131,20 @@ iframe.results{
 	overflow-y: scroll;
 }
 
+table {
+	border-collapse: collapse;
+  }
+  
+  table, th, td {
+	border: 1px solid black;
+	padding:5px;
+	text-align:center;
+  }
+
+  .italic{
+	  font-style:italic;
+  }
+
 
 @media screen and (max-width:760px){
 	#main-content,#footer, #menu, #bottom-menu{
