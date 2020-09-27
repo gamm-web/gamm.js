@@ -329,6 +329,7 @@ class Gamm{
 			for(var i = 0; i < gamm_models.length; i++){
 				
 				var gamm_model = gamm_models[i];
+				var gamm_value = eval("this.data." + gamm_model.name);
 
 				if(gamm_model.tagName == "INPUT" && (gamm_model.type =="radio" || gamm_model.type == "checkbox") ){
 
@@ -336,8 +337,10 @@ class Gamm{
 
 						var boxes = document.querySelectorAll("#" + this.template_id + " [name='" + gamm_model.name + "']");
 						for(var j = 0; j < boxes.length; j++){
-
-							if(this.data[gamm_model.name].indexOf(boxes[j].value) > -1){
+							
+							
+							
+							if(gamm_value.indexOf(boxes[j].value) > -1){
 								boxes[j].checked = true;
 							}
 							else{
@@ -351,7 +354,7 @@ class Gamm{
 
 				}
 				else{
-					gamm_model.value = this.data[gamm_model.name];
+					gamm_model.value = gamm_value;
 				}
 				
 				
@@ -417,7 +420,7 @@ class Gamm{
 
 							if(this.checked){
 
-								$this.data[this.name] = this.value;
+								eval("$this.data." + this.name + " = this.value;"); 
 								
 							}
 
@@ -428,7 +431,7 @@ class Gamm{
 
 								if($this.data[this.name].indexOf(this.value) < 0 ){
 
-									$this.data[this.name].push(this.value);
+									eval("$this.data." + this.name + ".push(this.value);");
 
 								}
 								
@@ -436,8 +439,8 @@ class Gamm{
 
 							}
 							else{
-								var index = $this.data[this.name].indexOf(this.value);									
-								$this.data[this.name].splice(index,1);
+								var index = eval("$this.data." + this.name + ".indexOf(this.value);");
+								eval("$this.data." + this.name + ".splice(index,1);");
 								
 							}
 
@@ -451,10 +454,11 @@ class Gamm{
 
 					}
 					else{
-
-						if(this.value != $this.data[this.name]){
+						var gamm_value = eval("$this.data." + this.name);
+						if(this.value != gamm_value){
 						
-							$this.data[this.name] = this.value;
+							
+							eval("$this.data." + this.name + " = this.value;");
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
@@ -483,7 +487,7 @@ class Gamm{
 
 							if(this.checked){
 
-								$this.data[this.name] = this.value;
+								eval("$this.data." + this.name + " = this.value;"); 
 								
 							}
 
@@ -494,7 +498,7 @@ class Gamm{
 
 								if($this.data[this.name].indexOf(this.value) < 0 ){
 
-									$this.data[this.name].push(this.value);
+									eval("$this.data." + this.name + ".push(this.value);");
 
 								}
 								
@@ -502,8 +506,8 @@ class Gamm{
 
 							}
 							else{
-								var index = $this.data[this.name].indexOf(this.value);									
-								$this.data[this.name].splice(index,1);
+								var index = eval("$this.data." + this.name + ".indexOf(this.value);");
+								eval("$this.data." + this.name + ".splice(index,1);");
 								
 							}
 
@@ -517,10 +521,11 @@ class Gamm{
 
 					}
 					else{
-
-						if(this.value != $this.data[this.name]){
+						var gamm_value = eval("$this.data." + this.name);
+						if(this.value != gamm_value){
 						
-							$this.data[this.name] = this.value;
+							
+							eval("$this.data." + this.name + " = this.value;");
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
