@@ -772,7 +772,7 @@ class Gamm{
 		this.compile_codes();
 		this.compile_events(); 		
 		this.compile_datas(); 				
-		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
+		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template;
 		this.distribute_events();
 		this.compile_models();	
 	}
