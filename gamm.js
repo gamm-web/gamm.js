@@ -673,8 +673,9 @@ class Gamm{
 		}
 		
 		this.compile_codes();
+		this.compile_datas();	
 		this.compile_events(); 				
-		this.compile_datas();		
+			
 		try{
 			
 			var template_div = document.createElement("div");
@@ -700,8 +701,9 @@ class Gamm{
 		}
 		
 		this.compile_codes();
+		this.compile_datas();
 		this.compile_events(); 				
-		this.compile_datas();		
+				
 		try{
 			
 			var template_div = document.createElement("div");
@@ -725,8 +727,9 @@ class Gamm{
 		}
 		
 		this.compile_codes();
+		this.compile_datas();
 		this.compile_events(); 				
-		this.compile_datas();		
+				
 		try{
 			
 			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
@@ -747,8 +750,9 @@ class Gamm{
 		
 		
 		this.compile_codes();
+		this.compile_datas();
 		this.compile_events(); 						
-		this.compile_datas(); 		
+		 		
 		try{
 			
 			document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
@@ -770,8 +774,9 @@ class Gamm{
 		}
 		
 		this.compile_codes();
+		this.compile_datas();
 		this.compile_events(); 		
-		this.compile_datas(); 				
+		 				
 		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template;
 		this.distribute_events();
 		this.compile_models();	
@@ -781,8 +786,9 @@ class Gamm{
 	get_data(){
 
 		this.compile_codes();
-		this.compile_events(); 		
 		this.compile_datas();
+		this.compile_events(); 		
+		
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
 			
 	}
