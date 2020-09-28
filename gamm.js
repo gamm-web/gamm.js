@@ -553,11 +553,11 @@ class Gamm{
 		
 		try{
 			
-			for(var index in this.gamm_element_and_events){
+			for(var gamm_event_index in this.gamm_element_and_events){
 				
 				eval(
-					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function($event){ \
-						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
+					"document.querySelector('" + this.gamm_element_and_events[gamm_event_index].element + "').on" + this.gamm_element_and_events[gamm_event_index].on + " = function($event){ \
+						$this.gamm_events." + this.gamm_element_and_events[gamm_event_index].event + ".call($this,this,$event); \
 						if($this.element != null){ \
 							$this.init_element.call($this); \
 						}else{ \
