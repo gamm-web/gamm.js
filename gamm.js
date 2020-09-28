@@ -779,12 +779,17 @@ class Gamm{
 	
 	
 	get_data(){
+
+		this.compile_codes();
+		this.compile_events(); 		
+		this.compile_datas();
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+			
 	}
 	
 	other($class,$data,$value){
 		
-		eval( "$class.data." + $data + " = $value");
+		eval( "$class.data." + $data + " = $value;");
 		$class.reload.call($class);
 		
 	}
