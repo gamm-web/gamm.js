@@ -329,7 +329,6 @@ class Gamm{
 			for(var i = 0; i < gamm_models.length; i++){
 				
 				var gamm_model = gamm_models[i];
-				var gamm_value = eval("this.data." + gamm_model.name);
 
 				if(gamm_model.tagName == "INPUT" && (gamm_model.type =="radio" || gamm_model.type == "checkbox") ){
 
@@ -337,10 +336,8 @@ class Gamm{
 
 						var boxes = document.querySelectorAll("#" + this.template_id + " [name='" + gamm_model.name + "']");
 						for(var j = 0; j < boxes.length; j++){
-							
-							
-							
-							if(gamm_value.indexOf(boxes[j].value) > -1){
+
+							if(this.data[gamm_model.name].indexOf(boxes[j].value) > -1){
 								boxes[j].checked = true;
 							}
 							else{
@@ -354,7 +351,7 @@ class Gamm{
 
 				}
 				else{
-					gamm_model.value = gamm_value;
+					gamm_model.value = this.data[gamm_model.name];
 				}
 				
 				
@@ -420,7 +417,7 @@ class Gamm{
 
 							if(this.checked){
 
-								eval("$this.data." + this.name + " = this.value;"); 
+								$this.data[this.name] = this.value;
 								
 							}
 
@@ -431,7 +428,7 @@ class Gamm{
 
 								if($this.data[this.name].indexOf(this.value) < 0 ){
 
-									eval("$this.data." + this.name + ".push(this.value);");
+									$this.data[this.name].push(this.value);
 
 								}
 								
@@ -439,8 +436,8 @@ class Gamm{
 
 							}
 							else{
-								var index = eval("$this.data." + this.name + ".indexOf(this.value);");
-								eval("$this.data." + this.name + ".splice(index,1);");
+								var index = $this.data[this.name].indexOf(this.value);									
+								$this.data[this.name].splice(index,1);
 								
 							}
 
@@ -454,11 +451,10 @@ class Gamm{
 
 					}
 					else{
-						var gamm_value = eval("$this.data." + this.name);
-						if(this.value != gamm_value){
+
+						if(this.value != $this.data[this.name]){
 						
-							
-							eval("$this.data." + this.name + " = this.value;");
+							$this.data[this.name] = this.value;
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
@@ -487,7 +483,7 @@ class Gamm{
 
 							if(this.checked){
 
-								eval("$this.data." + this.name + " = this.value;"); 
+								$this.data[this.name] = this.value;
 								
 							}
 
@@ -498,7 +494,7 @@ class Gamm{
 
 								if($this.data[this.name].indexOf(this.value) < 0 ){
 
-									eval("$this.data." + this.name + ".push(this.value);");
+									$this.data[this.name].push(this.value);
 
 								}
 								
@@ -506,8 +502,8 @@ class Gamm{
 
 							}
 							else{
-								var index = eval("$this.data." + this.name + ".indexOf(this.value);");
-								eval("$this.data." + this.name + ".splice(index,1);");
+								var index = $this.data[this.name].indexOf(this.value);									
+								$this.data[this.name].splice(index,1);
 								
 							}
 
@@ -521,11 +517,10 @@ class Gamm{
 
 					}
 					else{
-						var gamm_value = eval("$this.data." + this.name);
-						if(this.value != gamm_value){
+
+						if(this.value != $this.data[this.name]){
 						
-							
-							eval("$this.data." + this.name + " = this.value;");
+							$this.data[this.name] = this.value;
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
@@ -553,11 +548,11 @@ class Gamm{
 		
 		try{
 			
-			for(var gamm_event_index in this.gamm_element_and_events){
+			for(var index in this.gamm_element_and_events){
 				
 				eval(
-					"document.querySelector('" + this.gamm_element_and_events[gamm_event_index].element + "').on" + this.gamm_element_and_events[gamm_event_index].on + " = function($event){ \
-						$this.gamm_events." + this.gamm_element_and_events[gamm_event_index].event + ".call($this,this,$event); \
+					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function($event){ \
+						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
 						if($this.element != null){ \
 							$this.init_element.call($this); \
 						}else{ \
@@ -673,9 +668,8 @@ class Gamm{
 		}
 		
 		this.compile_codes();
-		this.compile_datas();	
 		this.compile_events(); 				
-			
+		this.compile_datas();		
 		try{
 			
 			var template_div = document.createElement("div");
@@ -701,9 +695,8 @@ class Gamm{
 		}
 		
 		this.compile_codes();
-		this.compile_datas();
 		this.compile_events(); 				
-				
+		this.compile_datas();		
 		try{
 			
 			var template_div = document.createElement("div");
@@ -727,9 +720,8 @@ class Gamm{
 		}
 		
 		this.compile_codes();
-		this.compile_datas();
 		this.compile_events(); 				
-				
+		this.compile_datas();		
 		try{
 			
 			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
@@ -750,9 +742,8 @@ class Gamm{
 		
 		
 		this.compile_codes();
-		this.compile_datas();
 		this.compile_events(); 						
-		 		
+		this.compile_datas(); 		
 		try{
 			
 			document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
@@ -774,28 +765,21 @@ class Gamm{
 		}
 		
 		this.compile_codes();
-		this.compile_datas();
 		this.compile_events(); 		
-		 				
-		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template;
+		this.compile_datas(); 				
+		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
 		this.distribute_events();
 		this.compile_models();	
 	}
 	
 	
 	get_data(){
-
-		this.compile_codes();
-		this.compile_datas();
-		this.compile_events(); 		
-		
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
-			
 	}
 	
 	other($class,$data,$value){
 		
-		eval( "$class.data." + $data + " = $value;");
+		$class.data[$data] = $value;
 		$class.reload.call($class);
 		
 	}
