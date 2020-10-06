@@ -461,7 +461,7 @@ class Gamm{
 						
 						if(this.value != gamm_data){
 						
-							eval("$this.data" + this.name + "= this.value;");
+							eval("$this.data." + this.name + "= this.value;");
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
@@ -531,7 +531,7 @@ class Gamm{
 						
 						if(this.value != gamm_data){
 						
-							eval("$this.data" + this.name + "= this.value;");
+							eval("$this.data." + this.name + "= this.value;");
 							$this.reload.call($this);						
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );
 						}
