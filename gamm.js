@@ -73,7 +73,7 @@ class Gamm{
 
 		this.http = {
 
-			post : function(url,options){
+			post : function(url,options = {}){
 
 				var method = "POST";
 				var path = url;
@@ -83,6 +83,8 @@ class Gamm{
 			
 				var data = "";
 				var params = "";
+				
+
 				if(options.data !== undefined){
 					
 					if(typeof options.data === "object"){
@@ -129,18 +131,23 @@ class Gamm{
 				
 				
 				xhttp.open(method, path, async_bool);
+				var has_content_type = false;
 				if(options.headers !== undefined){
 					
 					for(var k in options.headers){
 						
 						xhttp.setRequestHeader(k,options.headers[k]);
-						
+						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+							has_content_type = true;
+						}
 					}
 					
 				}
 				
 				if(options.data !== undefined){
-					xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					if(!has_content_type){
+						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					}					
 					xhttp.send(params);
 				}
 				else{
@@ -154,7 +161,7 @@ class Gamm{
 
 			},
 
-			get : function(url,options){
+			get : function(url,options = {}){
 
 				var method = "GET";
 				var path = url;
@@ -164,6 +171,8 @@ class Gamm{
 			
 				var data = "";
 				var params = "";
+
+
 				if(options.data !== undefined){
 					
 					if(typeof options.data === "object"){
@@ -210,18 +219,23 @@ class Gamm{
 				
 				
 				xhttp.open(method, path, async_bool);
+				var has_content_type = false;
 				if(options.headers !== undefined){
 					
 					for(var k in options.headers){
 						
 						xhttp.setRequestHeader(k,options.headers[k]);
-						
+						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+							has_content_type = true;
+						}
 					}
 					
 				}
 				
 				if(options.data !== undefined){
-					xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					if(!has_content_type){
+						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					}					
 					xhttp.send(params);
 				}
 				else{
