@@ -970,7 +970,7 @@ class Gamm{
 	
 	other($class,$data,$value){
 		
-		$class.data[$data] = $value;
+		eval("$class." + $data + " = $value");
 		$class.reload.call($class);
 		
 	}
