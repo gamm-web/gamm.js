@@ -119,7 +119,7 @@ class Gamm{
 						}
 						
 						if(options.success !== undefined){
-							options.options(xhttp);
+							options.success(xhttp);
 						}
 					}
 					else if(this.readyState == 4 && this.status != 200){
