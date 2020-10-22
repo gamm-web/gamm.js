@@ -247,6 +247,98 @@ class Gamm{
 					return data;
 				}
 
+			},
+			
+			request : function(url,options = {}){
+
+				var method = "POST";
+				var path = url;
+				var async_bool = false;
+				
+				var xhttp = null;
+			
+				var data = "";
+				var params = "";
+
+				if(options.method !== undefined){
+					method = options.method;
+				}
+				
+
+				if(options.data !== undefined){
+					
+					if(typeof options.data === "object"){
+						// console.log(typeof options.data );
+						for(var k in options.data){
+			
+							params += k + "=" + encodeURI(options.data[k]) + "&";
+				
+						}
+						params = params.substring(0,params.length - 1);
+			
+					}
+					else{
+						params = options.data;
+					}
+				}
+			
+			
+				if (window.XMLHttpRequest) {
+					// code for modern browsers
+					xhttp = new XMLHttpRequest();
+				} else {
+					// code for old IE browsers
+					xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {			   
+						if(!async_bool){
+							data = xhttp;
+						}
+						
+						if(options.success !== undefined){
+							options.success(xhttp);
+						}
+					}
+					else if(this.readyState == 4 && this.status != 200){
+						if(options.error !== undefined){
+							options.error(xhttp);
+						}
+					}
+				};
+				
+				
+				xhttp.open(method, path, async_bool);
+				var has_content_type = false;
+				if(options.headers !== undefined){
+					
+					for(var k in options.headers){
+						
+						xhttp.setRequestHeader(k,options.headers[k]);
+						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+							has_content_type = true;
+						}
+					}
+					
+				}
+				
+				if(options.data !== undefined){
+					if(!has_content_type){
+						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					}					
+					xhttp.send(params);
+				}
+				else{
+					xhttp.send();
+				}
+				
+				
+				if(!async_bool){
+					return data;
+				}
+
 			}
 
 		};
