@@ -61,15 +61,7 @@ class Gamm{
 		
 		
 		
-		this.make_template_id();
 		
-		if(args.load !== undefined){
-			this.load = args.load;			
-		}
-		
-		if(this.element != null){
-			this.init_element();			
-		}
 
 		this.http = {
 
@@ -342,6 +334,17 @@ class Gamm{
 			}
 
 		};
+
+
+		this.make_template_id();
+		
+		if(args.load !== undefined){
+			this.load = args.load;			
+		}
+		
+		if(this.element != null){
+			this.init_element();			
+		}
 		
 	}
 	
