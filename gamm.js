@@ -75,6 +75,10 @@ class Gamm{
 			
 				var data = "";
 				var params = "";
+
+				if(options.async !== undefined){
+					async_bool = options.async;
+				}
 				
 
 				if(options.data !== undefined){
@@ -164,6 +168,9 @@ class Gamm{
 				var data = "";
 				var params = "";
 
+				if(options.async !== undefined){
+					async_bool = options.async;
+				}
 
 				if(options.data !== undefined){
 					
@@ -251,6 +258,10 @@ class Gamm{
 			
 				var data = "";
 				var params = "";
+
+				if(options.async !== undefined){
+					async_bool = options.async;
+				}
 
 				if(options.method !== undefined){
 					method = options.method;
