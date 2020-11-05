@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="gamm.js"></script>
+    </head>
+
+    <body>
+
+        <div id="test">
+
+            <button id="btn">
+                Alert Me
+            </button>
+
+            <button class="btn-we">
+                Alert Me1
+            </button>
+
+            <button class="btn-we">
+                Alert Me2
+            </button>
+
+            <button class="btn-we">
+                Alert Me3
+            </button>
+
+            <input type="checkbox" id="chk">
+
+
+        </div>
+
+        <script>
+            var $ = new Gamm().q;
+
+            $(".btn-we:index(1)").on("click",function(){
+                alert( $("#test").html() );
+            });
+
+            
+            
+            $("#btn" ).on("click",function(){
+                $(".btn-we:index(1)").text("hahaah");
+            });
+        </script>
+
+    </body>
+</html>

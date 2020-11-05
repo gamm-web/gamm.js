@@ -26,38 +26,54 @@ class Gamm{
         this.properties = {};
         this.gamm_element_and_events = {};
 		
-		if(args.file !== undefined){
+		if(args !== undefined){
+
+			if(args.file !== undefined){
 			
-			this.template = this.read_template(args.file);
-			this.convert_to_html();
-			
-		}
-		else if(args.element !== undefined){
-			
-			try{
-				this.template = document.querySelectorAll(args.element)[0].innerHTML;
+				this.template = this.read_template(args.file);
+				this.convert_to_html();
+				
 			}
-			catch(gamm_html_error){
-				this.template = "";
+			else if(args.element !== undefined){
+				
+				try{
+					this.template = document.querySelectorAll(args.element)[0].innerHTML;
+				}
+				catch(gamm_html_error){
+					this.template = "";
+				}
+				
+				this.element = args.element;
+				this.convert_to_html();
+				
+			}
+			else{
+				
+				this.template = args.template;
+				this.convert_to_html();
 			}
 			
-			this.element = args.element;
-			this.convert_to_html();
+			if(args.data !== undefined){
+				this.data = args.data;
+			}
+			
+			if(args.events !== undefined){
+				this.gamm_events = args.events;
+			}
+
+			this.make_template_id();
+		
+			if(args.load !== undefined){
+				this.load = args.load;			
+			}
+			
+			if(this.element != null){
+				this.init_element();			
+			}
 			
 		}
-		else{
-			
-			this.template = args.template;
-			this.convert_to_html();
-		}
+
 		
-		if(args.data !== undefined){
-			this.data = args.data;
-		}
-		
-		if(args.events !== undefined){
-			this.gamm_events = args.events;
-		}
 		
 		
 		
@@ -347,16 +363,6 @@ class Gamm{
 		};
 
 
-		this.make_template_id();
-		
-		if(args.load !== undefined){
-			this.load = args.load;			
-		}
-		
-		if(this.element != null){
-			this.init_element();			
-		}
-		
 	}
 	
 	convert_to_html(){
@@ -1100,86 +1106,404 @@ class Gamm{
 	
 	q($query){
 
-		var doc = document.querySelectorAll($query);
-		var options = {
+		class gamm_elment{
 
-			on : function($event,$func){
+			constructor($query){
 				
-				if(doc.length > 0){
+				var $index = null;
+				var $d = null;
+				if(typeof $query == "string"){
 
-					for(var gamm_i = 0; gamm_i < doc.length; gamm_i++){
+					if( $query.indexOf(":index(") > 0 ){
+						var $q_str = $query.split(":index(");
+						
 
-						eval("doc[gamm_i].on" + $event + " = $func;");
+						$index = $q_str[1].replace(")","");
 
-					}
-
-				}
-				else{
-					eval("doc.on" + $event + " = $func;")
-				}
-
-			},
-
-			val : function($val){
-
-				if($val !== undefined){
-
-					doc.value = $val;
-
-
-				}
-				else{
-
-					return doc.value;
-
-				}
-
-			},
-
-			data : function($data,$val){
-
-				if($val !== undefined){
-
-					doc.setAttribute("data-" + $data,$val);
-
-
-				}
-				else{
-
-					return doc.getAttribute("data-" + $data);
-
-				}
-
-			},
-
-			attr : function($attr,$val){
-
-				if($val !== undefined){
-
-					doc.setAttribute($data,$val);
-
-
-				}
-				else{
-
-					if($attr !== undefined){
-						return doc.getAttribute($data);
+					
+						$d = document.querySelectorAll($q_str[0]);
 					}
 					else{
-						return doc.attributes;
+						$d = document.querySelectorAll($query);
+					}
+
+					
+				}
+				else{
+					$d = $query;
+					
+				}
+				console.log($d);
+				
+			
+
+				this.size = $d.length;
+				
+				this.on = function($event,$func){
+
+					if($index != null){
+						
+						eval("$d[$index].on" + $event + " = $func;");
+
+					}
+					else{
+
+						if($d.length > 0){
+
+							for(var $i = 0; $i < $d.length; $i++){
+								eval("$d[$i].on" + $event + " = $func;");
+							}
+	
+						}
+						else{
+							eval("$d.on" + $event + " = $func;");
+						}
+
+					}
+					
+					
+				};
+
+				this.prop = function($prop,$val){
+
+					if($val !== undefined){
+
+						if($index != null){
+						
+							eval("$d[$index]." + $prop + " = $val;");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i]." + $prop + " = $val;");
+								}
+		
+							}
+							else{
+								eval("$d." + $prop + " = $val;");
+							}
+	
+						}
+
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index]." + $prop + ";");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i]." + $prop + ";");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d." + $prop + ";");
+							}
+						}
+
+						return $return_value;
+
 					}
 					
 
-				}
 
-			},
+				};
 
+				this.html = function($val){
 
-		};
+					if($val !== undefined){
 
+						if($index != null){
+						
+							eval("$d[$index].innerHTML = $val;");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i].innerHTML = $val;");
+								}
 		
+							}
+							else{
+								eval("$d.innerHTML = $val;");
+							}
+	
+						}
 
-		return options;
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index].innerHTML;");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i].innerHTML;");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d.innerHTML;");
+							}
+						}
+
+						return $return_value;
+
+					}
+
+				};
+
+				this.text = function($val){
+
+					if($val !== undefined){
+
+						if($index != null){
+						
+							eval("$d[$index].innerText = $val;");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i].innerText = $val;");
+								}
+		
+							}
+							else{
+								eval("$d.innerText = $val;");
+							}
+	
+						}
+
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index].innerText;");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i].innerText;");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d.innerText;");
+							}
+						}
+
+						return $return_value;
+
+					}
+
+				};
+
+				this.val = function($val){
+
+					if($val !== undefined){
+
+						if($index != null){
+						
+							eval("$d[$index].value = $val;");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i].value = $val;");
+								}
+		
+							}
+							else{
+								eval("$d.value = $val;");
+							}
+	
+						}
+
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index].value;");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i].value;");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d.value;");
+							}
+						}
+
+						return $return_value;
+
+					}
+
+				};
+
+				this.attr = function($attr,$val){
+
+					if($val !== undefined){
+
+						if($index != null){
+						
+							eval("$d[$index].setAttribute($attr,$val);");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i].setAttribute($attr,$val)");
+								}
+		
+							}
+							else{
+								eval("$d.setAttribute($attr,$val);");
+							}
+	
+						}
+
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index].getAttribute($attr);");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i].getAttribute($attr);");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d.getAttribute($attr);");
+							}
+						}
+
+						return $return_value;
+
+					}
+
+				};
+
+				this.data = function($data,$val){
+
+					if($val !== undefined){
+
+						if($index != null){
+						
+							eval("$d[$index].setAttribute('data-' + $data,$val);");
+	
+						}
+						else{
+	
+							if($d.length > 0){
+	
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$d[$i].setAttribute('data-' + $data,$val)");
+								}
+		
+							}
+							else{
+								eval("$d.setAttribute('data-' + $data,$val);");
+							}
+	
+						}
+
+					}
+					else{
+
+						var $return_value = "";
+
+						if($index != null){
+						
+							eval("$return_value = $d[$index].getAttribute('data-' + $data);");
+	
+						}
+						else{
+
+							if($d.length > 0){
+		
+								for(var $i = 0; $i < $d.length; $i++){
+									eval("$return_value = $d[$i].getAttribute('data-' + $data);");
+								}
+		
+							}
+							else{
+								eval("$return_value = $d.getAttribute('data-' + $data);");
+							}
+						}
+
+						return $return_value;
+
+					}
+
+				};
+
+
+				
+				this.element = $d;
+
+			}
+			
+			
+			
+
+
+		}
+
+		return new gamm_elment($query);
+
 
 	}
 	
