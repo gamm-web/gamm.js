@@ -1098,6 +1098,90 @@ class Gamm{
 		element.dispatchEvent(event);
 	}
 	
+	q($query){
+
+		var doc = document.querySelectorAll($query);
+		var options = {
+
+			on : function($event,$func){
+				
+				if(doc.length > 0){
+
+					for(var gamm_i = 0; gamm_i < doc.length; gamm_i++){
+
+						eval("doc[gamm_i].on" + $event + " = $func;");
+
+					}
+
+				}
+				else{
+					eval("doc.on" + $event + " = $func;")
+				}
+
+			},
+
+			val : function($val){
+
+				if($val !== undefined){
+
+					doc.value = $val;
+
+
+				}
+				else{
+
+					return doc.value;
+
+				}
+
+			},
+
+			data : function($data,$val){
+
+				if($val !== undefined){
+
+					doc.setAttribute("data-" + $data,$val);
+
+
+				}
+				else{
+
+					return doc.getAttribute("data-" + $data);
+
+				}
+
+			},
+
+			attr : function($attr,$val){
+
+				if($val !== undefined){
+
+					doc.setAttribute($data,$val);
+
+
+				}
+				else{
+
+					if($attr !== undefined){
+						return doc.getAttribute($data);
+					}
+					else{
+						return doc.attributes;
+					}
+					
+
+				}
+
+			},
+
+
+		};
+
+		
+
+		return options;
+
+	}
 	
 
 }
