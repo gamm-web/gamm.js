@@ -5,7 +5,7 @@ Author Url: gammjs.juztpost.net
 */
 
 window.GAMM_IDS = [];
-function GAMM(args){
+function Gamm(args){
 
     this.template = "wew";
 
