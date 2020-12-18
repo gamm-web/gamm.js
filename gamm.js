@@ -3,369 +3,49 @@ Author: Angelo Octavio
 Version: 1.1
 Author Url: gammjs.juztpost.net
 */
+
 window.GAMM_IDS = [];
-class Gamm{
-	
-	constructor(args){
-		
-		this.template = "";
+function Gamm(args){
 
-		this.element = null;
-		this.template_id = "";
-		this.template = "";
-		this.compiled_template = "";
-		this.data = {};
-		this.gamm_events = {};
-		this.options = [];
-		
-		this.stored_events = {};
-		this.compiled_events = {};
-		this.load = null;
-		
-		this.textareas = {};
-        this.properties = {};
-        this.gamm_element_and_events = {};
-		
-		if(args !== undefined){
+    this.template = "wew";
 
-			if(args.file !== undefined){
-			
-				this.template = this.read_template(args.file);
-				this.convert_to_html();
-				
-			}
-			else if(args.element !== undefined){
-				
-				try{
-					this.template = document.querySelectorAll(args.element)[0].innerHTML;
-				}
-				catch(gamm_html_error){
-					this.template = "";
-				}
-				
-				this.element = args.element;
-				this.convert_to_html();
-				
-			}
-			else{
-				
-				this.template = args.template;
-				this.convert_to_html();
-			}
-			
-			if(args.data !== undefined){
-				this.data = args.data;
-			}
-			
-			if(args.events !== undefined){
-				this.gamm_events = args.events;
-			}
+    this.element = null;
+    this.template_id = "";
+    this.template = "";
+    this.compiled_template = "";
+    this.data = {};
+    this.gamm_events = {};
+    this.options = [];
+    
+    this.stored_events = {};
+    this.compiled_events = {};
+    this.load = null;
+    
+    this.textareas = {};
+    this.properties = {};
+    this.gamm_element_and_events = {};
 
-			this.make_template_id();
-		
-			if(args.load !== undefined){
-				this.load = args.load;			
-			}
-			
-			if(this.element != null){
-				this.init_element();			
-			}
-			
+    
+
+    this.make_template_id = function(){
+		var result           = '';
+		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		var charactersLength = characters.length;
+		for ( var i = 0; i < 10; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
 		}
-
 		
+		if( window.GAMM_IDS.indexOf(result) > -1 ){
+			this.make_template_id();
+		}
+		else{
+			this.template_id = result;
+			window.GAMM_IDS[ window.GAMM_IDS.length ] = result;
+		}
 		
-		
-		
-		
-
-		this.http = {
-
-			post : function(url,options = {}){
-
-				var method = "POST";
-				var path = url;
-				var async_bool = false;
-				
-				var xhttp = null;
-			
-				var data = "";
-				var params = "";
-
-				if(options.async !== undefined){
-					async_bool = options.async;
-				}
-				
-
-				if(options.data !== undefined){
-					
-					if(typeof options.data === "object"){
-						// console.log(typeof options.data );
-						for(var k in options.data){
-			
-							params += k + "=" + encodeURI(options.data[k]) + "&";
-				
-						}
-						params = params.substring(0,params.length - 1);
-			
-					}
-					else{
-						params = options.data;
-					}
-				}
-			
-			
-				if (window.XMLHttpRequest) {
-					// code for modern browsers
-					xhttp = new XMLHttpRequest();
-				} else {
-					// code for old IE browsers
-					xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				
-				
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {			   
-						if(!async_bool){
-							data = xhttp;
-						}
-						
-						if(options.success !== undefined){
-							options.success(xhttp);
-						}
-					}
-					else if(this.readyState == 4 && this.status != 200){
-						if(options.error !== undefined){
-							options.error(xhttp);
-						}
-					}
-				};
-				
-				
-				xhttp.open(method, path, async_bool);
-				var has_content_type = false;
-				if(options.headers !== undefined){
-					
-					for(var k in options.headers){
-						
-						xhttp.setRequestHeader(k,options.headers[k]);
-						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
-							has_content_type = true;
-						}
-					}
-					
-				}
-				
-				if(options.data !== undefined){
-					if(!has_content_type){
-						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-					}					
-					xhttp.send(params);
-				}
-				else{
-					xhttp.send();
-				}
-				
-				
-				if(!async_bool){
-					return data;
-				}
-
-			},
-
-			get : function(url,options = {}){
-
-				var method = "GET";
-				var path = url;
-				var async_bool = false;
-				
-				var xhttp = null;
-			
-				var data = "";
-				var params = "";
-
-				if(options.async !== undefined){
-					async_bool = options.async;
-				}
-
-				if(options.data !== undefined){
-					
-					if(typeof options.data === "object"){
-						// console.log(typeof options.data );
-						for(var k in options.data){
-			
-							params += k + "=" + encodeURI(options.data[k]) + "&";
-				
-						}
-						params = params.substring(0,params.length - 1);
-			
-					}
-					else{
-						params = options.data;
-					}
-				}
-			
-			
-				if (window.XMLHttpRequest) {
-					// code for modern browsers
-					xhttp = new XMLHttpRequest();
-				} else {
-					// code for old IE browsers
-					xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				
-				
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {			   
-						if(!async_bool){
-							data = xhttp;
-						}
-						
-						if(options.success !== undefined){
-							options.options(xhttp);
-						}
-					}
-					else if(this.readyState == 4 && this.status != 200){
-						if(options.error !== undefined){
-							options.error(xhttp);
-						}
-					}
-				};
-				
-				
-				xhttp.open(method, path, async_bool);
-				var has_content_type = false;
-				if(options.headers !== undefined){
-					
-					for(var k in options.headers){
-						
-						xhttp.setRequestHeader(k,options.headers[k]);
-						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
-							has_content_type = true;
-						}
-					}
-					
-				}
-				
-				if(options.data !== undefined){
-					if(!has_content_type){
-						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-					}					
-					xhttp.send(params);
-				}
-				else{
-					xhttp.send();
-				}
-				
-				
-				if(!async_bool){
-					return data;
-				}
-
-			},
-			
-			request : function(url,options = {}){
-
-				var method = "POST";
-				var path = url;
-				var async_bool = false;
-				
-				var xhttp = null;
-			
-				var data = "";
-				var params = "";
-
-				if(options.async !== undefined){
-					async_bool = options.async;
-				}
-
-				if(options.method !== undefined){
-					method = options.method;
-				}
-				
-
-				if(options.data !== undefined){
-					
-					if(typeof options.data === "object"){
-						// console.log(typeof options.data );
-						for(var k in options.data){
-			
-							params += k + "=" + encodeURI(options.data[k]) + "&";
-				
-						}
-						params = params.substring(0,params.length - 1);
-			
-					}
-					else{
-						params = options.data;
-					}
-				}
-			
-			
-				if (window.XMLHttpRequest) {
-					// code for modern browsers
-					xhttp = new XMLHttpRequest();
-				} else {
-					// code for old IE browsers
-					xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				
-				
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {			   
-						if(!async_bool){
-							data = xhttp;
-						}
-						
-						if(options.success !== undefined){
-							options.success(xhttp);
-						}
-					}
-					else if(this.readyState == 4 && this.status != 200){
-						if(options.error !== undefined){
-							options.error(xhttp);
-						}
-					}
-				};
-				
-				
-				xhttp.open(method, path, async_bool);
-				var has_content_type = false;
-				if(options.headers !== undefined){
-					
-					for(var k in options.headers){
-						
-						xhttp.setRequestHeader(k,options.headers[k]);
-						if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
-							has_content_type = true;
-						}
-					}
-					
-				}
-				
-				if(options.data !== undefined){
-					if(!has_content_type){
-						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-					}					
-					xhttp.send(params);
-				}
-				else{
-					xhttp.send();
-				}
-				
-				
-				if(!async_bool){
-					return data;
-				}
-
-			}
-
-		};
-
-
 	}
-	
-	convert_to_html(){
+
+    this.convert_to_html = function(){
 		
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(this.template, 'text/html');		
@@ -373,129 +53,61 @@ class Gamm{
 		
 	}
 	
-	convert_to_text(str){
+	this.convert_to_text = function(str){
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(this.template, 'text/html');
 		var text = doc.body.innerText;
 		return text;
 		
-	}
-	
-	compile_events(){
+    }
+
+    this.init_element = function(){
 		
+		if(this.load !== null){
+			this.load.call(this);
+		}
+		
+		
+		this.compile_codes();
+		this.compile_events(); 						
+		this.compile_datas(); 		
 		try{
 			
-			var gamm_el_events = "";
-			
-			gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
-			
-			
-			var gamm_el_events_counter = 0;
-			var quote_regex =  new RegExp("\'","g");
-			
-			while(gamm_el_events.length > 0){
-				
-				try{
-					var gamm_events = "";
-					
-		
-					gamm_events = JSON.parse(gamm_el_events[0].replace(quote_regex,'"') );
-						
-					
-					
-					var gamm_temp_data = "";
-					
-					for(var gamm_key in gamm_events){
-						
-						try{
-							var gamm_temp_element_attribute = 'data-gamm_' + gamm_key + '="' + '' + this.template_id + '_' + gamm_el_events_counter + '"';
-							var gamm_temp_element_attribute_key = 'data_gamm_' + gamm_key + '_' + '' + this.template_id + '_' + gamm_el_events_counter ;
-							gamm_temp_data += gamm_temp_element_attribute + ' ';
-							
-							this.gamm_element_and_events[ gamm_temp_element_attribute_key ] = {
-								
-								element : "[" + gamm_temp_element_attribute + "]",
-								event : gamm_events[gamm_key],
-								on : gamm_key
-								
-							};
-						}
-						catch(gamm_event_error){
-							console.log("ERROR EVENT: " + gamm_event_error);
-						}
-						
-						
-						
-						gamm_el_events_counter++;
-					}
-					
-					
-					
-					
-					
-						
-					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"",gamm_temp_data);
-					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
-					
-					
-				}
-				catch(gamm_err){
-					console.log(gamm_err);
-					
-					
-					
-						
-					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"","data-gamm='"+gamm_err+"'");
-					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
-						
-					
-				}
-				
-			}
-			
-			
-			
+			document.querySelector(this.element).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
 			
 		}
-		catch(gamm_err){
-			console.log(gamm_err);
+		catch(gamm_html_error){
+			this.template = "";
+		}
+				
+		this.distribute_events();
+		this.compile_models();
+		
+    };
+
+    this.insert_to = function(selector){
+		
+		if(this.load !== null){
+			this.load.call(this);
 		}
 		
-		
-	}
-	
-	compile_datas(){
-		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
 		try{
-	
-			// this.compiled_template = this.compiled_template;
-			var gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
 			
-			while(gamm_el_datas.length > 0){
-				
-				try{
-					
-					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}", eval( "this.data." + gamm_el_datas[0] ) );
-					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
-					
-				}
-				catch(gamm_data_error){
-					console.log("ERROR DATA: " + gamm_data_error);
-					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}","[object-undefined]");
-					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
-				}
-				
-			}
-			
-			
+			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
 		}
-		catch(gamm_datas_error){
-			console.log("ERROR DATA: " + gamm_datas_error);
+		catch(gamm_html_error){
+			this.template = "";
 		}
+		this.distribute_events();
+		this.compile_models();
 		
-	}
-	
-	compile_codes(){
+	};
+    
+
+    this.compile_codes = function(){
 		
 		try{
 			
@@ -609,9 +221,151 @@ class Gamm{
 		catch(gamm_codes_error){
 			console.log("ERROR CODES: " + gamm_codes_error);
 		}
-	}
+    };
+    
+    this.compile_events = function(){
+		
+		try{
+			
+			var gamm_el_events = "";
+			
+			gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+			
+			
+			var gamm_el_events_counter = 0;
+			var quote_regex =  new RegExp("\'","g");
+			
+			while(gamm_el_events.length > 0){
+				
+				try{
+					var gamm_events = "";
+					
+		
+					gamm_events = JSON.parse(gamm_el_events[0].replace(quote_regex,'"') );
+						
+					
+					
+					var gamm_temp_data = "";
+					
+					for(var gamm_key in gamm_events){
+						
+						try{
+							var gamm_temp_element_attribute = 'data-gamm_' + gamm_key + '="' + '' + this.template_id + '_' + gamm_el_events_counter + '"';
+							var gamm_temp_element_attribute_key = 'data_gamm_' + gamm_key + '_' + '' + this.template_id + '_' + gamm_el_events_counter ;
+							gamm_temp_data += gamm_temp_element_attribute + ' ';
+							
+							this.gamm_element_and_events[ gamm_temp_element_attribute_key ] = {
+								
+								element : "[" + gamm_temp_element_attribute + "]",
+								event : gamm_events[gamm_key],
+								on : gamm_key
+								
+							};
+						}
+						catch(gamm_event_error){
+							console.log("ERROR EVENT: " + gamm_event_error);
+						}
+						
+						
+						
+						gamm_el_events_counter++;
+					}
+					
+					
+					
+					
+					
+						
+					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"",gamm_temp_data);
+					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+					
+					
+				}
+				catch(gamm_err){
+					console.log(gamm_err);
+					
+					
+					
+						
+					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"","data-gamm='"+gamm_err+"'");
+					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
+						
+					
+				}
+				
+			}
+			
+			
+			
+			
+		}
+		catch(gamm_err){
+			console.log(gamm_err);
+		}
+		
+		
+    };
+    
+    this.compile_datas = function(){
+		
+		try{
 	
-	compile_models(){
+			// this.compiled_template = this.compiled_template;
+			var gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
+			
+			while(gamm_el_datas.length > 0){
+				
+				try{
+					
+					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}", eval( "this.data." + gamm_el_datas[0] ) );
+					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
+					
+				}
+				catch(gamm_data_error){
+					console.log("ERROR DATA: " + gamm_data_error);
+					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}","[object-undefined]");
+					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
+				}
+				
+			}
+			
+			
+		}
+		catch(gamm_datas_error){
+			console.log("ERROR DATA: " + gamm_datas_error);
+		}
+		
+    };
+    
+    this.distribute_events = function(){
+		
+		var $this = this;
+		
+		try{
+			
+			for(var index in this.gamm_element_and_events){
+				
+				eval(
+					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function($event){ \
+						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
+						if($this.element != null){ \
+							$this.init_element.call($this); \
+						}else{ \
+							$this.reload.call($this); \
+						} \
+					};"
+				);
+				
+			}
+			
+		}
+		catch(gamm_events_error){
+			console.log("ERROR EVENT: " + gamm_events_error);
+		}
+		
+	};
+
+    this.compile_models = function(){
 		
 		try{
 			
@@ -840,42 +594,9 @@ class Gamm{
 			console.log(gamm_models_error);
 		}
 		
-	}
-	
-	
-	
-	
-	distribute_events(){
-		
-		var $this = this;
-		
-		try{
-			
-			for(var index in this.gamm_element_and_events){
-				
-				eval(
-					"document.querySelector('" + this.gamm_element_and_events[index].element + "').on" + this.gamm_element_and_events[index].on + " = function($event){ \
-						$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
-						if($this.element != null){ \
-							$this.init_element.call($this); \
-						}else{ \
-							$this.reload.call($this); \
-						} \
-					};"
-				);
-				
-			}
-			
-		}
-		catch(gamm_events_error){
-			console.log("ERROR EVENT: " + gamm_events_error);
-		}
-		
-	}
-	
-	
-	
-	parse_data($data,$first_pattern,$second_pattern){
+    };
+    
+    this.parse_data = function($data,$first_pattern,$second_pattern){
 
 		var $length = $data.length;
 		var $return_data = [];
@@ -920,12 +641,17 @@ class Gamm{
 		}
 
 		return $return_data;
-	}
-	
-	read_template(path,method = "GET"){
+    };
+    
+    this.read_template = function(path,method){
 		
 		var xhttp = null;
-		var data = "";
+        var data = "";
+        
+        if(method === undefined){
+            method = "GET";
+        }
+
 		if (window.XMLHttpRequest) {
 			// code for modern browsers
 			xhttp = new XMLHttpRequest();
@@ -944,27 +670,9 @@ class Gamm{
 		xhttp.send();
 		
 		return data;
-	}
-	
-	make_template_id(){
-		var result           = '';
-		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-		var charactersLength = characters.length;
-		for ( var i = 0; i < 10; i++ ) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		}
-		
-		if( window.GAMM_IDS.indexOf(result) > -1 ){
-			this.make_template_id();
-		}
-		else{
-			this.template_id = result;
-			window.GAMM_IDS[ window.GAMM_IDS.length ] = result;
-		}
-		
-	}
-	
-	prepend_to(selector){
+    };
+    
+    this.prepend_to = function(selector){
 		
 		if(this.load !== null){
 			this.load.call(this);
@@ -988,10 +696,9 @@ class Gamm{
 		this.distribute_events();
 		this.compile_models();
 		
-	}
-	
-	
-	append_to(selector){
+    };
+    
+    this.append_to = function(selector){
 		
 		if(this.load !== null){
 			this.load.call(this);
@@ -1014,30 +721,9 @@ class Gamm{
 		}
 		this.distribute_events();
 		this.compile_models();
-	}
-	
-	insert_to(selector){
-		
-		if(this.load !== null){
-			this.load.call(this);
-		}
-		
-		this.compile_codes();
-		this.compile_events(); 				
-		this.compile_datas();		
-		try{
-			
-			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
-		}
-		catch(gamm_html_error){
-			this.template = "";
-		}
-		this.distribute_events();
-		this.compile_models();
-		
-	}
-	
-	init_element(){
+    };
+    
+    this.init_element = function(){
 		
 		if(this.load !== null){
 			this.load.call(this);
@@ -1059,9 +745,9 @@ class Gamm{
 		this.distribute_events();
 		this.compile_models();
 		
-	}
-	
-	reload(){
+    }
+    
+    this.reload = function(){
 		
 		if(this.load !== null){
 			this.load.call(this);
@@ -1073,21 +759,20 @@ class Gamm{
 		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
 		this.distribute_events();
 		this.compile_models();	
-	}
-	
-	
-	get_data(){
+    };
+    
+    this.get_data = function(){
 		return "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
-	}
-	
-	other($class,$data,$value){
+    };
+    
+    this.other = function($class,$data,$value){
 		
 		eval("$class." + $data + " = $value");
 		$class.reload.call($class);
 		
-	}
-	
-	focus(element) {
+    };
+    
+    this.focus = function(element) {
 		var eventType = "onfocusin" in element ? "focusin" : "focus",
 			bubbles = "onfocusin" in element,
 			event;
@@ -1102,13 +787,11 @@ class Gamm{
 
 		element.focus();
 		element.dispatchEvent(event);
-	}
-	
-	q($query){
+    };
+    
+    this.q = function($query){
 
-		class gamm_elment{
-
-			constructor($query){
+		function gamm_elment($query){
 				
 				var $index = null;
 				var $d = null;
@@ -1494,18 +1177,343 @@ class Gamm{
 				
 				this.element = $d;
 
-			}
+			
 			
 			
 			
 
-
+            return this;
 		}
 
 		return new gamm_elment($query);
 
 
-	}
-	
+	};
+
+    //main----------------------------------------
+
+    
+    if(args !== undefined){
+
+        if(args.element !== undefined){
+				
+            try{
+                this.template = document.querySelectorAll(args.element)[0].innerHTML;
+            }
+            catch(gamm_html_error){
+                this.template = "";
+            }
+            
+            this.element = args.element;
+            this.convert_to_html();
+            
+        }
+        else{
+            
+            this.template = args.template;
+            this.convert_to_html();
+        }
+
+        if(args.data !== undefined){
+            this.data = args.data;
+        }
+        
+        if(args.events !== undefined){
+            this.gamm_events = args.events;
+        }
+
+        this.make_template_id();
+
+
+        if(this.element != null){
+            this.init_element();			
+        }
+
+    }
+
+    this.http = {
+
+        post : function(url,options){
+
+            var method = "POST";
+            var path = url;
+            var async_bool = false;
+            
+            var xhttp = null;
+        
+            var data = "";
+            var params = "";
+
+            if(options.async !== undefined){
+                async_bool = options.async;
+            }
+            
+
+            if(options.data !== undefined){
+                
+                if(typeof options.data === "object"){
+                    // console.log(typeof options.data );
+                    for(var k in options.data){
+        
+                        params += k + "=" + encodeURI(options.data[k]) + "&";
+            
+                    }
+                    params = params.substring(0,params.length - 1);
+        
+                }
+                else{
+                    params = options.data;
+                }
+            }
+        
+        
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xhttp = new XMLHttpRequest();
+            } else {
+                // code for old IE browsers
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            
+            
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {			   
+                    if(!async_bool){
+                        data = xhttp;
+                    }
+                    
+                    if(options.success !== undefined){
+                        options.success(xhttp);
+                    }
+                }
+                else if(this.readyState == 4 && this.status != 200){
+                    if(options.error !== undefined){
+                        options.error(xhttp);
+                    }
+                }
+            };
+            
+            
+            xhttp.open(method, path, async_bool);
+            var has_content_type = false;
+            if(options.headers !== undefined){
+                
+                for(var k in options.headers){
+                    
+                    xhttp.setRequestHeader(k,options.headers[k]);
+                    if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+                        has_content_type = true;
+                    }
+                }
+                
+            }
+            
+            if(options.data !== undefined){
+                if(!has_content_type){
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                }					
+                xhttp.send(params);
+            }
+            else{
+                xhttp.send();
+            }
+            
+            
+            if(!async_bool){
+                return data;
+            }
+
+        },
+
+        get : function(url,options){
+
+            var method = "GET";
+            var path = url;
+            var async_bool = false;
+            
+            var xhttp = null;
+        
+            var data = "";
+            var params = "";
+
+            if(options.async !== undefined){
+                async_bool = options.async;
+            }
+
+            if(options.data !== undefined){
+                
+                if(typeof options.data === "object"){
+                    // console.log(typeof options.data );
+                    for(var k in options.data){
+        
+                        params += k + "=" + encodeURI(options.data[k]) + "&";
+            
+                    }
+                    params = params.substring(0,params.length - 1);
+        
+                }
+                else{
+                    params = options.data;
+                }
+            }
+        
+        
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xhttp = new XMLHttpRequest();
+            } else {
+                // code for old IE browsers
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            
+            
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {			   
+                    if(!async_bool){
+                        data = xhttp;
+                    }
+                    
+                    if(options.success !== undefined){
+                        options.options(xhttp);
+                    }
+                }
+                else if(this.readyState == 4 && this.status != 200){
+                    if(options.error !== undefined){
+                        options.error(xhttp);
+                    }
+                }
+            };
+            
+            
+            xhttp.open(method, path, async_bool);
+            var has_content_type = false;
+            if(options.headers !== undefined){
+                
+                for(var k in options.headers){
+                    
+                    xhttp.setRequestHeader(k,options.headers[k]);
+                    if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+                        has_content_type = true;
+                    }
+                }
+                
+            }
+            
+            if(options.data !== undefined){
+                if(!has_content_type){
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                }					
+                xhttp.send(params);
+            }
+            else{
+                xhttp.send();
+            }
+            
+            
+            if(!async_bool){
+                return data;
+            }
+
+        },
+        
+        request : function(url,options){
+
+            var method = "POST";
+            var path = url;
+            var async_bool = false;
+            
+            var xhttp = null;
+        
+            var data = "";
+            var params = "";
+
+            if(options.async !== undefined){
+                async_bool = options.async;
+            }
+
+            if(options.method !== undefined){
+                method = options.method;
+            }
+            
+
+            if(options.data !== undefined){
+                
+                if(typeof options.data === "object"){
+                    // console.log(typeof options.data );
+                    for(var k in options.data){
+        
+                        params += k + "=" + encodeURI(options.data[k]) + "&";
+            
+                    }
+                    params = params.substring(0,params.length - 1);
+        
+                }
+                else{
+                    params = options.data;
+                }
+            }
+        
+        
+            if (window.XMLHttpRequest) {
+                // code for modern browsers
+                xhttp = new XMLHttpRequest();
+            } else {
+                // code for old IE browsers
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            
+            
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {			   
+                    if(!async_bool){
+                        data = xhttp;
+                    }
+                    
+                    if(options.success !== undefined){
+                        options.success(xhttp);
+                    }
+                }
+                else if(this.readyState == 4 && this.status != 200){
+                    if(options.error !== undefined){
+                        options.error(xhttp);
+                    }
+                }
+            };
+            
+            
+            xhttp.open(method, path, async_bool);
+            var has_content_type = false;
+            if(options.headers !== undefined){
+                
+                for(var k in options.headers){
+                    
+                    xhttp.setRequestHeader(k,options.headers[k]);
+                    if(k.toLowerCase().indexOf("content-type") > -1 && has_content_type == false){
+                        has_content_type = true;
+                    }
+                }
+                
+            }
+            
+            if(options.data !== undefined){
+                if(!has_content_type){
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                }					
+                xhttp.send(params);
+            }
+            else{
+                xhttp.send();
+            }
+            
+            
+            if(!async_bool){
+                return data;
+            }
+
+        }
+
+    };
+
+    return this;
 
 }
