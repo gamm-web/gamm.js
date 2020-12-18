@@ -1,7 +1,7 @@
 /*
 Author: Angelo Octavio
 Version: 1.1
-Author Url: gammjs.juztpost.net
+Author Url: gamm.website/gammjs
 */
 
 window.GAMM_IDS = [];
