@@ -1207,9 +1207,13 @@ function Gamm(args){
             this.element = args.element;
             this.convert_to_html();
             
-        }
+		}
+		else if(args.file !== undefined){
+			this.template = this.read_template(args.file);
+			this.convert_to_html();
+		}
         else{
-            
+
             this.template = args.template;
             this.convert_to_html();
         }
