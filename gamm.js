@@ -307,6 +307,33 @@ function Gamm(args){
     };
     
     this.compile_datas = function(){
+
+		try{
+	
+			// this.compiled_template = this.compiled_template;
+			var gamm_el_global_datas = this.parse_data(this.compiled_template,"{{$","}}");
+			
+			while(gamm_el_global_datas.length > 0){
+				
+				try{
+					
+					this.compiled_template = this.compiled_template.replace("{{$" + gamm_el_global_datas[0] + "}}", eval( gamm_el_global_datas[0] ) );
+					gamm_el_global_datas = this.parse_data(this.compiled_template,"{{$","}}");
+					
+				}
+				catch(gamm_data_error){
+					console.log("ERROR DATA: " + gamm_data_error);
+					this.compiled_template = this.compiled_template.replace("{{$" + gamm_el_global_datas[0] + "}}","[object-undefined]");
+					gamm_el_global_datas = this.parse_data(this.compiled_template,"{{$","}}");
+				}
+				
+			}
+			
+			
+		}
+		catch(gamm_datas_error){
+			console.log("ERROR GLOBAL DATA: " + gamm_datas_error);
+		}
 		
 		try{
 	
@@ -334,6 +361,8 @@ function Gamm(args){
 		catch(gamm_datas_error){
 			console.log("ERROR DATA: " + gamm_datas_error);
 		}
+
+		
 		
     };
     
