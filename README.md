@@ -50,7 +50,7 @@ new Gamm({
     }
 });
 ```
-The said code will generate this result in HTML and will insert to the element value on the parameters object "element". But will also include and enclose the inner HTML with "<div>" tag with a random id generated as a template-id for the parse HTML code.
+The said code will generate this result in HTML and will insert to the element value on the parameters object "element". But will also include and enclose the inner HTML with (&lt;div&gt;) tag with a random id generated as a template-id for the parse HTML code.
 ```html
 <div id="main-content">		
     <div id="template-id-random-generated">
