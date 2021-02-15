@@ -1054,7 +1054,7 @@ This methods is what we have to offer so far. But in the long run we may have to
 
 | Method or Function Name | Parameters | Description |
 | --- | --- | --- |
-| new Gamm | ({ file : "",<br> template : "",<br> element : "",<br> data : {},<br> events : {},<br> load : function(){ } }) | This class helps you to use all the features of the "Gamm"  <br> class to manipulate HTML code and compile it base on your parameter. <br> "file" object parameter - this will read the file and compile the contents inside with Gamm Syntax. <br> "template" object parameter - this is a string value of html code that you want to easily implement and this will still undergo same compilation of Gamm Syntax. <br> "element" object parameter - this read the selected element inner HTML and Gamm Syntax and compile the contents inside. <br> "data" object parameter - is a list of variables or models inside your Gamm Template. <br> "events" object parameter - is a list of events or methods for your Gamm Template. <br> "load" object parameter - is function that will first execute before loading your Gamm Template. |
+| new Gamm | ({ <b>file</b> : "",<br> template : "",<br> <b>element</b> : "",<br> <b>data</b> : {},<br> <b>events</b> : {},<br> <b>load</b> : function(){ } }) | This class helps you to use all the features of the "Gamm"  <br> class to manipulate HTML code and compile it base on your parameter. <br> <b>"file"</b> object parameter - this will read the file and compile the contents inside with Gamm Syntax. <br> <b>"template"</b> object parameter - this is a string value of html code that you want to easily implement and this will still undergo same compilation of Gamm Syntax. <br> "element" object parameter - this read the selected element inner HTML and Gamm Syntax and compile the contents inside. <br> "data" object parameter - is a list of variables or models inside your Gamm Template. <br> "events" object parameter - is a list of events or methods for your Gamm Template. <br> "load" object parameter - is function that will first execute before loading your Gamm Template. |
 | insert_to | (selector) | This method will put your Gamm Template to the existing inner HTML of the query selector parameters you inputted. It will replace all values inside the element that you wish to insert. | 
 | append_to | (selector) | This method will append your Gamm Template to the bottom most of the existing inner HTML of the query selector parameters you inputted. |
 | prepend_to | (selector) | This method will prepend your Gamm Template to the top most of the existing inner HTML of the query selector parameters you inputted. | 
@@ -1064,4 +1064,10 @@ This methods is what we have to offer so far. But in the long run we may have to
 | Method or Function Name | Parameters | Description |
 | --- | --- | --- |
 | tag | (str) | the parameter value is use to display a content inside the template. This is usually use to a limitations. Read more on Limitations. | 
-| | | ```js  if(i == 0){ tag('h1'); {{i}} tag('/h1'); } ``` | 
+| | | ```js  
+if(i == 0){ 
+    tag('h1'); 
+    {{i}} 
+    tag('/h1'); 
+} 
+``` | 
