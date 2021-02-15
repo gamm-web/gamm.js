@@ -12,7 +12,7 @@ This library is mostly used to create my projects and will help me to easily int
 
 This library might be familiar to you like famous frameworks out there on the internet like Angular.js by Google, React.js by Facebook, and Vue.js by Evan You. This library is almost similar to these 3 famous frameworks but this one like Vue.js doesn't need any complications on installing or integrating into your projects. It is light and easy to use than these 3 famous frameworks already in the market.
 
-#
+
 ## Integration
 Integration is as easy us this:
 ```html
@@ -23,7 +23,7 @@ You can also use the minify/compressed version:
 <script type="text/javascript" src="[path_to_library]/gamm.min.js"></script>
 ```
 
-#
+
 ## Disclaimer
 It might be it may have similar to any Javascript framework or library it does not copy any library existing in the market or on the internet. The code can be easily read and you can check if there is some copied code there. This library was made from scratch and not copied by any source.
 
@@ -31,7 +31,7 @@ This library also comes from my logic if there is such code that is much better 
 
 Thank you and if you like my library feel free to at least credit me or send me an email at prefikes@gmail.com for issues that could help my library to be much better, faster, and optimized.
 
-#
+
 ## HTML Render
 To render or pass variable data like the other frameworks you can use double open and close brackets and inside is the data name or variable name.
 ```html
@@ -49,4 +49,48 @@ new Gamm({
         welcome_message : "Hello Gamm.js"
     }
 });
+```
+The said code will generate this result in HTML and will insert to the element value on the parameters object "element". But will also include and enclose the inner HTML with "<div>" tag with a random id generated as a template-id for the parse HTML code.
+```html
+<div id="main-content">		
+    <div id="template-id-random-generated">
+        <h1>Hello Gamm.js</h1>					
+    </div>
+</div>	
+```
+
+
+## The Gamm Tag
+The use of gamm tag is usually for loop and conditional syntax. For more examples you can check loops and coditions pages. but below is a little example of usage of it.
+```html
+<div id="main-content">		
+    <#gamm
+        //Javascript code...
+    #>
+</div>
+```
+A little more sample.
+```html
+<div id="main-content">		
+    <#gamm
+        var display_this_var = 'Hello Gamm.js';
+        <h1>
+        {{display_this_var}}
+        </h1>
+    #>
+</div>	
+```
+Initialize
+```js
+new Gamm({
+    element : "#main-content"
+});
+```
+Result:
+```html
+<div id="main-content">	
+    <h1>
+    Hello Gamm.js
+    </h1>
+</div>
 ```
