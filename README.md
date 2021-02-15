@@ -1,6 +1,7 @@
 # GammJS
 A Javascript framework/Library that I will be using for most projects.
-Author Uri: http://www.gamm.website
+
+Author Uri: http://www.gamm.website <br>
 Documentation: http://www.gamm.website/gammjs
 
 <hr> 
@@ -325,3 +326,129 @@ new Gamm({
     </div>
 </div>
 ```
+
+<hr>
+
+# Events Or Methods
+Adding events to the element is easier just by addding an attribute "gamm-events" with a JSON data starts with the key as the name of the event and value as the function inside "events" parameters in the library class.
+
+As the element has an attribute "gamm-events" will be compiled to attribute base on the event you added. For example a "click" event will converted to "data-gamm_click" with a value of the template_id and "_" with the number base on the number of the element compiled start to zero(0).
+
+```html
+<div id="main-content">		
+    <button gamm-events="{'click':'show_output'}" >Click Me For Output!</button>
+</div>
+```
+
+Here you can see we add a JSON format data inside "gamm-events" with the key as "click" and the value is the function name "show_output".
+
+<b>Initialize:</b>
+
+```js
+new Gamm({
+    element : "#main-content",
+    events : {
+        show_output : function(){
+
+            console.log("Hello Gamm.js");
+
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        <button data-gamm_click="parent_id_0">Click Me For Output!</button>
+	</div>
+</div>
+```
+
+```bash
+Hello Gamm.js
+```
+
+## Get Element Data Or Properties On Events
+To get the element properties of the attached event you will need to add a first parameter to your function. Through this you will able to see all the information you needed.
+
+```html
+<div id="main-content">		
+    <button gamm-events="{'click':'show_output'}" data-my_information="This is what you output please!">
+        I will show what's on the attribute 'data-my_information'.
+    </button>
+</div>	
+```
+
+<b>Initialize:</b>
+
+```js
+new Gamm({
+    element : "#main-content",
+    events : {
+        show_output : function(el){
+
+            console.log(el.getAttribute("data-my_information"));
+
+        }
+    }
+});
+```
+```html
+<div id="main-content">
+    <div id="random-id">
+        <button data-gamm_click="parent_id_0" data-my_information="This is what you output please!">
+        I will show what's on the attribute 'data-my_information'.
+        </button>
+	</div>
+</div>
+```
+
+```bash
+This is what you output please!
+```
+
+
+## Get Element Mouse Event
+This time to get the mouse events of a element that you have attached a method/event you just need to add a second parameter to your function. See example.
+
+```html
+<div id="main-content">		
+    <div style="border:1px solid black; width:300px; height:100px;" gamm-events="{'mouseover':'show_mouse_x_y'}" >
+        {{mouse_x}},{{mouse_y}}
+    </div>
+</div>	
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        mouse_x : 0,
+        mouse_y : 0
+    },
+    events : {
+        show_mouse_x_y : function(el,mev){
+
+            this.data.mouse_x = mev.clientX;
+            this.data.mouse_y = mev.clientY;
+
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+    <div id="random-id">
+        <div style="border:1px solid black; width:300px; height:100px;" data-gamm_mouseover="parent_id_0" >
+            0,0
+        </div>
+    </div>
+</div>
+```
+
