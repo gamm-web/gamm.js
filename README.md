@@ -48,6 +48,7 @@ To render or pass variable data like the other frameworks you can use double ope
 ```
 And to use the library you can use the class new "Gamm" with object parameters element on which element you want to parse and compile the results.
 <br>
+<br>
 <b>Initialization:</b>
 ```js
 new Gamm({
@@ -77,6 +78,7 @@ The use of gamm tag is usually for loop and conditional syntax. For more example
     #>
 </div>
 ```
+
 A little more sample.
 ```html
 <div id="main-content">		
@@ -88,15 +90,19 @@ A little more sample.
     #>
 </div>	
 ```
+
 <br>
 <b>Initialize</b>
+
 ```js
 new Gamm({
     element : "#main-content"
 });
 ```
+
 <br>
-<b>Result:</b>
+<b>Result:</b> 
+
 ```html
 <div id="main-content">	
     <h1>
@@ -109,6 +115,7 @@ new Gamm({
 
 ## Data And Models
 Data and models in this library can be declared via user input forms by the "name" attribute. No need to use another custom attributes we can just use the already built-in "name" attribute.
+
 ```html
 <div id="main-content">		
 
@@ -118,6 +125,7 @@ Data and models in this library can be declared via user input forms by the "nam
 ```
 <br>
 <b>Initialize:</b>
+
 ```js
 new Gamm({
     element : "#main-content",
@@ -128,6 +136,7 @@ new Gamm({
 ```
 <br>
 <b>Result:</b>
+
 ```html
 <div id="main-content">
     <div id="random-id">
