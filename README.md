@@ -1054,18 +1054,4 @@ This methods is what we have to offer so far. But in the long run we may have to
 
 | Method or Function Name | Parameters | Description |
 | --- | --- | --- |
-| new Gamm | ({
-file : "",
-template : "",
-element : "",
-data : {},
-events : {},
-load : function(){ }
-}) | This class helps you to use all the features of the "Gamm" class to manipulate HTML code and compile it base on your parameter.
-"file" object parameter - this will read the file and compile the contents inside with Gamm Syntax.
-"template" object parameter - this is a string value of html code that you want to easily implement and this will still undergo same compilation of Gamm Syntax.
-"element" object parameter - this read the selected element inner HTML and Gamm Syntax and compile the contents inside.
-"data" object parameter - is a list of variables or models inside your Gamm Template.
-"events" object parameter - is a list of events or methods for your Gamm Template.
-"load" object parameter - is function that will first execute before loading your Gamm Template. |
-
+| new Gamm | ({ file : "", template : "", element : "", data : {}, events : {}, load : function(){ } }) | This class helps you to use all the features of the "Gamm"  <br> class to manipulate HTML code and compile it base on your parameter. <br> "file" object parameter - this will read the file and compile the contents inside with Gamm Syntax. <br> "template" object parameter - this is a string value of html code that you want to easily implement and this will still undergo same compilation of Gamm Syntax. <br> "element" object parameter - this read the selected element inner HTML and Gamm Syntax and compile the contents inside. <br> "data" object parameter - is a list of variables or models inside your Gamm Template. <br> "events" object parameter - is a list of events or methods for your Gamm Template. <br> "load" object parameter - is function that will first execute before loading your Gamm Template. |
