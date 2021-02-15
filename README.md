@@ -3,8 +3,9 @@ A Javascript framework/Library that I will be using for most projects.
 Author Uri: http://www.gamm.website
 Documentation: http://www.gamm.website/gammjs
 
-<hr>
+<hr> 
 
+# Introduction
 ## Welcome To GammJS
 A simple library that you can use to create block templates that can easily be manipulated and add methods or events to a certain element in the document.
 
@@ -14,7 +15,6 @@ This library is mostly used to create my projects and will help me to easily int
 
 This library might be familiar to you like famous frameworks out there on the internet like Angular.js by Google, React.js by Facebook, and Vue.js by Evan You. This library is almost similar to these 3 famous frameworks but this one like Vue.js doesn't need any complications on installing or integrating into your projects. It is light and easy to use than these 3 famous frameworks already in the market.
 
-<hr>
 
 ## Integration
 Integration is as easy us this:
@@ -26,7 +26,6 @@ You can also use the minify/compressed version:
 <script type="text/javascript" src="[path_to_library]/gamm.min.js"></script>
 ```
 
-<hr>
 
 ## Disclaimer
 It might be it may have similar to any Javascript framework or library it does not copy any library existing in the market or on the internet. The code can be easily read and you can check if there is some copied code there. This library was made from scratch and not copied by any source.
@@ -37,7 +36,7 @@ Thank you and if you like my library feel free to at least credit me or send me 
 
 <hr>
 
-## HTML Render
+# HTML Render
 To render or pass variable data like the other frameworks you can use double open and close brackets and inside is the data name or variable name.
 ```html
 <div id="main-content">		
@@ -67,7 +66,6 @@ The said code will generate this result in HTML and will insert to the element v
 </div>	
 ```
 
-<hr>
 
 ## The Gamm Tag
 The use of gamm tag is usually for loop and conditional syntax. For more examples you can check loops and coditions pages. but below is a little example of usage of it.
@@ -92,7 +90,7 @@ A little more sample.
 ```
 
 <br>
-<b>Initialize</b>
+<b>Initialize:</b>
 
 ```js
 new Gamm({
@@ -105,15 +103,17 @@ new Gamm({
 
 ```html
 <div id="main-content">	
-    <h1>
-    Hello Gamm.js
-    </h1>
+    <div id="random-id">
+        <h1>
+        Hello Gamm.js
+        </h1>
+    </div>
 </div>
 ```
 
 <hr>
 
-## Data And Models
+# Data And Models
 Data and models in this library can be declared via user input forms by the "name" attribute. No need to use another custom attributes we can just use the already built-in "name" attribute.
 
 ```html
@@ -141,6 +141,187 @@ new Gamm({
 <div id="main-content">
     <div id="random-id">
         <input type="text" name="firstname" value="John Doe">
+    </div>
+</div>
+```
+
+
+## Data Binding
+When you change value of a model or data. It will also change the data which you have put on the brackets and even in the inputs. The forms has a watcher that detects change of value and also changes the values related to that data or model.
+
+```html
+<div id="main-content">		
+    <label>Try to change the input value: </label> 	
+    <br> 	
+    <input type="text" name="firstname"> 
+    <br> 
+    My first name is : {{firstname}}
+    <select name="gender"> 
+        <option value="Male">Male</option> 
+        <option value="Female">Female</option> 
+    </select> 
+    <br> 
+    My Gender is: {{gender}}
+</div>	
+```
+
+<b>Initialize:</b>
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        firstname : "Jose Marie",
+        gender : ""
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        <label>Try to change the input value: </label> 
+        <br>
+        <input type="text" name="firstname" value="Jose Marie">
+        <br>
+        My first name is : Jose Marie
+        <br>
+        <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <br>
+        My Gender is:         
+    </div>
+</div>
+```
+
+## Data Binding On Radio And Check Boxes
+
+```html
+<div id="main-content">		
+    <label>I like to: </label> 	
+    <br> 	
+    <input type="checkbox" name="hobby" value="Work"> Work
+    <br> 
+    <input type="checkbox" name="hobby" value="Play"> Play
+    <br> 
+    <label>Select Gender: </label> 	
+    <br> 	
+    <input type="radio" name="gender" value="Male" >  Male
+    <br> 	
+    <input type="radio" name="gender" value="Female" >  Female
+    <br>
+    {{hobby}}
+    <br> 			
+    {{gender}}
+</div>	
+```
+
+<b>Initialize:</b>
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        hobby : [],
+        gender : "",
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+    <div id="random-id">
+        <label>I like to: </label> 	
+        <br> 	
+        <input type="checkbox" name="hobby" value="Work" checked> Work
+        <br> 
+        <input type="checkbox" name="hobby" value="Play" checked> Play
+        <br> 
+        <label>Select Gender: </label> 	
+        <br> 	
+        <input type="radio" name="gender" value="Male" >  Male
+        <br> 	
+        <input type="radio" name="gender" value="Female" checked>  Female
+        <br>
+        Work,Play
+        <br> 			
+        Female
+    </div>
+</div>
+```
+
+## Data Updates After An Event Is Triggered
+When a data is manipulated inside the function it will also update the template object base on the code execution or syntax you composed.
+
+```html
+<div id="main-content">		
+    Press this button then this will count: {{counter}}
+    <br>
+    <button gamm-events="{'click' : 'increment_counter'}">Increment Data Counter</button>
+</div>	
+```
+
+<b>Initialize:</b>
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        counter : 0
+    },
+    events : {
+        increment_counter : function(){
+
+            this.data.counter++;
+
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        Press this button then this will count: 0
+        <br>
+        <button data-gamm_click="parent_id_0">Increment Data Counter</button>
+    </div>
+</div>
+```
+
+## Displaying Global Data/Variables
+To display global variables you can add a dollar sign($) on the open and close brackets({{}}) like we display on the variables/data.
+
+```html
+<div id="main-content">
+    {{$global_variable}}
+</div>
+```
+
+<b>Initialize:</b>
+
+```js
+window.global_variable = "Hello Gamm.JS";
+
+new Gamm({
+    element : "#main-content"
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+    Hello Gamm.JS
     </div>
 </div>
 ```
