@@ -13,9 +13,12 @@ This library is mostly used to create my projects and will help me to easily int
 This library might be familiar to you like famous frameworks out there on the internet like Angular.js by Google, React.js by Facebook, and Vue.js by Evan You. This library is almost similar to these 3 famous frameworks but this one like Vue.js doesn't need any complications on installing or integrating into your projects. It is light and easy to use than these 3 famous frameworks already in the market.
 
 
-#Integration
+# Integration
 Integration is as easy us this:
 ```html
 <script type="text/javascript" src="[path_to_library]/gamm.js"></script>
 ```
-
+You can also use the minify/compressed version:
+```html
+<script type="text/javascript" src="[path_to_library]/gamm.min.js"></script>
+```
