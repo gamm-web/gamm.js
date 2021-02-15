@@ -1059,4 +1059,9 @@ This methods is what we have to offer so far. But in the long run we may have to
 | append_to | (selector) | This method will append your Gamm Template to the bottom most of the existing inner HTML of the query selector parameters you inputted. |
 | prepend_to | (selector) | This method will prepend your Gamm Template to the top most of the existing inner HTML of the query selector parameters you inputted. | 
 | other | ($class,$data,$value) | This method let you modify or update other different Gamm Templates data. <br> $class parameter - is the class of Gamm Template you want to modify. <br> $data parameter - which data of the class you want to modify. $value parameter - what value you want to put to the data you want to modify. |
-| Below functions only works inside the Gamm Template Content. |
+
+## Below functions only works inside the Gamm Template Content. 
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| tag | (str) | the parameter value is use to display a content inside the template. This is usually use to a limitations. Read more on Limitations. | 
+| | | ```js  if(i == 0){ tag('h1'); {{i}} tag('/h1'); } ``` | 
