@@ -12,6 +12,7 @@ This library is mostly used to create my projects and will help me to easily int
 
 This library might be familiar to you like famous frameworks out there on the internet like Angular.js by Google, React.js by Facebook, and Vue.js by Evan You. This library is almost similar to these 3 famous frameworks but this one like Vue.js doesn't need any complications on installing or integrating into your projects. It is light and easy to use than these 3 famous frameworks already in the market.
 
+<hr>
 
 ## Integration
 Integration is as easy us this:
@@ -23,6 +24,7 @@ You can also use the minify/compressed version:
 <script type="text/javascript" src="[path_to_library]/gamm.min.js"></script>
 ```
 
+<hr>
 
 ## Disclaimer
 It might be it may have similar to any Javascript framework or library it does not copy any library existing in the market or on the internet. The code can be easily read and you can check if there is some copied code there. This library was made from scratch and not copied by any source.
@@ -31,6 +33,7 @@ This library also comes from my logic if there is such code that is much better 
 
 Thank you and if you like my library feel free to at least credit me or send me an email at prefikes@gmail.com for issues that could help my library to be much better, faster, and optimized.
 
+<hr>
 
 ## HTML Render
 To render or pass variable data like the other frameworks you can use double open and close brackets and inside is the data name or variable name.
@@ -42,6 +45,7 @@ To render or pass variable data like the other frameworks you can use double ope
 </div>		
 ```
 And to use the library you can use the class new "Gamm" with object parameters element on which element you want to parse and compile the results.
+<b>Initialization:</b>
 ```js
 new Gamm({
     element : "#main-content",
@@ -59,6 +63,7 @@ The said code will generate this result in HTML and will insert to the element v
 </div>	
 ```
 
+<hr>
 
 ## The Gamm Tag
 The use of gamm tag is usually for loop and conditional syntax. For more examples you can check loops and coditions pages. but below is a little example of usage of it.
@@ -80,17 +85,45 @@ A little more sample.
     #>
 </div>	
 ```
-Initialize
+<b>Initialize</b>
 ```js
 new Gamm({
     element : "#main-content"
 });
 ```
-Result:
+<b>Result:</b>
 ```html
 <div id="main-content">	
     <h1>
     Hello Gamm.js
     </h1>
+</div>
+```
+
+
+## Data And Models
+Data and models in this library can be declared via user input forms by the "name" attribute. No need to use another custom attributes we can just use the already built-in "name" attribute.
+```html
+<div id="main-content">		
+
+    <input type="text" name="firstname">
+
+</div>
+```
+<b>Initialize:</b>
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        firstname : "John Doe"
+    }
+});
+```
+<b>Result:</b>
+```html
+<div id="main-content">
+    <div id="random-id">
+        <input type="text" name="firstname" value="John Doe">
+    </div>
 </div>
 ```
