@@ -746,6 +746,7 @@ new Gamm({
 ```
 
 <hr>
+
 # Styling
 Styling in this library is not far from we already have in Javascript, we can use style tag, CSS or even the style attribute and put values on it. As the library is flexible, we can directly associate object/variables/data into the attributes itself. See Example.
 
@@ -930,7 +931,7 @@ This library also offers to call a file to easly make your own templates if you 
 </div>				
 ```
 
-Use of built-in Gamm method "other" To pass data values to other Gamm classes. Read more on Gamm methods.
+Use of built-in Gamm method "other" To pass data values to other Gamm classes. Read more on <a href="#gamm-methods"> Gamm methods </a>.
 
 ```js
 var Result = new Gamm({
