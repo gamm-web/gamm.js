@@ -1064,7 +1064,7 @@ This methods is what we have to offer so far. But in the long run we may have to
 | Method or Function Name | Parameters | Description |
 | --- | --- | --- |
 | tag | (str) | the parameter value is use to display a content inside the template. This is usually use to a limitations. Read more on Limitations. | 
-| | | 
+
 ```js  
 if(i == 0){ 
     tag('h1'); 
@@ -1072,4 +1072,227 @@ if(i == 0){
     tag('/h1'); 
 } 
 ``` 
-| 
+
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| $ | (str) | the parameter value is use to display a opening HTML tag. | 
+
+```js
+if(i == 0){
+    $('h1');
+    {{i}}
+    tag('/h1');
+}
+```
+
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| $$ | (str) | the parameter value is use to display a closing HTML tag. | 
+
+```js
+if(i == 0){
+    $('h1');
+    {{i}}
+    $$('h1');
+}
+```
+
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| this.http.post | (url,options = {}) | This object function is use for sending request via "POST METHOD". To send data you can use options object "data". this function can be use inside the events properties inside the functions, otherwise you can use or pass it on different variable. | 
+
+```js
+new Gamm({
+    events : {
+        test_func : function(){
+
+            var result = this.http.post(url,{ 
+                data : {
+                    message : "the message value"
+                }
+            });
+        }
+    }
+});
+
+//or
+var post_req = new Gamm({});
+
+var result = post_req.http.post(url,{ 
+    data : {
+        message : "the message value"
+    }
+});
+```
+
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| this.http.get | (url,options = {}) | This object function is use for sending request via "GET METHOD". To send data you can use options object "data". this function can be use inside the events properties inside the functions, otherwise you can use or pass it on different variable. | 
+
+```js
+new Gamm({
+    events : {
+        test_func : function(){
+
+            var result = this.http.get(url);
+        }
+    }
+});
+
+//or
+var post_req = new Gamm({});
+var result = post_req.http.get(url);
+```
+
+| Method or Function Name | Parameters | Description |
+| --- | --- | --- |
+| this.http.request | (url,options = {}) | This object function is use for sending request via "ANY METHOD". To send any method you can use options object "method" To send data you can use options object "data". this function can be use inside the events properties inside the functions, otherwise you can use or pass it on different variable. | 
+
+```js
+new Gamm({
+    events : {
+        test_func : function(){
+
+            var result = this.http.request(url,{
+                method : "fetch"
+            });
+        }
+    }
+});
+
+//or
+var post_req = new Gamm({});
+var result = this.http.request(url,{
+    method : "fetch"
+});
+```
+
+<hr>
+
+# Limitations
+As all library or framework all has limitations and flaws. This flaws may be fixed along the way or it will be the limit and we make Alternatives to make remove this limitations.
+
+## Table Tags
+table tag (&lt;table&gt;) is having issue on this library because when you create table and put a Gamm Syntax inside the browsers auto seperate the contents inside the table that is not necessary for its content. So to fix this solution we have the method "tag", "$", and "$$". This is by if you really want to use table inside the Gamm Templates.
+
+<b>Example:</b>
+
+```html
+<table>
+	<#gamm 
+		//Javascript code..
+	#>
+</table>
+
+<#gamm 
+		<table>
+			<thead></thead>
+			<tbody>
+				for(var i = 0; i < 10; i++){
+				<tr>
+					{{i}}
+				</tr>
+				}
+			</tbody>
+		</table>
+#>
+```
+
+<b>Result:</b>
+
+```html
+<#gamm 
+		//Javascript code..
+	#>
+<table>	
+</table>
+
+<#gamm 
+for(var i = 0; i < 10; i++){
+	{{i}}
+}
+		<table>
+			<thead></thead>
+			<tbody>
+				
+				<tr>
+					
+				</tr>
+				
+			</tbody>
+		</table>
+#>
+````
+
+-So in this case it will cause many errors on the Gamm Template.
+
+<b>Solution So Far:</b>
+
+```html
+<div id="main-content">	
+<#gamm 
+	$('table border="1"');
+		$('tbody');
+			for(var i = 0; i < 10; i++){
+
+				$('tr');
+					$('td');
+						{{i}}
+					$$('td');
+				$$('tr');
+
+			}
+		$$('tbody');
+	$$('table');
+#>
+</div>
+```
+
+```js
+new Gamm({
+    element : "#main-content"
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+   <div id="random-id">
+      <table border="1">
+         <tbody>
+            <tr>
+               <td>0</td>
+            </tr>
+            <tr>
+               <td>1</td>
+            </tr>
+            <tr>
+               <td>2</td>
+            </tr>
+            <tr>
+               <td>3</td>
+            </tr>
+            <tr>
+               <td>4</td>
+            </tr>
+            <tr>
+               <td>5</td>
+            </tr>
+            <tr>
+               <td>6</td>
+            </tr>
+            <tr>
+               <td>7</td>
+            </tr>
+            <tr>
+               <td>8</td>
+            </tr>
+            <tr>
+               <td>9</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+```
