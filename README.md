@@ -744,3 +744,321 @@ new Gamm({
     </div>
 </div>
 ```
+
+<hr>
+# Styling
+Styling in this library is not far from we already have in Javascript, we can use style tag, CSS or even the style attribute and put values on it. As the library is flexible, we can directly associate object/variables/data into the attributes itself. See Example.
+
+```html
+<div id="main-content">		
+    <button gamm-events="{'click':'change_color'}" style="background-color:{{button_color}}; color:{{text_color}}">
+        {{button_text}}
+    </button>
+</div>	
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        button_color : "white",
+        text_color : "black",
+        button_text : "Change Me Into Black"
+    },
+    events : {
+        change_color : function(){
+
+            if(this.data.button_text == "Change Me Into Black"){
+                this.data.button_color = "black";
+                this.data.text_color = "white";
+                this.data.button_text = "Change Me Into White";
+            }
+            else{
+                this.data.button_color = "white";
+                this.data.text_color = "black";
+                this.data.button_text = "Change Me Into Black";
+            }
+
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        <button data-gamm_click="parent_id_0" style="background-color:white; color:black">
+			Change Me Into Black
+		</button>
+    </div>
+</div>
+```
+
+## Styling Techniques
+As the library always says, we can already use Javascript functions that is built-in, this is what makes this library easy to use because we already have Javascript documentations and to make everything faster.
+
+```html
+<div id="main-content">		
+    <div style="width:{{width}}px; height:100px; border:1px solid #000; ">			
+    </div>
+    <br>
+    <button gamm-events="{'click' : 'increase_width'}">Increase Width</button> 		
+    <button gamm-events="{'click' : 'decrease_width'}">Decrease Width</button>
+
+</div>	
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        width : 10
+    },
+    events : {
+        increase_width : function(){
+            this.data.width += 5;
+        },
+        decrease_width : function(){
+            this.data.width -= 5;
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        <div style="width:0px; height:100px; border:1px solid #000; ">			
+		</div>
+		<br>
+		<button data-gamm_click="parent_id_0">Increase Width</button> 
+		<button data-gamm_click="parent_id_1">Decrease Width</button>
+
+    </div>
+</div>
+```
+
+<hr>
+
+# Templates
+This library also offers to call a file to easly make your own templates if you want a seperate a certain are of your project. You can make blocks or modular template so you can easily fix which part may cause the problem or issue.
+
+<b>HTML FILE:</b>
+
+```html
+<div id="form-template">	
+    <b>File Template</b>
+    <br>	
+    <label>Firstname: </label> <input type="text" name="firstname">
+    <br>	
+    <label>Lastname: </label> <input type="text" name="lastname">
+    <br>
+    <label>Gender: </label> 
+    <input type="radio" name="gender" value="Male"> Male 
+    <input type="radio" name="gender" value="Female"> Female
+    <br>
+    <label>Field Work: </label> 
+    <select name="field_work">
+        <#gamm
+            for(var k in this.data.options){
+                var option = this.data.options[k];
+                <option value="{{option}}">
+                {{option}}
+                </option>
+            }
+        #>
+    </select>
+    <button gamm-events="{'click' : 'submit_result'}">Submit</button>
+</div>	
+```
+
+<b>MAIN HTML FILE:</b>
+
+```html
+<div id="main-content">		
+    <div id="form-wrapper" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
+    </div>
+
+    <div id="form-results" style="width:30%; margin:10px; padding:5px; float:left;">
+        <b>Other Template</b>
+        <table border="1">
+            <tbody>
+
+                <tr>
+                    <th>
+                        Firstname
+                    </th>
+                    <td>
+                        {{result.firstname}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Lastname
+                    </th>
+                    <td>
+                        {{result.lastname}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Gender
+                    </th>
+                    <td>
+                        {{result.gender}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Field Work
+                    </th>
+                    <td>
+                        {{result.field_work}}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>				
+```
+
+Use of built-in Gamm method "other" To pass data values to other Gamm classes. Read more on Gamm methods.
+
+```js
+var Result = new Gamm({
+    element : "#form-results",
+    data : {
+        result : {
+            firstname : "",
+            lastname : "",
+            gender : "",
+            field_work : ""
+        }
+    }
+});
+
+var FormTemplate = new Gamm({
+    file : "form.html",
+    data : {
+        firstname : "",
+        lastname : "",
+        gender : "",
+        field_work : "",
+        options : ["Computer Science","Information Technology","Information System"]
+    },
+    events : {
+        submit_result : function(){
+            this.other(Result,"data.result",this.data);
+        }
+    }
+});
+
+FormTemplate.insert_to("#form-wrapper");
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+
+    <div id="form-wrapper" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
+        <div id="random-id">
+
+            <div id="form-template">
+                <b>File Template</b>
+                <br>
+                <label>Firstname: </label> 
+                <input type="text" name="firstname" value="John">
+                <br>	
+                <label>Lastname: </label> 
+                <input type="text" name="lastname" value="Doe">
+                <br>
+                <label>Gender: </label> 
+                <input type="radio" name="gender" value="Male" checked> Male 
+                <input type="radio" name="gender" value="Female"> Female
+                <br>
+                <label>Field Work: </label> 
+                <select name="field_work">
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Information Technology" selected>Information Technology</option>
+                    <option value="Information System">Information System</option>
+                </select>
+                <button data-gamm_click="parent_id_0">Submit</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="form-results" style="width:30%; margin:10px; border:1px solid #333; padding:5px; float:left;">
+        <div id="random-id">
+            <b>Other Template</b>
+            <table border="1">
+                <tbody>
+
+                    <tr>
+                        <th>
+                            Firstname
+                        </th>
+                        <td>
+                            John
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            Lastname
+                        </th>
+                        <td>
+                            Doe
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            Gender
+                        </th>
+                        <td>
+                            Male
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            Field Work
+                        </th>
+                        <td>
+                            Information Technology
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+```
+
+<hr>
+
+# Gamm Methods
+This methods is what we have to offer so far. But in the long run we may have to add more features to make the library more flexible and useful. This method is attached or bind into the class itself.
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Method or Function Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
