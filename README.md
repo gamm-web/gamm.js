@@ -368,7 +368,7 @@ new Gamm({
 ```
 
 ```bash
-Hello Gamm.js
+>Hello Gamm.js
 ```
 
 ## Get Element Data Or Properties On Events
@@ -407,7 +407,7 @@ new Gamm({
 ```
 
 ```bash
-This is what you output please!
+>This is what you output please!
 ```
 
 
@@ -452,3 +452,295 @@ new Gamm({
 </div>
 ```
 
+<hr>
+
+# Loops
+This is a common thing in data handling when you want to display same html format and the only changing is the value of a given lists. For the loop to work we don't need to add any attribute but use what Javascript already offers.
+
+```html
+<div id="main-content">		
+		
+    <#gamm 
+        <ul>	
+        for(var k in this.data.menus){
+            var menu_name = this.data.menus[k];
+            <li>	
+                <a href="#">	
+                {{menu_name}}
+                </a>	
+            </li>	
+
+        }
+        </ul>	
+    #>	
+
+</div>	
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        menus : [
+            "Home",
+            "About Us",
+            "Contact Us"
+        ]
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+    <div id="random-id">
+        <ul>
+            <li>
+                <a href="#">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    About Us
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+```
+
+## Object Loop
+Like the above loop we can also use "For" Loop method already in Javascript.
+
+```html
+<div id="main-content">		
+		
+    <#gamm 
+        <ul>	
+        for(var key in this.data.menus){
+            var menu = this.data.menus[key];
+            
+            <li>	
+                <a href="{{menu.link}}">	
+                {{menu.name}}
+                </a>	
+            </li>	
+
+        }
+        </ul>	
+    #>	
+
+</div>
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        menus : [
+            {
+                name : "Home",
+                link : "home.html"
+            },
+            {
+                name : "About",
+                link : "about.html"
+            },
+            {
+                name : "Contact",
+                link : "contact.html"
+            }
+        ]
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+    <div id="random-id">
+        <ul>
+            <li>
+                <a href="home.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="about.html">
+                    About
+                </a>
+            </li>
+            <li>
+                <a href="contact.html">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+```
+
+<hr>
+
+# Conditions
+Condition is very important for us developers to limit something we want to display, execution, time, etc... So in this page I will show that it is easy to use those conditions because this library is already using Javascript syntax. See example.
+
+```html
+<div id="main-content">		
+		
+    <#gamm 
+        if(this.data.show_me == true){
+            <h1>	
+            {{'Show Me'}}
+            </h1>	
+        }
+        else{
+        
+            {{'Nothing To See Here.'}}
+            
+        }
+    #>
+
+</div>
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        show_me : false
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">		
+    <div id="random-id">		
+        Noting To See Here.
+    </div>
+</div>
+```
+
+
+## Play With Events And Conditions
+
+```html
+<div id="main-content">		
+		
+    <#gamm 
+        if(this.data.show_me == true){
+            <h1>	
+            {{'Show Me'}}
+            </h1>	
+        }
+        else{
+        
+            {{'Nothing To See Here.'}}
+            
+        }
+    #>
+    <br>
+    <button gamm-events="{'click' : 'button_is_click'}">{{button_text}}</button>
+</div>		
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        show_me : false,
+        button_text : "Show H1"
+    },
+    events : {
+        button_is_click : function(){
+
+            if(this.data.button_text == "Show H1"){
+                this.data.show_me = true;
+                this.data.button_text = "Hide H1";
+            }
+            else{
+                this.data.show_me = false;
+                this.data.button_text = "Show H1";
+            }
+
+        }
+    }
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+    
+        <h1>Show Me</h1>	
+        <br>
+        <button data-gamm_click="parent_id_0">Hide H1</button>
+
+    </div>
+</div>
+```
+
+
+## Arithmetic Condition
+Arithmetic condition is also very important so we can identify values that needed to be process or execute a given code. See Example.
+
+```html
+<div id="main-content">		
+		
+    <#gamm 
+        for(var i = 0; i < this.data.numbers.length; i++){
+            var number = this.data.numbers[i];
+
+            if( (number % 2) == 0){
+                {{number + ' is even.'}}
+            }
+            else{
+                {{number + ' is odd.'}}
+            }
+            
+            <br>
+
+        }
+    #>		
+</div>		
+```
+
+```js
+new Gamm({
+    element : "#main-content",
+    data : {
+        numbers : [1,2,3,4,5,6,7,8,9,10]	
+    }		
+});
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">
+        1 is odd.<br>
+        2 is even.<br>
+        3 is odd.<br>
+        4 is even.<br>
+        5 is odd.<br>
+        6 is even.<br>
+        7 is odd.<br>
+        8 is even.<br>
+        9 is odd.<br>
+        10 is even.<br>		
+    </div>
+</div>
+```
