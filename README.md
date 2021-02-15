@@ -1064,10 +1064,12 @@ This methods is what we have to offer so far. But in the long run we may have to
 | Method or Function Name | Parameters | Description |
 | --- | --- | --- |
 | tag | (str) | the parameter value is use to display a content inside the template. This is usually use to a limitations. Read more on Limitations. | 
-| | | ```js  
+| | | 
+```js  
 if(i == 0){ 
     tag('h1'); 
     {{i}} 
     tag('/h1'); 
 } 
-``` | 
+``` 
+| 
