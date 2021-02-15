@@ -3,6 +3,8 @@ A Javascript framework/Library that I will be using for most projects.
 Author Uri: http://www.gamm.website
 Documentation: http://www.gamm.website/gammjs
 
+<hr>
+
 ## Welcome To GammJS
 A simple library that you can use to create block templates that can easily be manipulated and add methods or events to a certain element in the document.
 
@@ -45,6 +47,7 @@ To render or pass variable data like the other frameworks you can use double ope
 </div>		
 ```
 And to use the library you can use the class new "Gamm" with object parameters element on which element you want to parse and compile the results.
+<br>
 <b>Initialization:</b>
 ```js
 new Gamm({
@@ -85,12 +88,14 @@ A little more sample.
     #>
 </div>	
 ```
+<br>
 <b>Initialize</b>
 ```js
 new Gamm({
     element : "#main-content"
 });
 ```
+<br>
 <b>Result:</b>
 ```html
 <div id="main-content">	
@@ -100,6 +105,7 @@ new Gamm({
 </div>
 ```
 
+<hr>
 
 ## Data And Models
 Data and models in this library can be declared via user input forms by the "name" attribute. No need to use another custom attributes we can just use the already built-in "name" attribute.
@@ -110,6 +116,7 @@ Data and models in this library can be declared via user input forms by the "nam
 
 </div>
 ```
+<br>
 <b>Initialize:</b>
 ```js
 new Gamm({
@@ -119,6 +126,7 @@ new Gamm({
     }
 });
 ```
+<br>
 <b>Result:</b>
 ```html
 <div id="main-content">
