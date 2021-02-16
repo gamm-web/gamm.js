@@ -1296,3 +1296,201 @@ new Gamm({
    </div>
 </div>
 ```
+
+## Double Quotes
+This one is a very strict compliance for the Gamm Template. Double quotes cause errors because Gamm Compiler compiles everything as string. So the solution to this is only using single quote when display a string or using it on conditions. See Example.
+
+```html
+<div id="main-content">
+    <#gamm 
+        {{"This will cause an error"}}
+    #>
+
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">[object-undefined]
+    </div>
+</div>
+```
+
+<b>Another Example:</b>
+
+```html
+<div id="main-content">
+    <#gamm 
+        var a = "This is an error too.";
+    #>
+
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">[object-undefined]
+    </div>
+</div>
+```
+
+<b>Another Example:</b>
+
+```html
+<div id="main-content">
+    <#gamm 
+        var a = 'correct string';
+        if(a == "wrong string"){
+            {{'this is a right string.'}}
+        }
+    #>
+
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">[object-undefined]
+    </div>
+</div>
+```
+
+<b>Solution So Far:</b>
+Always start with a single quote(') and end with another single quote(') to display strings.
+
+```html
+<div id="main-content">
+    <#gamm 
+        var a = 'correct string';
+        if(a == 'correct string'){
+            {{'this is a right string.'}}
+        }
+    #>
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">this is a right string.
+    </div>
+</div>
+```
+
+
+## Always Use Single Quote On Gamm Tag
+If you want to put string or text inside Gamm Tag always use {{''}} this symbols. It will cause a major error in compilation if you directly put text in the Gamm Tag.
+
+```html
+<div id="main-content">
+    <#gamm 
+        <h1>
+            this is a text.
+        </h1>
+    #>
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+    <div id="random-id">[object-undefined]
+    </div>
+</div>
+```
+
+<b>Correction:</b>
+
+```html
+<div id="main-content">
+    <#gamm 
+        <h1>
+            {{'this is a text.'}}
+        </h1>
+    #>
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+   <div id="random-id">
+      <h1>this is a text.</h1>
+   </div>
+</div>
+```
+
+
+## Gamm Tag Limitations
+Gamm Tag limits is mostly html tags. HTML tags won't work unless they are seperated by line. Every code is good to look at if properly seperated by line, So this library may practice you to do so.
+
+```html
+<div id="main-content">
+    <#gamm 
+        <h1>{{'this is a text.'}}</h1>
+    #>
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+   <div id="random-id">
+      <h1>gamm_echo('this is a text.');</h1>
+   </div>
+</div>
+```
+
+"gamm_echo" is a method inside Gamm Tag that use in compilation. So if the html tags is not properly seperated by new line this error/issue will occur.
+
+<b>Solution:</b>
+
+```html
+<div id="main-content">
+    <#gamm 
+        <h1>
+            {{'this is a text.'}}
+        </h1>
+
+        <ul>
+            for(var i = 1; i < 11; i++){
+            <li>
+                {{'Display Number: ' + i}}	
+            </li>
+            }
+        </ul>
+    #>
+</div>
+```
+
+<b>Result:</b>
+
+```html
+<div id="main-content">
+   <div id="random-id">
+      <h1>this is a text.</h1>
+      <ul>
+         <li>Display Number: 1</li>
+         <li>Display Number: 2</li>
+         <li>Display Number: 3</li>
+         <li>Display Number: 4</li>
+         <li>Display Number: 5</li>
+         <li>Display Number: 6</li>
+         <li>Display Number: 7</li>
+         <li>Display Number: 8</li>
+         <li>Display Number: 9</li>
+         <li>Display Number: 10</li>
+      </ul>
+   </div>
+</div>
+```
