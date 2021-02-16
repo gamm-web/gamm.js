@@ -1,8 +1,8 @@
 # GammJS
 A Javascript framework/Library that I will be using for most projects.
 
-Author Uri: http://www.gamm.website <br>
-Documentation: http://www.gamm.website/gammjs
+Author Uri: http://gamm.website <br>
+Documentation: http://gamm.website/gammjs
 
 <hr> 
 
