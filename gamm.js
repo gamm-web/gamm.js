@@ -845,7 +845,7 @@ function Gamm(args){
 					$d = $query;
 					
 				}
-				console.log($d);
+				// console.log($d);
 				
 			
 
