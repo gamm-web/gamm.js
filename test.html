@@ -25,9 +25,13 @@
             </button>
 
             <input type="checkbox" id="chk">
-
+            
 
         </div>
+
+        <br>
+        <br>
+        <ao-header></ao-header>
 
         <script>
             var $ = new Gamm().q;
@@ -40,6 +44,20 @@
             
             $("#btn" ).on("click",function(){
                 $(".btn-we:index(1)").text("hahaah");
+            });
+
+            Gamm({
+                block : "ao-header",
+                template : "<h1>{{message}}</h1><br><input type='text' name='message' ><textarea name='message1' ></textarea><br><button gamm-events=\"{'click' : 'alert_data'}\">Show Input Text</button>",
+                data : {
+                    message : "",
+                    message1 : "",
+                },
+                events : {
+                    alert_data : function(){
+                        alert(this.data.message);
+                    }
+                }
             });
         </script>
 
