@@ -1049,6 +1049,33 @@ FormTemplate.insert_to("#form-wrapper");
 
 <hr>
 
+# Component
+A new feature that would be useful for creating easy integrations of a specific UI that will help creators to share there work with people who needs.
+
+```js
+Gamm({
+    block : "helloworld",
+    template : "<h1>Hello World</h1>"
+});
+```
+
+```html
+<helloworld></helloworld>
+```
+
+<b>Result:</b>
+
+```html
+<helloworld>
+    <div id="random-id">
+        <h1>Hello World</h1>
+    </div>
+</helloworld>
+```
+
+<hr>
+
+
 # Gamm Methods
 This methods is what we have to offer so far. But in the long run we may have to add more features to make the library more flexible and useful. This method is attached or bind into the class itself.
 
