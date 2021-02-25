@@ -159,6 +159,13 @@ function Gamm(args){
 			var gamm_start_brackets = new RegExp("{{","g");
 			var gamm_end_brackets = new RegExp("}}","g");
 			
+			var table = "table";
+			var tr = "tr";
+			var td = "td";
+			var tbody = "tbody";
+			var thead = "thead";
+			var th = "th";
+
 			function gamm_echo(str){
 				gamm_final_code += str;
 			}
