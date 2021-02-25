@@ -856,7 +856,7 @@ function Gamm(args){
 		element.focus();
 		element.dispatchEvent(event);
 
-		if(element.tagName.toLowerCase() == "input" || element.tagName.toLowerCase() == "textarea"){
+		if( (element.tagName.toLowerCase() == "input" && element.type == "text") || element.tagName.toLowerCase() == "textarea"){
 			element.setSelectionRange(caret,caret);
 		}
     };
