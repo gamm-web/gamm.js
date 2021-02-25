@@ -428,6 +428,7 @@ function Gamm(args){
 		
 		try{
 			
+
 			var $this = this;
 			var gamm_models = document.querySelectorAll("#" + this.template_id + " [name]");
 			
@@ -488,6 +489,8 @@ function Gamm(args){
 				if(gamm_model.tagName == "TEXTAREA"){
 
 					gamm_model.onmouseup = function(){
+
+						
 						
 						if( $this.textareas[this.name] === undefined){
 							
@@ -509,6 +512,8 @@ function Gamm(args){
 				
 				
 				gamm_model.onkeyup = function(){
+
+					
 					
 					var similiar_elems = document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']");
 					var index_elem = 0;
@@ -557,21 +562,27 @@ function Gamm(args){
 
 						}
 
+						var gamm_x_position = window.scrollX;
+						var gamm_y_position = window.scrollY;
+
 						$this.reload.call($this);						
 						$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );			
-						
+						window.scrollTo(gamm_x_position,gamm_y_position);
 
 					}
 					else{
 						
 						if(this.value != gamm_data){
-						
+							
+							var gamm_x_position = window.scrollX;
+							var gamm_y_position = window.scrollY;
+
 							var caret = this.selectionStart;
 							eval("$this.data." + this.name + "= this.value;");
 
-							$this.reload.call($this);
-							
+							$this.reload.call($this);							
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] , caret);
+							window.scrollTo(gamm_x_position,gamm_y_position);
 							
 
 						}
@@ -632,9 +643,12 @@ function Gamm(args){
 
 						}
 
+						var gamm_x_position = window.scrollX;
+						var gamm_y_position = window.scrollY;
+
 						$this.reload.call($this);						
 						$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] );			
-						
+						window.scrollTo(gamm_x_position,gamm_y_position);
 
 					}
 					else{
@@ -644,10 +658,13 @@ function Gamm(args){
 							var caret = this.selectionStart;
 							eval("$this.data." + this.name + "= this.value;");
 
-							$this.reload.call($this);
-							
+
+							var gamm_x_position = window.scrollX;
+							var gamm_y_position = window.scrollY;
+
+							$this.reload.call($this);							
 							$this.focus( document.querySelectorAll("#" + $this.template_id + " [name='" + this.name + "']")[index_elem] , caret);
-							
+							window.scrollTo(gamm_x_position,gamm_y_position);
 						}
 
 					}
