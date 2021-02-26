@@ -63,7 +63,7 @@ function Gamm(args){
 
     this.init_element = function(){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -87,7 +87,7 @@ function Gamm(args){
 
     this.insert_to = function(selector){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -108,7 +108,7 @@ function Gamm(args){
 
 	this.component = function(selector){
 
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -766,7 +766,7 @@ function Gamm(args){
     
     this.prepend_to = function(selector){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -792,7 +792,7 @@ function Gamm(args){
     
     this.append_to = function(selector){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -817,7 +817,7 @@ function Gamm(args){
     
     this.init_element = function(){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -841,7 +841,7 @@ function Gamm(args){
     
     this.reload = function(){
 		
-		if(this.load !== null){
+		if(this.load != null){
 			this.load.call(this);
 		}
 		
@@ -1320,6 +1320,10 @@ function Gamm(args){
         
         if(args.events !== undefined){
             this.gamm_events = args.events;
+        }
+
+		if(args.load !== undefined){
+            this.load = args.load;
         }
 
         this.make_template_id();
