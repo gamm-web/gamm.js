@@ -841,16 +841,24 @@ function Gamm(args){
     
     this.reload = function(){
 		
-		if(this.load != null){
-			this.load.call(this);
+		try{
+
+			if(this.load != null){
+				this.load.call(this);
+			}
+			
+			this.compile_codes();
+			this.compile_events(); 		
+			this.compile_datas(); 				
+			document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
+			this.distribute_events();
+			this.compile_models();
+
 		}
-		
-		this.compile_codes();
-		this.compile_events(); 		
-		this.compile_datas(); 				
-		document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
-		this.distribute_events();
-		this.compile_models();	
+		catch(gamm_err){
+
+		}
+			
     };
     
     this.get_data = function(){
