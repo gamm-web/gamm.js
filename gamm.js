@@ -185,7 +185,9 @@ function Gamm(args){
 			while(gamm_el_codes.length > 0){
 				
 				try{
-					
+					gamm_final_code = "";
+					final_code_compiled = "";
+
 					gamm_temp_code = gamm_el_codes[0];
 					
 					
