@@ -917,10 +917,6 @@ function Gamm(args){
 		
 		try{
 
-			if(this.load != null){
-				this.load.call(this);
-			}
-			
 			this.compile_codes();
 			this.compile_events(); 		
 			this.compile_datas(); 				
