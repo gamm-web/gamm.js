@@ -25,6 +25,9 @@ function Gamm(args){
     this.properties = {};
     this.gamm_element_and_events = {};
 
+	this.last_compiled_before_error = [];
+	this.debug = false;
+
     
 
     this.make_template_id = function(){
@@ -185,6 +188,7 @@ function Gamm(args){
 			while(gamm_el_codes.length > 0){
 				
 				try{
+					
 					gamm_final_code = "";
 					final_code_compiled = "";
 
@@ -192,6 +196,12 @@ function Gamm(args){
 					
 					
 					gamm_temp_code = gamm_temp_code.replace(gamm_double_quotes,'\\"');
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_TAGG",
+						code : gamm_temp_code
+					};
+
 					
 					var start_lt_tag = false;
 					for(var i = 0; i < gamm_temp_code.length; i++){
@@ -212,6 +222,11 @@ function Gamm(args){
 						else{
 							final_code_compiled += str_1;
 						}
+
+						this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+							function : "GAMM_TAGG",
+							code : final_code_compiled
+						};
 							
 					}
 					
@@ -235,6 +250,11 @@ function Gamm(args){
 					
 
 					// console.log(final_code_compiled);
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_EVAL",
+						code : final_code_compiled
+					};
 					eval(final_code_compiled);
 					
 					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,  gamm_final_code);
@@ -243,9 +263,13 @@ function Gamm(args){
 					
 				}
 				catch(gamm_code_error){
-					console.log("ERROR CODE: " + gamm_code_error);
+					// console.log("ERROR CODE: " + gamm_code_error);
 					this.compiled_template = this.compiled_template.replace(gamm_start_identifier + gamm_el_codes[0] + gamm_end_identifier,"[object-undefined]");
 					gamm_el_codes = this.parse_data(this.compiled_template,gamm_start_identifier,gamm_end_identifier);
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_code_error;
+					console.log( this.last_compiled_before_error[this.last_compiled_before_error.length - 1] );
+
 				}
 				
 			}
@@ -279,16 +303,26 @@ function Gamm(args){
 		
 					gamm_events = JSON.parse(gamm_el_events[0].replace(quote_regex,'"') );
 						
-					
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_EVENTS",
+						code : gamm_events
+					};
 					
 					var gamm_temp_data = "";
 					
 					for(var gamm_key in gamm_events){
 						
 						try{
+
+							
 							var gamm_temp_element_attribute = 'data-gamm_' + gamm_key + '="' + '' + this.template_id + '_' + gamm_el_events_counter + '"';
 							var gamm_temp_element_attribute_key = 'data_gamm_' + gamm_key + '_' + '' + this.template_id + '_' + gamm_el_events_counter ;
 							gamm_temp_data += gamm_temp_element_attribute + ' ';
+
+							this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+								function : "GAMM_EVENTS",
+								code : gamm_temp_data
+							};
 							
 							this.gamm_element_and_events[ gamm_temp_element_attribute_key ] = {
 								
@@ -299,7 +333,9 @@ function Gamm(args){
 							};
 						}
 						catch(gamm_event_error){
-							console.log("ERROR EVENT: " + gamm_event_error);
+
+							this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_event_error;
+							console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
 						}
 						
 						
@@ -310,7 +346,10 @@ function Gamm(args){
 					
 					
 					
-					
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_EVENTS",
+						code : gamm_temp_data
+					};
 						
 					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"",gamm_temp_data);
 					gamm_el_events = this.parse_data(this.compiled_template,"gamm-events=\"","\"");
@@ -318,9 +357,9 @@ function Gamm(args){
 					
 				}
 				catch(gamm_err){
-					console.log(gamm_err);
-					
-					
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_err;
+					console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
 					
 						
 					this.compiled_template = this.compiled_template.replace("gamm-events=\"" + gamm_el_events[0] + "\"","data-gamm='"+gamm_err+"'");
@@ -336,7 +375,10 @@ function Gamm(args){
 			
 		}
 		catch(gamm_err){
-			console.log(gamm_err);
+
+			this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_err;
+			console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
+			
 		}
 		
 		
@@ -353,12 +395,21 @@ function Gamm(args){
 				
 				try{
 					
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_GLOBAL_DATA",
+						code : gamm_el_global_datas[0]
+					};
+
 					this.compiled_template = this.compiled_template.replace("{{$" + gamm_el_global_datas[0] + "}}", eval( gamm_el_global_datas[0] ) );
 					gamm_el_global_datas = this.parse_data(this.compiled_template,"{{$","}}");
 					
 				}
 				catch(gamm_data_error){
-					console.log("ERROR DATA: " + gamm_data_error);
+					
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_data_error;
+					console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
+
 					this.compiled_template = this.compiled_template.replace("{{$" + gamm_el_global_datas[0] + "}}","[object-undefined]");
 					gamm_el_global_datas = this.parse_data(this.compiled_template,"{{$","}}");
 				}
@@ -368,7 +419,9 @@ function Gamm(args){
 			
 		}
 		catch(gamm_datas_error){
-			console.log("ERROR GLOBAL DATA: " + gamm_datas_error);
+
+			this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_datas_error;
+			console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
 		}
 		
 		try{
@@ -379,13 +432,22 @@ function Gamm(args){
 			while(gamm_el_datas.length > 0){
 				
 				try{
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+						function : "GAMM_DATA",
+						code : gamm_el_datas[0]
+					};
 					
 					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}", eval( "this.data." + gamm_el_datas[0] ) );
 					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
 					
 				}
 				catch(gamm_data_error){
-					console.log("ERROR DATA: " + gamm_data_error);
+					
+
+					this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_data_error;
+					console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
+
 					this.compiled_template = this.compiled_template.replace("{{" + gamm_el_datas[0] + "}}","[object-undefined]");
 					gamm_el_datas = this.parse_data(this.compiled_template,"{{","}}");
 				}
@@ -395,7 +457,10 @@ function Gamm(args){
 			
 		}
 		catch(gamm_datas_error){
-			console.log("ERROR DATA: " + gamm_datas_error);
+
+			this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"] = gamm_datas_error;
+			console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
+			
 		}
 
 		
@@ -445,6 +510,11 @@ function Gamm(args){
 				
 				var gamm_value = "";
 				var gamm_model = gamm_models[i];
+
+				this.last_compiled_before_error[this.last_compiled_before_error.length] = {
+					function : "GAMM_MODELS",
+					code : gamm_model
+				};
 
 				gamm_value = eval("this.data." + gamm_model.name );
 
@@ -685,7 +755,9 @@ function Gamm(args){
 			
 		}
 		catch(gamm_models_error){
-			console.log(gamm_models_error);
+
+			this.last_compiled_before_error[this.last_compiled_before_error.length - 1]["error"]= gamm_models_error;
+			console.log(this.last_compiled_before_error[this.last_compiled_before_error.length - 1]);
 		}
 		
     };
