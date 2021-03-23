@@ -1386,6 +1386,11 @@ function Gamm(args){
 			this.template = this.read_template(args.file);
 			this.convert_to_html();
 		}
+		else if(args.html !== undefined){
+			var temp_template = this.parse_data(args.html + "","/*","*/");
+			this.template = temp_template[0];
+			this.convert_to_html();
+		}
         else{
 
             this.template = args.template;
@@ -1415,6 +1420,8 @@ function Gamm(args){
 			
 			this.component(args.block);
 		}
+
+		
 
     }
 
