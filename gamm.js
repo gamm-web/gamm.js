@@ -1,7 +1,9 @@
 /*
-Author: Angelo Octavio
-Version: 1.1
-Author Url: gamm.website/gammjs
+* Author: Angelo Octavio
+ * Version: 1.1
+ * Author Url: http://gamm.website/gammjs
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
 window.GAMM_IDS = [];
