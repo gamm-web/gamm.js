@@ -9,17 +9,27 @@
         <div id="test">
             <#gamm 
 
-            $(table + ' class="wew"' )
 
-                $(tbody)
-                    $(tr)
-                        $(td)
-                        {{'wew'}}
-                        $$(td)
-                    $$(tr)
-                $$(tbody)
+            <g-table class=''>
+                <g-thead>
+                    <g-tr>
+                        <g-th>
+                            {{'Test'}}
+                        </g-th>
+                    </g-tr>
+                </g-thead>
 
-            $$(table)
+                <g-tbody>
+                    
+                    <g-tr>
+                        <g-td>
+                            {{this.data.msg}}
+                        </g-td>
+                    </g-tr>
+
+                </g-tbody>
+
+            </g-table>
 
             #>
             <button id="btn">
@@ -76,7 +86,10 @@
 
 
             Gamm({
-                element : "#test"
+                element : "#test",
+                data : {
+                    msg : "ahahaha"
+                }
             });
         </script>
 

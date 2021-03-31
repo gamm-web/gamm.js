@@ -163,6 +163,26 @@ function Gamm(args){
 			
 			var gamm_start_brackets = new RegExp("{{","g");
 			var gamm_end_brackets = new RegExp("}}","g");
+
+			var gamm_regex_table = {
+				"<g-table" : "<table",
+				"</g-table" : "</table",
+
+				"<g-thead" : "<thead",
+				"</g-thead" : "</thead",
+
+				"<g-tbody" : "<tbody",
+				"</g-tbody" : "</tbody",
+
+				"<g-tr" : "<tr",
+				"</g-tr" : "</tr",
+
+				"<g-th" : "<th",
+				"</g-th" : "</th",
+
+				"<g-td" : "<td",
+				"</g-td" : "</td",
+			};
 			
 			var table = "table";
 			var tr = "tr";
@@ -249,6 +269,14 @@ function Gamm(args){
 								.replace(gamm_ampersand_string,"&")
 								.replace(gamm_start_brackets,"gamm_echo(")
 								.replace(gamm_end_brackets,");");
+					
+					for(var gamm_regex_key in gamm_regex_table){
+						
+						var gamm_regex_value = new RegExp(gamm_regex_key,"g");
+						final_code_compiled = final_code_compiled.replace(gamm_regex_value,gamm_regex_table[gamm_regex_key]);
+
+
+					}
 					
 
 					// console.log(final_code_compiled);
