@@ -16,6 +16,7 @@ function Gamm(args){
     this.template = "";
     this.compiled_template = "";
     this.data = {};
+	this.old_data = {};
     this.gamm_events = {};
     this.options = [];
     
@@ -84,9 +85,10 @@ function Gamm(args){
 		catch(gamm_html_error){
 			this.template = "";
 		}
-				
-		this.distribute_events();
+		
 		this.compile_models();
+		this.distribute_events();
+		
 		
     };
 
@@ -106,8 +108,9 @@ function Gamm(args){
 		catch(gamm_html_error){
 			this.template = "";
 		}
-		this.distribute_events();
 		this.compile_models();
+		this.distribute_events();
+		
 		
 	};
 
@@ -133,8 +136,9 @@ function Gamm(args){
 			console.log(gamm_html_error);
 			this.template = "";
 		}
-		this.distribute_events();
 		this.compile_models();
+		this.distribute_events();
+		
 
 	}
     
@@ -496,6 +500,8 @@ function Gamm(args){
 		
 		
     };
+
+	
     
     this.distribute_events = function(){
 		
@@ -503,24 +509,43 @@ function Gamm(args){
 		
 		try{
 			
-			for(var index in this.gamm_element_and_events){
+			for(var gamm_indexing in this.gamm_element_and_events){
 				
 				eval(
-					"var $gamm_doc = document.querySelectorAll('" + this.gamm_element_and_events[index].element + "'); \
-					for(var $gamm_kkk in $gamm_doc){	\
-							$gamm_doc[$gamm_kkk].on" + this.gamm_element_and_events[index].on + " = function($event){ \
-							$this.gamm_events." + this.gamm_element_and_events[index].event + ".call($this,this,$event); \
-							if($this.element != null){ \
-								$this.init_element.call($this); \
-							}else{ \
-								$this.reload.call($this); \
-							} \
-						}; \
-					}"
+					"var $gamm_doc = document.querySelectorAll('" + this.gamm_element_and_events[gamm_indexing].element + "'); \
+					$gamm_doc[0].addEventListener('" + this.gamm_element_and_events[gamm_indexing].on + "',function($event){ \
+						\
+						$this.gamm_events." + this.gamm_element_and_events[gamm_indexing].event + ".call($this,this,$event);\
+						if($this.element != null){\
+							$this.init_element.call($this);\
+						}\
+						else{\
+							$this.reload.call($this);\
+						}\
+						\
+						if( (this.tagName == 'INPUT' || this.tagName == 'TEXTAREA') && ('" + this.gamm_element_and_events[gamm_indexing].on + "' == 'keyup' || '" + this.gamm_element_and_events[gamm_indexing].on + "' == 'keydown') ){\
+								var similiar_elems = document.querySelectorAll('#' + $this.template_id + ' [name=\"' + this.name + '\"]'); \
+								\
+								var index_elem = 0; \
+								for(var elem_i = 0; elem_i < similiar_elems.length; elem_i++){ \
+									if(this == similiar_elems[elem_i]){ \
+										index_elem = elem_i; \
+									} \
+								} \
+								var caret = this.selectionStart;\
+								\
+								$this.focus( document.querySelectorAll('#' + $this.template_id + ' [name=\"' + this.name + '\"]')[index_elem],caret );\
+								\
+						}\
+					});\
+					"
 				);
+
+
 				
 			}
 			
+
 		}
 		catch(gamm_events_error){
 			console.log("ERROR EVENT: " + gamm_events_error);
@@ -629,8 +654,8 @@ function Gamm(args){
 					var gamm_data = eval("$this.data." + this.name + "");
 
 					for(var elem_i = 0; elem_i < similiar_elems.length; elem_i++){
-						if(this == similiar_elems[i]){
-							index_elem = i;
+						if(this == similiar_elems[elem_i]){
+							index_elem = elem_i;
 						}
 					}
 
@@ -710,8 +735,8 @@ function Gamm(args){
 					var gamm_data = eval("$this.data." + this.name + "");
 
 					for(var elem_i = 0; elem_i < similiar_elems.length; elem_i++){
-						if(this == similiar_elems[i]){
-							index_elem = i;
+						if(this == similiar_elems[elem_i]){
+							index_elem = elem_i;
 						}
 					}
 
@@ -889,8 +914,9 @@ function Gamm(args){
 		catch(gamm_html_error){
 			this.template = "";
 		}
-		this.distribute_events();
 		this.compile_models();
+		this.distribute_events();
+		
 		
     };
     
@@ -915,8 +941,9 @@ function Gamm(args){
 		catch(gamm_html_error){
 			this.template = "";
 		}
-		this.distribute_events();
 		this.compile_models();
+		this.distribute_events();
+		
     };
     
     this.init_element = function(){
@@ -937,9 +964,9 @@ function Gamm(args){
 		catch(gamm_html_error){
 			this.template = "";
 		}
-				
+		this.compile_models();		
 		this.distribute_events();
-		this.compile_models();
+		
 		
     }
     
@@ -951,8 +978,9 @@ function Gamm(args){
 			this.compile_events(); 		
 			this.compile_datas(); 				
 			document.querySelector("#" + this.template_id).innerHTML = this.compiled_template ;
-			this.distribute_events();
 			this.compile_models();
+			this.distribute_events();
+			
 
 		}
 		catch(gamm_err){
