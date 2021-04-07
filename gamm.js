@@ -1424,66 +1424,7 @@ function Gamm(args){
 
     //main----------------------------------------
 
-    
-    if(args !== undefined){
-
-        if(args.element !== undefined){
-				
-            try{
-                this.template = document.querySelectorAll(args.element)[0].innerHTML;
-            }
-            catch(gamm_html_error){
-                this.template = "";
-            }
-            
-            this.element = args.element;
-            this.convert_to_html();
-            
-		}
-		else if(args.file !== undefined){
-			this.template = this.read_template(args.file);
-			this.convert_to_html();
-		}
-		else if(args.html !== undefined){
-			var temp_template = this.parse_data(args.html + "","/*","*/");
-			this.template = temp_template[0];
-			this.convert_to_html();
-		}
-        else{
-
-            this.template = args.template;
-            this.convert_to_html();
-        }
-
-        if(args.data !== undefined){
-            this.data = args.data;
-        }
-        
-        if(args.events !== undefined){
-            this.gamm_events = args.events;
-        }
-
-		if(args.load !== undefined){
-            this.load = args.load;
-        }
-
-        this.make_template_id();
-
-
-        if(this.element != null){
-            this.init_element();			
-        }
-
-		if(args.block !== undefined){
-			
-			this.component(args.block);
-		}
-
-		
-
-    }
-
-    this.http = {
+	this.http = {
 
         post : function(url,options){
 
@@ -1765,6 +1706,66 @@ function Gamm(args){
         }
 
     };
+    
+    if(args !== undefined){
+
+        if(args.element !== undefined){
+				
+            try{
+                this.template = document.querySelectorAll(args.element)[0].innerHTML;
+            }
+            catch(gamm_html_error){
+                this.template = "";
+            }
+            
+            this.element = args.element;
+            this.convert_to_html();
+            
+		}
+		else if(args.file !== undefined){
+			this.template = this.read_template(args.file);
+			this.convert_to_html();
+		}
+		else if(args.html !== undefined){
+			var temp_template = this.parse_data(args.html + "","/*","*/");
+			this.template = temp_template[0];
+			this.convert_to_html();
+		}
+        else{
+
+            this.template = args.template;
+            this.convert_to_html();
+        }
+
+        if(args.data !== undefined){
+            this.data = args.data;
+        }
+        
+        if(args.events !== undefined){
+            this.gamm_events = args.events;
+        }
+
+		if(args.load !== undefined){
+            this.load = args.load;
+        }
+
+        this.make_template_id();
+
+
+        if(this.element != null){
+            this.init_element();			
+        }
+
+		if(args.block !== undefined){
+			
+			this.component(args.block);
+		}
+
+		
+
+    }
+
+    
 
     return this;
 
