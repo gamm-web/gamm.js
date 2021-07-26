@@ -112,6 +112,26 @@ function Gamm(args){
 		this.compile_models();
 		this.distribute_events();
 		
+	};
+
+	this.insert = function(selector){
+		
+		if(this.load != null){
+			this.load.call(this);
+		}
+		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
+		try{
+			
+			document.querySelector(selector).innerHTML = "<div id='" + this.template_id + "'>" + this.compiled_template + "</div>";
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+		this.compile_models();
+		this.distribute_events();
 		
 	};
 
@@ -516,7 +536,7 @@ function Gamm(args){
 					"var $gamm_doc = document.querySelectorAll('" + this.gamm_element_and_events[gamm_indexing].element + "'); \
 					$gamm_doc[0].addEventListener('" + this.gamm_element_and_events[gamm_indexing].on + "',function($event){ \
 						\
-						$this.gamm_events." + this.gamm_element_and_events[gamm_indexing].event + ".call($this,this,$event);\
+						$this.events." + this.gamm_element_and_events[gamm_indexing].event + ".call($this,this,$event);\
 						if($this.element != null){\
 							$this.init_element.call($this);\
 						}\
@@ -936,6 +956,30 @@ function Gamm(args){
 			template_div.id = this.template_id;
 			template_div.innerHTML = this.compiled_template;
 
+			document.querySelector(selector).append(template_div);
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+		this.compile_models();
+		this.distribute_events();
+		
+    };
+
+	this.append = function(selector){
+		
+		if(this.load != null){
+			this.load.call(this);
+		}
+		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
+		try{
+			
+			var template_div = document.createElement("div");
+			template_div.id = this.template_id;
+			template_div.innerHTML = this.compiled_template;
 
 			document.querySelector(selector).append(template_div);
 		}
@@ -1406,14 +1450,8 @@ function Gamm(args){
 
 				};
 
-
 				
 				this.element = $d;
-
-			
-			
-			
-			
 
             return this;
 		}
@@ -1743,8 +1781,8 @@ function Gamm(args){
         }
         
         if(args.events !== undefined){
-            this.gamm_events = args.events;
-			this.events = args.events;
+            this.events = args.events;
+			this.gamm_events = args.events;			
         }
 
 		if(args.load !== undefined){
