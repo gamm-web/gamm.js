@@ -18,6 +18,7 @@ function Gamm(args){
     this.data = {};
 	this.old_data = {};
     this.gamm_events = {};
+	this.events = {};
     this.options = [];
     
     this.stored_events = {};
@@ -1743,6 +1744,7 @@ function Gamm(args){
         
         if(args.events !== undefined){
             this.gamm_events = args.events;
+			this.events = args.events;
         }
 
 		if(args.load !== undefined){
