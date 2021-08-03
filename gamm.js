@@ -940,6 +940,33 @@ function Gamm(args){
 		
 		
     };
+
+	this.prepend = function(selector){
+		
+		if(this.load != null){
+			this.load.call(this);
+		}
+		
+		this.compile_codes();
+		this.compile_events(); 				
+		this.compile_datas();		
+		try{
+			
+			var template_div = document.createElement("div");
+			template_div.id = this.template_id;
+			template_div.innerHTML = this.compiled_template;
+
+
+			document.querySelector(selector).prepend(template_div);
+		}
+		catch(gamm_html_error){
+			this.template = "";
+		}
+		this.compile_models();
+		this.distribute_events();
+		
+		
+    };
     
     this.append_to = function(selector){
 		
