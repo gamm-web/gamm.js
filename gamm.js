@@ -1581,6 +1581,9 @@ function Gamm(args){
             if(!async_bool){
                 return data;
             }
+			else{
+				return xhttp;
+			}
 
         },
 
@@ -1672,6 +1675,9 @@ function Gamm(args){
             if(!async_bool){
                 return data;
             }
+			else{
+				return xhttp;
+			}
 
         },
         
@@ -1768,6 +1774,9 @@ function Gamm(args){
             if(!async_bool){
                 return data;
             }
+			else{
+				return xhttp;
+			}
 
         }
 
