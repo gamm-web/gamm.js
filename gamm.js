@@ -904,7 +904,7 @@ function Gamm(args){
 		
 		
 		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {			   
+			if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {			   
 			   data = xhttp.responseText;
 			}
 		};
@@ -1536,7 +1536,7 @@ function Gamm(args){
             
             
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {			   
+                if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {			   
                     if(!async_bool){
                         data = xhttp;
                     }
@@ -1630,7 +1630,7 @@ function Gamm(args){
             
             
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {			   
+                if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {			   
                     if(!async_bool){
                         data = xhttp;
                     }
@@ -1729,7 +1729,7 @@ function Gamm(args){
             
             
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {			   
+                if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {			   
                     if(!async_bool){
                         data = xhttp;
                     }
