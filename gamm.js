@@ -1807,6 +1807,10 @@ function Gamm(args){
             this.convert_to_html();
         }
 
+		if(args.class !== undefined){
+			this.template_class = args.class;
+		}
+
         if(args.data !== undefined){
             this.data = args.data;
         }
